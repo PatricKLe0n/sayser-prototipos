@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SAYSER — Facility Services · Mantenimiento que nunca para</title>
+<meta name="description" content="Operamos las instalaciones críticas del Perú —aire acondicionado, grupos electrógenos, UPS, pozos a tierra— con la disciplina que exigen los bancos más serios. Desde 2009." />
+<link rel="icon" type="image/png" href="assets/logo.png" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Tailwind Play CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          'sayser-orange': '#C9651C',
+          'sayser-yellow': '#E5B523',
+          'sayser-gray': '#8C8C8C',
+          'cream': {
+            50: '#FFFBF3',
+            100: '#FDF8F0',
+            200: '#FAF3E8',
+            300: '#F4ECDB',
+          },
+          'ink': {
+            900: '#1A1410',
+            800: '#3A2E22',
+            700: '#5A4D3F',
+            600: '#9C8B72',
+          }
+        },
+        fontFamily: {
+          sans: ['Geist', 'Inter Tight', 'system-ui', 'sans-serif'],
+          mono: ['Geist Mono', 'ui-monospace', 'monospace'],
+        },
+      }
+    }
+  }
+</script>
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<style>
+  :root {
+    --orange: #C9651C;
+    --yellow: #E5B523;
+    --cream-50: #FFFBF3;
+    --cream-100: #FDF8F0;
+    --cream-200: #FAF3E8;
+    --ink-900: #1A1410;
+    --ink-700: #5A4D3F;
+    --ink-600: #9C8B72;
+  }
+
+  * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: #FDF8F0;
+    color: #1A1410;
+    font-family: 'Geist', 'Inter Tight', system-ui, sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom Cursor — warm ink dot, no difference blend (we're on light bg) */
+  .cursor-dot {
+    position: fixed;
+    top: 0; left: 0;
+    width: 8px; height: 8px;
+    background: #1A1410;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: width .2s ease, height .2s ease, background .2s ease, border .2s ease;
+    transform: translate(-50%, -50%);
+  }
+  .cursor-dot.hover-link {
+    width: 44px; height: 44px;
+    background: rgba(201,101,28,.25);
+    border: 1px solid rgba(201,101,28,.5);
+  }
+  @media (max-width: 768px) { body { cursor: auto; } .cursor-dot { display: none; } }
+
+  /* Dot grid bg — warm subtle dots on cream */
+  .dot-grid {
+    background-image: radial-gradient(rgba(90,77,63,0.18) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  /* Hero orb — warm sun on cream */
+  .orb-glow {
+    position: absolute;
+    width: 900px; height: 900px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,101,28,0.45) 0%, rgba(229,181,35,0.22) 30%, rgba(201,101,28,0) 70%);
+    filter: blur(70px);
+    pointer-events: none;
+    animation: orbPulse 3.5s ease-in-out infinite alternate;
+    mix-blend-mode: multiply;
+  }
+  .orb-glow-yellow {
+    background: radial-gradient(circle, rgba(229,181,35,0.4) 0%, rgba(229,181,35,0.18) 35%, rgba(229,181,35,0) 70%);
+    filter: blur(90px);
+    animation: orbPulse 4.2s ease-in-out infinite alternate-reverse;
+  }
+  @keyframes orbPulse {
+    0%   { opacity: 0.55; transform: scale(1) translate(-50%, -50%); }
+    100% { opacity: 0.9; transform: scale(1.08) translate(-50%, -50%); }
+  }
+
+  /* Gradient text — unchanged, glows even better on cream */
+  .gradient-text {
+    background: linear-gradient(90deg, #E5B523 0%, #C9651C 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Buttons — primary glows stronger on cream */
+  .btn-primary {
+    background: linear-gradient(135deg, #E5B523 0%, #C9651C 100%);
+    color: #1A1410;
+    font-weight: 600;
+    box-shadow: 0 0 0 1px rgba(201,101,28,0.35), 0 12px 30px -8px rgba(201,101,28,0.55), inset 0 1px 0 rgba(255,255,255,0.45);
+    transition: all .35s cubic-bezier(.2,.8,.2,1);
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 0 1px rgba(201,101,28,0.55), 0 18px 45px -8px rgba(201,101,28,0.7), inset 0 1px 0 rgba(255,255,255,0.55);
+  }
+
+  .btn-ghost {
+    background: rgba(255,255,255,0.55);
+    border: 1px solid rgba(26,20,16,0.18);
+    color: #1A1410;
+    backdrop-filter: blur(10px);
+    transition: all .35s cubic-bezier(.2,.8,.2,1);
+  }
+  .btn-ghost:hover {
+    background: rgba(255,255,255,0.85);
+    border-color: rgba(201,101,28,0.5);
+    box-shadow: 0 12px 32px -10px rgba(201,101,28,0.35);
+  }
+
+  /* Glass card — warm light glass on cream */
+  .glass {
+    background: rgba(255,253,247,0.7);
+    border: 1px solid rgba(201,101,28,0.12);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 8px 32px -10px rgba(201,101,28,0.10), inset 0 1px 0 rgba(255,255,255,0.6);
+    transition: all .4s cubic-bezier(.2,.8,.2,1);
+  }
+  .glass:hover {
+    background: rgba(255,253,247,0.92);
+    border-color: rgba(201,101,28,0.42);
+    box-shadow: 0 22px 60px -18px rgba(201,101,28,0.35), inset 0 1px 0 rgba(255,255,255,0.7);
+    transform: translateY(-3px);
+  }
+
+  /* Image tint — natural on cream, mild warm wash */
+  .img-tint {
+    position: relative;
+    overflow: hidden;
+  }
+  .img-tint img {
+    filter: saturate(1.05) contrast(1.02);
+    transition: transform 1.2s cubic-bezier(.2,.8,.2,1), filter .6s ease;
+  }
+  .img-tint::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(201,101,28,0.10) 0%, rgba(229,181,35,0.05) 60%, rgba(26,20,16,0.18) 100%);
+    pointer-events: none;
+  }
+  .img-tint:hover img { transform: scale(1.04); filter: saturate(1.15) contrast(1.03); }
+
+  /* Marquee */
+  @keyframes marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .marquee-track {
+    animation: marquee 35s linear infinite;
+    will-change: transform;
+  }
+
+  /* Pulse dot */
+  .pulse-dot {
+    width: 8px; height: 8px;
+    background: #C9651C;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(201,101,28,0.7);
+    animation: pulseDot 2s infinite;
+  }
+  @keyframes pulseDot {
+    0%   { box-shadow: 0 0 0 0 rgba(201,101,28,0.7); }
+    70%  { box-shadow: 0 0 0 10px rgba(201,101,28,0); }
+    100% { box-shadow: 0 0 0 0 rgba(201,101,28,0); }
+  }
+
+  /* Scroll indicator — warm line falling */
+  .scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(180deg, rgba(90,77,63,0.35) 0%, transparent 100%);
+    position: relative;
+  }
+  .scroll-line::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 30%;
+    background: linear-gradient(180deg, #C9651C 0%, transparent 100%);
+    animation: scrollDrop 2.2s ease-in-out infinite;
+  }
+  @keyframes scrollDrop {
+    0%   { top: -30%; opacity: 0; }
+    50%  { opacity: 1; }
+    100% { top: 130%; opacity: 0; }
+  }
+
+  /* Hero text reveal */
+  .reveal-word {
+    display: inline-block;
+    filter: blur(20px);
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  /* Header — cream blurred */
+  .header-blur {
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    background: rgba(253,248,240,0.78);
+    border-bottom: 1px solid rgba(201,101,28,0.10);
+  }
+
+  /* Section divider */
+  .stripe-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .stripe-divider::before, .stripe-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,101,28,0.18), transparent);
+  }
+
+  /* WhatsApp Float */
+  .wa-float {
+    position: fixed;
+    bottom: 28px; right: 28px;
+    width: 60px; height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 0 rgba(37,211,102,0.7), 0 10px 30px -5px rgba(37,211,102,0.5);
+    animation: waPulse 2.5s infinite;
+    z-index: 100;
+    transition: transform .3s ease;
+  }
+  .wa-float:hover { transform: scale(1.08); }
+  @keyframes waPulse {
+    0%   { box-shadow: 0 0 0 0 rgba(37,211,102,0.7), 0 10px 30px -5px rgba(37,211,102,0.5); }
+    70%  { box-shadow: 0 0 0 20px rgba(37,211,102,0), 0 10px 30px -5px rgba(37,211,102,0.5); }
+    100% { box-shadow: 0 0 0 0 rgba(37,211,102,0), 0 10px 30px -5px rgba(37,211,102,0.5); }
+  }
+
+  /* Cookie banner */
+  .cookie-banner {
+    position: fixed;
+    bottom: 28px; left: 28px;
+    max-width: 420px;
+    z-index: 90;
+    transform: translateY(0);
+    transition: transform .5s cubic-bezier(.2,.8,.2,1), opacity .5s;
+  }
+  .cookie-banner.hidden-banner { transform: translateY(180%); opacity: 0; pointer-events: none; }
+
+  /* Particles — saturated orange so they read on cream */
+  .particle {
+    position: absolute;
+    width: 3px; height: 3px;
+    background: rgba(201,101,28,0.55);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: particleFloat linear infinite;
+    box-shadow: 0 0 6px rgba(201,101,28,0.35);
+  }
+  @keyframes particleFloat {
+    0%   { transform: translateY(0) translateX(0); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.6; }
+    100% { transform: translateY(-100vh) translateX(40px); opacity: 0; }
+  }
+
+  /* Number KPI mono */
+  .kpi-num {
+    font-family: 'Geist', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    color: #1A1410;
+  }
+
+  /* Sector card bg — warm rich photos on cream */
+  .sector-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    filter: saturate(1.1) contrast(1.05) brightness(0.95);
+    opacity: 0.85;
+    transition: opacity .6s ease, filter .6s ease, transform .9s ease;
+  }
+  .sector-card:hover .sector-bg { opacity: 1; filter: saturate(1.2) contrast(1.08) brightness(1); transform: scale(1.04); }
+  /* Sector overlay — warm dark wash so white text reads */
+  .sector-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(26,20,16,0.08) 0%, rgba(26,20,16,0.55) 65%, rgba(26,20,16,0.85) 100%);
+    pointer-events: none;
+  }
+
+  /* Number indent line */
+  .diff-num::before {
+    content: '';
+    display: block;
+    width: 40px; height: 1px;
+    background: linear-gradient(90deg, #C9651C, transparent);
+    margin-bottom: 12px;
+  }
+
+  /* Footer logo glow */
+  .logo-glow {
+    filter: drop-shadow(0 0 14px rgba(201,101,28,0.55));
+  }
+
+  /* Hide scrollbar on marquee */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Selection */
+  ::selection { background: rgba(229,181,35,0.45); color: #1A1410; }
+
+  /* Display type */
+  .display-text {
+    font-family: 'Geist', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 0.98;
+    color: #1A1410;
+  }
+
+  /* Tabular detail */
+  .mono-tag {
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* ============ DARK BREAKS (testimonios + CTA final) ============ */
+  .dark-stage {
+    background: #1A1410;
+    color: #FAF3E8;
+    position: relative;
+    isolation: isolate;
+  }
+  .dark-stage .display-text,
+  .dark-stage .kpi-num { color: #FAF3E8; }
+  .dark-stage .mono-tag { color: rgba(250,243,232,0.55); }
+  .dark-stage .glass {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(229,181,35,0.18);
+    box-shadow: 0 8px 32px -10px rgba(201,101,28,0.3);
+  }
+  .dark-stage .glass:hover {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(201,101,28,0.45);
+    box-shadow: 0 22px 60px -18px rgba(201,101,28,0.5);
+  }
+  .dark-stage .btn-ghost {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(229,181,35,0.25);
+    color: #FAF3E8;
+  }
+  .dark-stage .btn-ghost:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(229,181,35,0.5);
+    box-shadow: 0 0 32px -8px rgba(229,181,35,0.4);
+  }
+</style>
+</head>
+
+<body class="bg-cream-100 text-ink-900 antialiased">
+
+<!-- Custom cursor -->
+<div class="cursor-dot" id="cursor"></div>
+
+<!-- Particles container -->
+<div id="particles" class="fixed inset-0 pointer-events-none z-0"></div>
+
+<!-- ============ HEADER ============ -->
+<header class="header-blur fixed top-0 left-0 right-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-2.5">
+      <img src="assets/logo.png" alt="SAYSER" class="h-8 w-auto logo-glow" />
+      <span class="font-semibold tracking-tight text-[15px] text-ink-900">SAYSER</span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-7 text-[13px] text-ink-700">
+      <a href="index.html" class="hover:text-sayser-orange transition-colors">Inicio</a>
+      <a href="#nosotros" class="hover:text-sayser-orange transition-colors">Nosotros</a>
+      <a href="servicios.html" class="hover:text-sayser-orange transition-colors">Servicios</a>
+      <a href="#sectores" class="hover:text-sayser-orange transition-colors">Sectores</a>
+      <a href="contacto.html" class="hover:text-sayser-orange transition-colors">Contacto</a>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <button id="mobileMenuBtn" aria-label="Abrir menú" aria-expanded="false" class="md:hidden p-2.5 rounded-lg border border-sayser-orange/25 text-ink-900 hover:bg-sayser-orange/8 transition-colors">
+        <svg id="menuIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+        <svg id="closeIcon" class="hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      <div class="hidden sm:flex items-center gap-1 text-[11px] text-ink-600 mono-tag">
+        <span class="text-ink-900">ES</span>
+        <span>|</span>
+        <span class="hover:text-sayser-orange cursor-pointer transition-colors">EN</span>
+      </div>
+      <a href="contacto.html" class="btn-primary px-4 py-2 rounded-full text-[13px] inline-flex items-center gap-1.5">
+        Cotizar
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile menu drawer -->
+<div id="mobileMenu" class="hidden md:hidden fixed top-16 left-0 right-0 z-40 bg-cream-50/95 backdrop-blur-md border-t border-sayser-orange/15 shadow-[0_12px_32px_-12px_rgba(201,101,28,0.18)]">
+  <nav class="max-w-7xl mx-auto px-6 py-5 flex flex-col gap-1 text-[15px] text-ink-700">
+    <a href="index.html" class="py-3 px-3 rounded-lg hover:bg-sayser-orange/8 hover:text-sayser-orange transition-colors">Inicio</a>
+    <a href="#nosotros" class="py-3 px-3 rounded-lg hover:bg-sayser-orange/8 hover:text-sayser-orange transition-colors">Nosotros</a>
+    <a href="servicios.html" class="py-3 px-3 rounded-lg hover:bg-sayser-orange/8 hover:text-sayser-orange transition-colors">Servicios</a>
+    <a href="#sectores" class="py-3 px-3 rounded-lg hover:bg-sayser-orange/8 hover:text-sayser-orange transition-colors">Sectores</a>
+    <a href="contacto.html" class="py-3 px-3 rounded-lg hover:bg-sayser-orange/8 hover:text-sayser-orange transition-colors">Contacto</a>
+    <div class="flex items-center gap-2 mt-3 pt-3 border-t border-sayser-orange/10 text-[12px] mono-tag text-ink-600 px-3">
+      <span class="text-ink-900">ES</span><span>|</span><span class="hover:text-sayser-orange cursor-pointer">EN</span>
+    </div>
+  </nav>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="relative min-h-screen flex items-center overflow-hidden pt-20">
+  <!-- Background layers -->
+  <div class="absolute inset-0 dot-grid opacity-70"></div>
+
+  <!-- Orbs -->
+  <div class="orb-glow" style="bottom: -300px; left: 50%; transform: translateX(-50%);"></div>
+  <div class="orb-glow orb-glow-yellow" style="top: 10%; right: -200px;"></div>
+
+  <!-- Top gradient ribbon -->
+  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-sayser-orange/40 to-transparent"></div>
+
+  <div class="relative max-w-7xl mx-auto px-6 lg:px-8 w-full z-10">
+    <div class="max-w-5xl">
+
+      <!-- Eyebrow -->
+      <div class="reveal-word inline-flex items-center gap-3 mono-tag text-sayser-orange mb-8" data-stagger>
+        <div class="w-1.5 h-1.5 rounded-full bg-sayser-yellow"></div>
+        FACILITY SERVICES · DESDE 2009
+      </div>
+
+      <!-- H1 -->
+      <h1 class="display-text" style="font-size: clamp(3rem, 8vw, 6rem);">
+        <span class="reveal-word" data-stagger>Mantenimiento</span>
+        <span class="reveal-word" data-stagger>que</span><br />
+        <span class="reveal-word" data-stagger><span class="gradient-text">nunca</span></span>
+        <span class="reveal-word" data-stagger><span class="gradient-text">para.</span></span>
+      </h1>
+
+      <!-- Sub -->
+      <p class="reveal-word mt-8 text-[18px] md:text-[20px] text-ink-700 max-w-2xl leading-relaxed" data-stagger>
+        Operamos las instalaciones críticas del Perú —desde aire acondicionado y grupos electrógenos hasta UPS y pozos a tierra— con la disciplina que exigen los bancos más serios.
+      </p>
+
+      <!-- CTAs -->
+      <div class="reveal-word mt-10 flex flex-col sm:flex-row gap-3" data-stagger>
+        <a href="contacto.html" class="btn-primary px-7 py-3.5 rounded-full text-[14px] inline-flex items-center justify-center gap-2">
+          Solicitar cotización
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="servicios.html" class="btn-ghost px-7 py-3.5 rounded-full text-[14px] inline-flex items-center justify-center gap-2">
+          Ver servicios
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- KPI Strip -->
+    <div class="mt-24 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10 max-w-5xl">
+      <div class="reveal-word border-l border-sayser-orange/25 pl-5" data-stagger>
+        <div class="kpi-num text-[44px] md:text-[56px]" data-count="16">0</div>
+        <div class="mono-tag text-ink-600 mt-1">Años</div>
+      </div>
+      <div class="reveal-word border-l border-sayser-orange/25 pl-5" data-stagger>
+        <div class="kpi-num text-[44px] md:text-[56px]" data-count="11">0</div>
+        <div class="mono-tag text-ink-600 mt-1">Regiones</div>
+      </div>
+      <div class="reveal-word border-l border-sayser-orange/25 pl-5" data-stagger>
+        <div class="kpi-num text-[44px] md:text-[56px]"><span data-count="200">0</span>+</div>
+        <div class="mono-tag text-ink-600 mt-1">Colaboradores</div>
+      </div>
+      <div class="reveal-word border-l border-sayser-orange/25 pl-5" data-stagger>
+        <div class="kpi-num text-[44px] md:text-[56px]">ISO<span class="text-sayser-orange"> 9001</span></div>
+        <div class="mono-tag text-ink-600 mt-1">Certificados</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
+    <div class="mono-tag text-ink-600">SCROLL</div>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ============ CLIENTES MARQUEE ============ -->
+<section class="relative py-16 border-y border-sayser-orange/12 overflow-hidden bg-cream-200/60">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 mb-8 flex items-center gap-4">
+    <span class="pulse-dot"></span>
+    <p class="mono-tag text-ink-700">Confianza demostrada con</p>
+  </div>
+
+  <div class="relative overflow-hidden no-scrollbar">
+    <!-- Gradient fade left -->
+    <div class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-cream-200 to-transparent z-10 pointer-events-none"></div>
+    <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-cream-200 to-transparent z-10 pointer-events-none"></div>
+
+    <div class="marquee-track flex items-center gap-20 w-max">
+      <!-- Set 1 -->
+      <span class="text-ink-900/35 text-[36px] font-semibold tracking-tight">Mibanco</span>
+      <span class="text-ink-900/35 text-[36px] font-semibold tracking-tight">Compartamos</span>
+      <span class="text-ink-900/35 text-[36px] font-semibold tracking-tight">Sodexo</span>
+      <span class="text-ink-900/35 text-[36px] font-semibold tracking-tight">Kamill</span>
+      <span class="text-ink-900/35 text-[36px] font-semibold tracking-tight">Pulso</span>
+      <span class="text-ink-900/35 text-[36px] font-semibold tracking-tight">Mibanco</span>
+      <span class="text-ink-900/35 text-[36px] font-semibold tracking-tight">Compartamos</span>
+      <span class="text-ink-900/35 text-[36px] font-semibold tracking-tight">Sodexo</span>
+      <!-- Set 2 (duplicate) -->
+      <span class="text-ink-900/35 text-[36px] font-semibold tracking-tight">Mibanco</span>
+      <span class="text-ink-900/35 text-[36px] font-semibold tracking-tight">Compartamos</span>
+      <span class="text-ink-900/35 text-[36px] font-semibold tracking-tight">Sodexo</span>
+      <span class="text-ink-900/35 text-[36px] font-semibold tracking-tight">Kamill</span>
+      <span class="text-ink-900/35 text-[36px] font-semibold tracking-tight">Pulso</span>
+      <span class="text-ink-900/35 text-[36px] font-semibold tracking-tight">Mibanco</span>
+      <span class="text-ink-900/35 text-[36px] font-semibold tracking-tight">Compartamos</span>
+      <span class="text-ink-900/35 text-[36px] font-semibold tracking-tight">Sodexo</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LO QUE HACEMOS ============ -->
+<section id="servicios-top" class="relative py-32 overflow-hidden">
+  <div class="absolute -left-40 top-1/3 w-[500px] h-[500px] rounded-full" style="background: radial-gradient(circle, rgba(201,101,28,0.18), transparent 70%); filter: blur(60px); mix-blend-mode: multiply;"></div>
+
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 reveal-section">
+      <div>
+        <div class="flex items-center gap-3 mono-tag text-sayser-orange mb-5">
+          <div class="w-6 h-px bg-sayser-orange"></div>
+          01 / LO QUE HACEMOS
+        </div>
+        <h2 class="display-text" style="font-size: clamp(2rem, 5vw, 3.5rem);">
+          Servicios técnicos<br/>
+          <span class="gradient-text">a la medida</span> de tu negocio.
+        </h2>
+      </div>
+      <p class="text-ink-700 max-w-md text-[15px] leading-relaxed">
+        13 líneas de servicio operadas con la misma rigurosidad que exigen los bancos. Mantenimiento preventivo, correctivo e instalación bajo un solo proveedor.
+      </p>
+    </div>
+
+    <!-- Bento grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <!-- Card 1 -->
+      <div class="reveal-section glass rounded-2xl p-7 group cursor-pointer">
+        <div class="w-11 h-11 rounded-xl bg-sayser-orange/10 border border-sayser-orange/25 flex items-center justify-center mb-5 group-hover:border-sayser-orange/60 group-hover:bg-sayser-orange/15 transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9.5 2v4M14.5 2v4M3 10h18M5 6h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2zM8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/>
+          </svg>
+        </div>
+        <h3 class="text-[18px] font-semibold tracking-tight mb-2 text-ink-900">Aire acondicionado</h3>
+        <p class="text-ink-700 text-[14px] leading-relaxed">
+          Mantenimiento preventivo y correctivo + instalación. Equipos split, multi-zona y fancoil para edificios y oficinas críticas.
+        </p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="reveal-section glass rounded-2xl p-7 group cursor-pointer">
+        <div class="w-11 h-11 rounded-xl bg-sayser-orange/10 border border-sayser-orange/25 flex items-center justify-center mb-5 group-hover:border-sayser-orange/60 group-hover:bg-sayser-orange/15 transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <h3 class="text-[18px] font-semibold tracking-tight mb-2 text-ink-900">Tableros eléctricos</h3>
+        <p class="text-ink-700 text-[14px] leading-relaxed">
+          Diseño, fabricación e instalación de tableros generales, de distribución y de transferencia automática para infraestructura crítica.
+        </p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="reveal-section glass rounded-2xl p-7 group cursor-pointer">
+        <div class="w-11 h-11 rounded-xl bg-sayser-orange/10 border border-sayser-orange/25 flex items-center justify-center mb-5 group-hover:border-sayser-orange/60 group-hover:bg-sayser-orange/15 transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/></svg>
+        </div>
+        <h3 class="text-[18px] font-semibold tracking-tight mb-2 text-ink-900">Grupos electrógenos</h3>
+        <p class="text-ink-700 text-[14px] leading-relaxed">
+          Mantenimiento, instalación y puesta en marcha de generadores. Cronogramas preventivos certificados para evitar caídas operativas.
+        </p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="reveal-section glass rounded-2xl p-7 group cursor-pointer">
+        <div class="w-11 h-11 rounded-xl bg-sayser-orange/10 border border-sayser-orange/25 flex items-center justify-center mb-5 group-hover:border-sayser-orange/60 group-hover:bg-sayser-orange/15 transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="14" height="12" rx="1"/><path d="M9 8V5a3 3 0 0 1 6 0v3"/><line x1="12" y1="14" x2="12" y2="16"/></svg>
+        </div>
+        <h3 class="text-[18px] font-semibold tracking-tight mb-2 text-ink-900">Sistemas UPS</h3>
+        <p class="text-ink-700 text-[14px] leading-relaxed">
+          Suministro ininterrumpido de energía: instalación, monitoreo y mantenimiento programado para data centers y agencias bancarias.
+        </p>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="reveal-section glass rounded-2xl p-7 group cursor-pointer">
+        <div class="w-11 h-11 rounded-xl bg-sayser-orange/10 border border-sayser-orange/25 flex items-center justify-center mb-5 group-hover:border-sayser-orange/60 group-hover:bg-sayser-orange/15 transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19h18M5 19V9l7-5 7 5v10M9 19v-6h6v6"/></svg>
+        </div>
+        <h3 class="text-[18px] font-semibold tracking-tight mb-2 text-ink-900">Pozo a tierra</h3>
+        <p class="text-ink-700 text-[14px] leading-relaxed">
+          Diseño, instalación y mediciones certificadas de sistemas puesta a tierra según normativa peruana y exigencias bancarias.
+        </p>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="reveal-section glass rounded-2xl p-7 group cursor-pointer">
+        <div class="w-11 h-11 rounded-xl bg-sayser-orange/10 border border-sayser-orange/25 flex items-center justify-center mb-5 group-hover:border-sayser-orange/60 group-hover:bg-sayser-orange/15 transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8 6 6 10 6 14a6 6 0 0 0 12 0c0-4-2-8-6-12z"/></svg>
+        </div>
+        <h3 class="text-[18px] font-semibold tracking-tight mb-2 text-ink-900">Contra incendios</h3>
+        <p class="text-ink-700 text-[14px] leading-relaxed">
+          Pruebas, certificaciones y mantenimiento de sistemas contra incendio. Luces de emergencia, señalética y simulacros ITSE.
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-12 flex justify-center reveal-section">
+      <a href="servicios.html" class="btn-ghost px-6 py-3 rounded-full text-[13px] inline-flex items-center gap-2 mono-tag">
+        VER LOS 13 SERVICIOS
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ POR QUÉ SAYSER ============ -->
+<section id="nosotros" class="relative py-32 overflow-hidden border-t border-sayser-orange/10 bg-cream-200/40">
+  <div class="absolute -right-40 top-1/4 w-[600px] h-[600px] rounded-full" style="background: radial-gradient(circle, rgba(229,181,35,0.16), transparent 70%); filter: blur(80px); mix-blend-mode: multiply;"></div>
+
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12">
+
+    <!-- LEFT: Text -->
+    <div class="lg:col-span-7">
+      <div class="reveal-section flex items-center gap-3 mono-tag text-sayser-orange mb-5">
+        <div class="w-6 h-px bg-sayser-orange"></div>
+        02 / POR QUÉ SAYSER
+      </div>
+      <h2 class="reveal-section display-text mb-16" style="font-size: clamp(2rem, 5vw, 3.5rem);">
+        No vendemos paquetes.<br/>
+        <span class="gradient-text">Operamos críticos.</span>
+      </h2>
+
+      <div class="space-y-12">
+        <!-- Diff 01 -->
+        <div class="reveal-section flex gap-6 border-l border-sayser-orange/20 pl-8 relative">
+          <div class="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-sayser-orange shadow-[0_0_20px_rgba(201,101,28,0.7)]"></div>
+          <div>
+            <div class="mono-tag text-sayser-orange mb-2">01</div>
+            <h3 class="text-[22px] font-semibold tracking-tight mb-2 text-ink-900">Calidad extremo a extremo</h3>
+            <p class="text-ink-700 text-[15px] leading-relaxed max-w-xl">
+              Desde la cotización hasta el cierre de OT: protocolos ISO 9001, supervisión técnica propia y reportes auditables. No subcontratamos el control.
+            </p>
+          </div>
+        </div>
+
+        <!-- Diff 02 -->
+        <div class="reveal-section flex gap-6 border-l border-sayser-orange/20 pl-8 relative">
+          <div class="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-sayser-yellow shadow-[0_0_20px_rgba(229,181,35,0.7)]"></div>
+          <div>
+            <div class="mono-tag text-sayser-orange mb-2">02</div>
+            <h3 class="text-[22px] font-semibold tracking-tight mb-2 text-ink-900">Cobertura en 11 regiones</h3>
+            <p class="text-ink-700 text-[15px] leading-relaxed max-w-xl">
+              De Tumbes a Junín, de Loreto a La Libertad. Si tienes 30 agencias dispersas, somos un solo número de teléfono.
+            </p>
+          </div>
+        </div>
+
+        <!-- Diff 03 -->
+        <div class="reveal-section flex gap-6 border-l border-sayser-orange/20 pl-8 relative">
+          <div class="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-sayser-orange shadow-[0_0_20px_rgba(201,101,28,0.7)]"></div>
+          <div>
+            <div class="mono-tag text-sayser-orange mb-2">03</div>
+            <h3 class="text-[22px] font-semibold tracking-tight mb-2 text-ink-900">Nos ponemos la camiseta</h3>
+            <p class="text-ink-700 text-[15px] leading-relaxed max-w-xl">
+              16 años con los mismos clientes no es casualidad. Nuestros técnicos resuelven como si la instalación fuera suya. Empatía operativa.
+            </p>
+          </div>
+        </div>
+
+        <!-- Diff 04 -->
+        <div class="reveal-section flex gap-6 border-l border-sayser-orange/20 pl-8 relative">
+          <div class="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-sayser-yellow shadow-[0_0_20px_rgba(229,181,35,0.7)]"></div>
+          <div>
+            <div class="mono-tag text-sayser-orange mb-2">04</div>
+            <h3 class="text-[22px] font-semibold tracking-tight mb-2 text-ink-900">Servicios a la carta</h3>
+            <p class="text-ink-700 text-[15px] leading-relaxed max-w-xl">
+              Como un restaurante: si no está en la carta, lo inventamos. Cotización a medida sin paquetes cerrados ni mínimos arbitrarios.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Image -->
+    <div class="lg:col-span-5 reveal-section">
+      <div class="sticky top-28">
+        <div class="img-tint rounded-2xl overflow-hidden aspect-[3/4]">
+          <img src="https://images.unsplash.com/photo-1581092163144-b7ae3c00adbc?w=1600&q=80&auto=format&fit=crop" alt="Técnico SAYSER" loading="lazy" class="w-full h-full object-cover" />
+        </div>
+        <div class="mt-6 glass rounded-2xl p-6">
+          <div class="flex items-baseline gap-2 mb-3">
+            <div class="kpi-num text-[40px]">98.7<span class="text-sayser-orange text-[24px]">%</span></div>
+          </div>
+          <div class="mono-tag text-ink-600">Cumplimiento SLA · 2024</div>
+          <div class="mt-4 pt-4 border-t border-sayser-orange/15 text-[13px] text-ink-700 leading-relaxed">
+            Indicador interno medido sobre todas las OT cerradas dentro del plazo contractual con clientes activos.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTORES ============ -->
+<section id="sectores" class="relative py-32 overflow-hidden border-t border-sayser-orange/10">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-16 reveal-section">
+      <div class="inline-flex items-center gap-3 mono-tag text-sayser-orange mb-5">
+        <div class="w-6 h-px bg-sayser-orange"></div>
+        03 / SECTORES QUE CONFÍAN
+        <div class="w-6 h-px bg-sayser-orange"></div>
+      </div>
+      <h2 class="display-text" style="font-size: clamp(2rem, 5vw, 3.5rem);">
+        Industrias donde<br/>
+        <span class="gradient-text">no se permite parar.</span>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <!-- Sector 1: Banca -->
+      <div class="sector-card reveal-section relative rounded-2xl overflow-hidden min-h-[500px] flex flex-col justify-end p-8 group cursor-pointer shadow-[0_12px_40px_-12px_rgba(201,101,28,0.25)]">
+        <div class="sector-bg" style="background-image: url('https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1600&q=80&auto=format&fit=crop');"></div>
+        <div class="sector-overlay"></div>
+        <div class="relative z-10 text-cream-100">
+          <div class="mono-tag text-sayser-yellow mb-3">SECTOR · 01</div>
+          <h3 class="text-[28px] font-semibold tracking-tight mb-3">Banca y microfinanzas</h3>
+          <p class="text-cream-100/85 text-[14px] leading-relaxed mb-5">
+            Agencias 24/7. Bóvedas climatizadas. UPS redundantes. Donde una caída de aire es una caída de servicio.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="px-3 py-1 rounded-full bg-white/10 border border-white/25 text-[11px] text-cream-100">Mibanco</span>
+            <span class="px-3 py-1 rounded-full bg-white/10 border border-white/25 text-[11px] text-cream-100">Compartamos</span>
+          </div>
+          <div class="flex items-center gap-2 mono-tag text-sayser-yellow">
+            VER CASOS
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sector 2: Retail -->
+      <div class="sector-card reveal-section relative rounded-2xl overflow-hidden min-h-[500px] flex flex-col justify-end p-8 group cursor-pointer shadow-[0_12px_40px_-12px_rgba(201,101,28,0.25)]">
+        <div class="sector-bg" style="background-image: url('https://images.unsplash.com/photo-1481437156560-3205f6a55735?w=1600&q=80&auto=format&fit=crop');"></div>
+        <div class="sector-overlay"></div>
+        <div class="relative z-10 text-cream-100">
+          <div class="mono-tag text-sayser-yellow mb-3">SECTOR · 02</div>
+          <h3 class="text-[28px] font-semibold tracking-tight mb-3">Retail y servicios</h3>
+          <p class="text-cream-100/85 text-[14px] leading-relaxed mb-5">
+            Multi-sede. Multi-marca. Operación matriz con mantenimiento descentralizado, reportado centralizadamente.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="px-3 py-1 rounded-full bg-white/10 border border-white/25 text-[11px] text-cream-100">Sodexo</span>
+            <span class="px-3 py-1 rounded-full bg-white/10 border border-white/25 text-[11px] text-cream-100">Kamill</span>
+            <span class="px-3 py-1 rounded-full bg-white/10 border border-white/25 text-[11px] text-cream-100">Pulso</span>
+          </div>
+          <div class="flex items-center gap-2 mono-tag text-sayser-yellow">
+            VER CASOS
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sector 3: Corporativo -->
+      <div class="sector-card reveal-section relative rounded-2xl overflow-hidden min-h-[500px] flex flex-col justify-end p-8 group cursor-pointer shadow-[0_12px_40px_-12px_rgba(201,101,28,0.25)]">
+        <div class="sector-bg" style="background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80');"></div>
+        <div class="sector-overlay"></div>
+        <div class="relative z-10 text-cream-100">
+          <div class="mono-tag text-sayser-yellow mb-3">SECTOR · 03</div>
+          <h3 class="text-[28px] font-semibold tracking-tight mb-3">Corporativo y pymes</h3>
+          <p class="text-cream-100/85 text-[14px] leading-relaxed mb-5">
+            Edificios de oficinas, plantas industriales medianas, almacenes. Un solo proveedor para todas las especialidades.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <span class="px-3 py-1 rounded-full bg-white/10 border border-white/25 text-[11px] text-cream-100">RNP inscrita</span>
+            <span class="px-3 py-1 rounded-full bg-white/10 border border-white/25 text-[11px] text-cream-100">ISO 9001</span>
+          </div>
+          <div class="flex items-center gap-2 mono-tag text-sayser-yellow">
+            VER CASOS
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COBERTURA ============ -->
+<section class="relative py-32 overflow-hidden border-t border-sayser-orange/10 bg-cream-200/40">
+  <div class="absolute left-1/2 top-1/2 w-[700px] h-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full" style="background: radial-gradient(circle, rgba(201,101,28,0.10), transparent 70%); filter: blur(80px); mix-blend-mode: multiply;"></div>
+
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+    <div class="reveal-section">
+      <div class="flex items-center gap-3 mono-tag text-sayser-orange mb-5">
+        <div class="w-6 h-px bg-sayser-orange"></div>
+        04 / COBERTURA NACIONAL
+      </div>
+      <h2 class="display-text mb-6" style="font-size: clamp(2rem, 4.5vw, 3.25rem);">
+        11 regiones.<br/>
+        <span class="gradient-text">Un solo número.</span>
+      </h2>
+      <p class="text-ink-700 text-[16px] leading-relaxed max-w-md mb-8">
+        Operamos infraestructura crítica desde Tumbes hasta Junín, de Loreto a La Libertad. Coordinación centralizada, ejecución regional.
+      </p>
+
+      <div class="flex items-center gap-6 pt-6 border-t border-sayser-orange/15">
+        <div>
+          <div class="kpi-num text-[36px]" data-count="11">0</div>
+          <div class="mono-tag text-ink-600">Regiones activas</div>
+        </div>
+        <div class="h-12 w-px bg-sayser-orange/20"></div>
+        <div>
+          <div class="kpi-num text-[36px]">24/<span class="text-sayser-orange">7</span></div>
+          <div class="mono-tag text-ink-600">Atención de emergencia</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal-section glass rounded-2xl p-8">
+      <div class="mono-tag text-ink-600 mb-6">PRESENCIA OPERATIVA</div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-4">
+        <div class="flex items-center gap-3 group cursor-default">
+          <span class="pulse-dot"></span>
+          <span class="text-[14px] text-ink-900 group-hover:text-sayser-orange transition-colors">La Libertad</span>
+        </div>
+        <div class="flex items-center gap-3 group cursor-default">
+          <span class="pulse-dot"></span>
+          <span class="text-[14px] text-ink-900 group-hover:text-sayser-orange transition-colors">Lambayeque</span>
+        </div>
+        <div class="flex items-center gap-3 group cursor-default">
+          <span class="pulse-dot"></span>
+          <span class="text-[14px] text-ink-900 group-hover:text-sayser-orange transition-colors">Piura</span>
+        </div>
+        <div class="flex items-center gap-3 group cursor-default">
+          <span class="pulse-dot"></span>
+          <span class="text-[14px] text-ink-900 group-hover:text-sayser-orange transition-colors">Tumbes</span>
+        </div>
+        <div class="flex items-center gap-3 group cursor-default">
+          <span class="pulse-dot"></span>
+          <span class="text-[14px] text-ink-900 group-hover:text-sayser-orange transition-colors">Áncash</span>
+        </div>
+        <div class="flex items-center gap-3 group cursor-default">
+          <span class="pulse-dot"></span>
+          <span class="text-[14px] text-ink-900 group-hover:text-sayser-orange transition-colors">Cajamarca</span>
+        </div>
+        <div class="flex items-center gap-3 group cursor-default">
+          <span class="pulse-dot"></span>
+          <span class="text-[14px] text-ink-900 group-hover:text-sayser-orange transition-colors">Lima</span>
+        </div>
+        <div class="flex items-center gap-3 group cursor-default">
+          <span class="pulse-dot"></span>
+          <span class="text-[14px] text-ink-900 group-hover:text-sayser-orange transition-colors">Junín</span>
+        </div>
+        <div class="flex items-center gap-3 group cursor-default">
+          <span class="pulse-dot"></span>
+          <span class="text-[14px] text-ink-900 group-hover:text-sayser-orange transition-colors">Loreto</span>
+        </div>
+        <div class="flex items-center gap-3 group cursor-default">
+          <span class="pulse-dot"></span>
+          <span class="text-[14px] text-ink-900 group-hover:text-sayser-orange transition-colors">Ucayali</span>
+        </div>
+        <div class="flex items-center gap-3 group cursor-default">
+          <span class="pulse-dot"></span>
+          <span class="text-[14px] text-ink-900 group-hover:text-sayser-orange transition-colors">San Martín</span>
+        </div>
+      </div>
+
+      <div class="mt-8 pt-6 border-t border-sayser-orange/15 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span class="text-[13px] text-ink-700">Sede central: Trujillo, La Libertad</span>
+        </div>
+        <a href="contacto.html" class="mono-tag text-sayser-orange hover:underline">VER MAPA</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIOS (DARK BREAK) ============ -->
+<section class="dark-stage relative py-32 overflow-hidden border-t border-sayser-orange/10">
+  <!-- Big warm orb behind quotes -->
+  <div class="orb-glow" style="bottom: -300px; left: 50%; transform: translateX(-50%); width: 1100px; height: 1100px; mix-blend-mode: screen;"></div>
+  <div class="absolute -left-40 bottom-0 w-[500px] h-[500px] rounded-full" style="background: radial-gradient(circle, rgba(229,181,35,0.18), transparent 70%); filter: blur(80px); mix-blend-mode: screen;"></div>
+
+  <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-20 reveal-section">
+      <div class="inline-flex items-center gap-3 mono-tag text-sayser-orange mb-5">
+        <div class="w-6 h-px bg-sayser-orange"></div>
+        05 / VOCES DE OPERACIONES
+        <div class="w-6 h-px bg-sayser-orange"></div>
+      </div>
+      <h2 class="display-text" style="font-size: clamp(2rem, 4.5vw, 3.25rem);">
+        Lo que dicen<br/>
+        <span class="gradient-text">los que firman.</span>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Testimonial 1 -->
+      <div class="reveal-section glass rounded-2xl p-10">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.5" class="mb-6 opacity-80"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2H4c-1.25 0-2 .75-2 2v4c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .5-1 1v3c0 1.25.75 2 2 2zM15 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2h-4c-1.25 0-2 .75-2 2v4c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .5-1 1v3c0 1.25.75 2 2 2z"/></svg>
+        <p class="text-[20px] md:text-[22px] leading-snug font-medium tracking-tight mb-8 text-cream-100">
+          "Tenemos <span class="gradient-text">SLA del 99%</span> en 27 agencias gracias a su disciplina preventiva. No tengo que llamarles dos veces."
+        </p>
+        <div class="flex items-center gap-4 pt-6 border-t border-sayser-orange/25">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-sayser-orange to-sayser-yellow flex items-center justify-center text-ink-900 font-semibold">JM</div>
+          <div>
+            <div class="text-[14px] font-medium text-cream-100">Jefe de Operaciones</div>
+            <div class="text-[12px] mono-tag text-cream-100/55">BANCA · LIMA</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 2 -->
+      <div class="reveal-section glass rounded-2xl p-10">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#E5B523" stroke-width="1.5" class="mb-6 opacity-80"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2H4c-1.25 0-2 .75-2 2v4c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .5-1 1v3c0 1.25.75 2 2 2zM15 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2h-4c-1.25 0-2 .75-2 2v4c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .5-1 1v3c0 1.25.75 2 2 2z"/></svg>
+        <p class="text-[20px] md:text-[22px] leading-snug font-medium tracking-tight mb-8 text-cream-100">
+          "Pedimos algo que no tenían en catálogo. <span class="gradient-text">A las dos semanas</span> lo estaban ejecutando como si lo hicieran siempre."
+        </p>
+        <div class="flex items-center gap-4 pt-6 border-t border-sayser-orange/25">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-sayser-yellow to-sayser-orange flex items-center justify-center text-ink-900 font-semibold">DC</div>
+          <div>
+            <div class="text-[14px] font-medium text-cream-100">Director de Facilities</div>
+            <div class="text-[12px] mono-tag text-cream-100/55">RETAIL · TRUJILLO</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRABAJA CON NOSOTROS ============ -->
+<section class="relative py-32 overflow-hidden border-t border-sayser-orange/10">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-16 reveal-section">
+      <div class="inline-flex items-center gap-3 mono-tag text-sayser-orange mb-5">
+        <div class="w-6 h-px bg-sayser-orange"></div>
+        06 / PRÓXIMO PASO
+        <div class="w-6 h-px bg-sayser-orange"></div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Bolsa trabajo -->
+      <div class="reveal-section glass rounded-2xl p-10 group cursor-pointer relative overflow-hidden">
+        <div class="absolute -top-20 -right-20 w-64 h-64 rounded-full" style="background: radial-gradient(circle, rgba(229,181,35,0.25), transparent 70%); filter: blur(40px); mix-blend-mode: multiply;"></div>
+        <div class="relative">
+          <div class="mono-tag text-sayser-orange mb-4">TALENTO</div>
+          <h3 class="display-text text-[36px] mb-4">Únete al equipo.</h3>
+          <p class="text-ink-700 text-[15px] leading-relaxed mb-8 max-w-md">
+            Buscamos técnicos electromecánicos, ingenieros de mantenimiento y supervisores de obra. Equipos en 11 regiones.
+          </p>
+          <a href="#" class="btn-ghost px-6 py-3 rounded-full text-[13px] inline-flex items-center gap-2">
+            Ver convocatorias
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Cotizar -->
+      <div class="reveal-section glass rounded-2xl p-10 group cursor-pointer relative overflow-hidden">
+        <div class="absolute -top-20 -left-20 w-64 h-64 rounded-full" style="background: radial-gradient(circle, rgba(201,101,28,0.3), transparent 70%); filter: blur(40px); mix-blend-mode: multiply;"></div>
+        <div class="relative">
+          <div class="mono-tag text-sayser-orange mb-4">CLIENTES</div>
+          <h3 class="display-text text-[36px] mb-4">¿Necesitas un servicio?</h3>
+          <p class="text-ink-700 text-[15px] leading-relaxed mb-8 max-w-md">
+            Cotización a medida sin paquetes cerrados. Respuesta en menos de 24 horas, presencia en 11 regiones.
+          </p>
+          <a href="contacto.html" class="btn-primary px-6 py-3 rounded-full text-[13px] inline-flex items-center gap-2">
+            Solicitar cotización
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA FINAL (DARK BREAK) ============ -->
+<section class="dark-stage relative py-40 overflow-hidden border-t border-sayser-orange/10">
+  <!-- Big orb -->
+  <div class="orb-glow" style="bottom: -400px; left: 50%; transform: translateX(-50%); width: 1200px; height: 1200px; mix-blend-mode: screen;"></div>
+
+  <div class="absolute inset-0 dot-grid opacity-15" style="background-image: radial-gradient(rgba(229,181,35,0.18) 1px, transparent 1px);"></div>
+
+  <div class="relative max-w-5xl mx-auto px-6 lg:px-8 text-center">
+    <div class="reveal-section inline-flex items-center gap-3 mono-tag text-sayser-yellow mb-8">
+      <span class="pulse-dot"></span>
+      RESPUESTA EN MENOS DE 24 HORAS
+    </div>
+    <h2 class="reveal-section display-text mb-8" style="font-size: clamp(2.5rem, 6vw, 5rem);">
+      ¿Listo para tercerizar<br/>
+      tus <span class="gradient-text">servicios críticos?</span>
+    </h2>
+    <p class="reveal-section text-cream-100/75 text-[18px] max-w-2xl mx-auto mb-12 leading-relaxed">
+      Conversemos sobre tus instalaciones. Cotización a medida, sin paquetes cerrados, en 11 regiones del Perú.
+    </p>
+    <div class="reveal-section flex flex-col sm:flex-row justify-center gap-3">
+      <a href="contacto.html" class="btn-primary px-8 py-4 rounded-full text-[15px] inline-flex items-center justify-center gap-2">
+        Solicitar cotización ahora
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <a href="https://wa.me/51935986543" target="_blank" class="btn-ghost px-8 py-4 rounded-full text-[15px] inline-flex items-center justify-center gap-2">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        WhatsApp directo
+      </a>
+    </div>
+    <p class="reveal-section mt-8 mono-tag text-cream-100/45">
+      O LLÁMANOS: +51 935 986 543 · LUN A VIE 9 — 18H
+    </p>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="relative border-t border-sayser-orange/15 pt-20 pb-10 bg-cream-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-10 mb-16">
+
+      <!-- Logo column -->
+      <div class="col-span-2">
+        <div class="flex items-center gap-2.5 mb-6">
+          <img src="assets/logo.png" alt="SAYSER" class="h-10 w-auto logo-glow" />
+          <span class="font-semibold text-[18px] tracking-tight text-ink-900">SAYSER</span>
+        </div>
+        <p class="text-ink-700 text-[14px] max-w-xs leading-relaxed mb-6">
+          Facility Services con disciplina de banca. Operamos 13 líneas de servicio en 11 regiones desde 2009.
+        </p>
+        <div class="flex items-center gap-3">
+          <a href="https://facebook.com/corporacion.sayser" target="_blank" class="w-9 h-9 rounded-full bg-white/60 border border-sayser-orange/20 flex items-center justify-center text-ink-700 hover:border-sayser-orange/60 hover:bg-sayser-orange/10 hover:text-sayser-orange transition">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://linkedin.com/company/sayser-s-a-c" target="_blank" class="w-9 h-9 rounded-full bg-white/60 border border-sayser-orange/20 flex items-center justify-center text-ink-700 hover:border-sayser-orange/60 hover:bg-sayser-orange/10 hover:text-sayser-orange transition">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"/></svg>
+          </a>
+          <a href="https://wa.me/51935986543" target="_blank" class="w-9 h-9 rounded-full bg-white/60 border border-sayser-orange/20 flex items-center justify-center text-ink-700 hover:border-sayser-orange/60 hover:bg-sayser-orange/10 hover:text-sayser-orange transition">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Servicios -->
+      <div>
+        <div class="mono-tag text-ink-600 mb-5">SERVICIOS</div>
+        <ul class="space-y-3 text-[13px] text-ink-700">
+          <li><a href="servicios.html" class="hover:text-sayser-orange transition">Aire acondicionado</a></li>
+          <li><a href="servicios.html" class="hover:text-sayser-orange transition">Grupos electrógenos</a></li>
+          <li><a href="servicios.html" class="hover:text-sayser-orange transition">UPS</a></li>
+          <li><a href="servicios.html" class="hover:text-sayser-orange transition">Pozo a tierra</a></li>
+          <li><a href="servicios.html" class="hover:text-sayser-orange transition">Contra incendios</a></li>
+          <li><a href="servicios.html" class="hover:text-sayser-orange transition">Ver todos</a></li>
+        </ul>
+      </div>
+
+      <!-- Empresa -->
+      <div>
+        <div class="mono-tag text-ink-600 mb-5">EMPRESA</div>
+        <ul class="space-y-3 text-[13px] text-ink-700">
+          <li><a href="#nosotros" class="hover:text-sayser-orange transition">Nosotros</a></li>
+          <li><a href="#sectores" class="hover:text-sayser-orange transition">Sectores</a></li>
+          <li><a href="#" class="hover:text-sayser-orange transition">Certificaciones</a></li>
+          <li><a href="#" class="hover:text-sayser-orange transition">Trabaja con nosotros</a></li>
+          <li><a href="contacto.html" class="hover:text-sayser-orange transition">Contacto</a></li>
+        </ul>
+      </div>
+
+      <!-- Contacto -->
+      <div>
+        <div class="mono-tag text-ink-600 mb-5">CONTACTO</div>
+        <ul class="space-y-3 text-[13px] text-ink-700">
+          <li>Panamericana Norte<br/>KM 557, Moche, Trujillo</li>
+          <li><a href="https://wa.me/51935986543" class="hover:text-sayser-orange transition">+51 935 986 543</a></li>
+          <li><a href="mailto:comercial@sayser.com" class="hover:text-sayser-orange transition">comercial@sayser.com</a></li>
+          <li>Lun a Vie · 9 — 18h</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pt-8 border-t border-sayser-orange/15 flex flex-col md:flex-row justify-between gap-4 text-[12px] text-ink-600">
+      <div>SAYSER S.A.C. · RUC 20482196595 · © 2009-2026</div>
+      <div class="flex flex-wrap gap-6">
+        <a href="#" class="hover:text-sayser-orange transition">Política de privacidad</a>
+        <a href="#" class="hover:text-sayser-orange transition">Libro de reclamaciones</a>
+        <a href="#" class="hover:text-sayser-orange transition">ISO 9001</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/51935986543" target="_blank" class="wa-float" aria-label="WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+</a>
+
+<!-- Cookie Banner -->
+<div class="cookie-banner glass rounded-2xl p-5" id="cookieBanner">
+  <div class="flex items-start gap-4">
+    <div class="w-9 h-9 rounded-full bg-sayser-orange/15 border border-sayser-orange/35 flex items-center justify-center flex-shrink-0">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.598 11.064a1.006 1.006 0 0 0-.854-.172A2.938 2.938 0 0 1 20 11c-1.654 0-3-1.346-3.003-2.937.005-.034.016-.136.017-.17a.998.998 0 0 0-1.254-1.006A3.002 3.002 0 0 1 15 7c-1.654 0-3-1.346-3-3 0-.217.031-.444.099-.716a1 1 0 0 0-1.067-1.236A10.014 10.014 0 0 0 2 12c0 5.514 4.486 10 10 10s10-4.486 10-10c0-.049-.003-.097-.007-.16a1.004 1.004 0 0 0-.395-.776zM12 20c-4.411 0-8-3.589-8-8a8.012 8.012 0 0 1 6.844-7.918A5.012 5.012 0 0 0 15 9a4.95 4.95 0 0 0 .156-.024A5.006 5.006 0 0 0 20 13l.158-.007A8.012 8.012 0 0 1 12 20z"/></svg>
+    </div>
+    <div class="flex-1">
+      <div class="text-[13px] text-ink-900 leading-relaxed mb-3">
+        Usamos cookies para mejorar tu experiencia. Al continuar, aceptas nuestra política.
+      </div>
+      <div class="flex gap-2">
+        <button onclick="document.getElementById('cookieBanner').classList.add('hidden-banner')" class="btn-primary px-4 py-1.5 rounded-full text-[12px]">Aceptar</button>
+        <button onclick="document.getElementById('cookieBanner').classList.add('hidden-banner')" class="btn-ghost px-4 py-1.5 rounded-full text-[12px]">Rechazar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ JS ============ -->
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  if (cursor && window.innerWidth > 768) {
+    document.addEventListener('mousemove', (e) => {
+      gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.15, ease: 'power2.out' });
+    });
+    document.querySelectorAll('a, button, .glass, .sector-card, [data-cursor]').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hover-link'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hover-link'));
+    });
+  }
+
+  // Particles
+  function createParticles() {
+    const container = document.getElementById('particles');
+    if (!container) return;
+    for (let i = 0; i < 30; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.bottom = '-10px';
+      p.style.animationDuration = (12 + Math.random() * 18) + 's';
+      p.style.animationDelay = Math.random() * 15 + 's';
+      p.style.opacity = (0.25 + Math.random() * 0.55);
+      container.appendChild(p);
+    }
+  }
+  createParticles();
+
+  // Mouse parallax orbs
+  document.addEventListener('mousemove', (e) => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 30;
+    const y = (e.clientY / window.innerHeight - 0.5) * 30;
+    document.querySelectorAll('.orb-glow').forEach((orb, i) => {
+      const factor = i === 0 ? 1 : -0.6;
+      orb.style.marginLeft = (x * factor) + 'px';
+      orb.style.marginTop = (y * factor) + 'px';
+    });
+  });
+
+  // GSAP register
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Hero reveal
+  window.addEventListener('load', () => {
+    gsap.to('[data-stagger]', {
+      filter: 'blur(0px)',
+      opacity: 1,
+      y: 0,
+      duration: 1.2,
+      stagger: 0.08,
+      ease: 'power3.out'
+    });
+  });
+
+  // Number count-up
+  document.querySelectorAll('[data-count]').forEach(el => {
+    const target = parseInt(el.dataset.count);
+    ScrollTrigger.create({
+      trigger: el,
+      start: 'top 85%',
+      once: true,
+      onEnter: () => {
+        const obj = { val: 0 };
+        gsap.to(obj, {
+          val: target,
+          duration: 2,
+          ease: 'power2.out',
+          onUpdate: () => el.textContent = Math.round(obj.val)
+        });
+      }
+    });
+  });
+
+  // Section reveals
+  gsap.utils.toArray('.reveal-section').forEach(el => {
+    gsap.from(el, {
+      y: 40,
+      opacity: 0,
+      scale: 0.98,
+      duration: 0.9,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 88%',
+        toggleActions: 'play none none none'
+      }
+    });
+  });
+</script>
+
+<script>
+  // Mobile menu toggle
+  (function() {
+    const btn = document.getElementById('mobileMenuBtn');
+    const menu = document.getElementById('mobileMenu');
+    const menuIcon = document.getElementById('menuIcon');
+    const closeIcon = document.getElementById('closeIcon');
+    if (!btn || !menu) return;
+    const setOpen = (open) => {
+      menu.classList.toggle('hidden', !open);
+      menuIcon.classList.toggle('hidden', open);
+      closeIcon.classList.toggle('hidden', !open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.style.overflow = open ? 'hidden' : '';
+    };
+    btn.addEventListener('click', () => setOpen(menu.classList.contains('hidden')));
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+    window.addEventListener('resize', () => { if (window.innerWidth >= 768) setOpen(false); });
+  })();
+</script>
+</body>
+</html>

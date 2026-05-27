@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prototipos · Sitio web SAYSER 2026</title>
+  <meta name="description" content="Dos direcciones de diseño en evaluación para el nuevo sitio web corporativo de SAYSER Facility Services." />
+  <link rel="icon" href="proto-1-warm/assets/logo.png" type="image/png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'sayser-orange': '#C9651C',
+            'sayser-yellow': '#E5B523',
+            'ink-900': '#1A1410',
+            'ink-700': '#5A4D3F',
+            'ink-600': '#7A6A55',
+            'cream-50': '#FFFBF3',
+            'cream-100': '#FDF8F0',
+            'cream-200': '#FAF3E8',
+          },
+          fontFamily: {
+            'sans': ['Inter Tight', 'Inter', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
+      background: #FDF8F0;
+      color: #1A1410;
+    }
+    .grain-bg {
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(201,101,28,0.06), transparent 40%),
+        radial-gradient(circle at 80% 60%, rgba(229,181,35,0.05), transparent 50%),
+        linear-gradient(180deg, #FFFBF3 0%, #FDF8F0 50%, #FAF3E8 100%);
+    }
+    .gradient-text {
+      background: linear-gradient(90deg, #C9651C, #E5B523);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .proto-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .proto-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 60px -20px rgba(201,101,28,0.25);
+      border-color: rgba(201,101,28,0.4);
+    }
+    .preview-warm {
+      background: linear-gradient(135deg, #FDF8F0 0%, #FAF3E8 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .preview-warm::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, transparent 60%, rgba(201,101,28,0.12) 100%),
+        radial-gradient(circle at 30% 70%, rgba(229,181,35,0.18), transparent 40%);
+    }
+    .preview-cinematic {
+      background: radial-gradient(ellipse at 50% 100%, #FDF8F0 0%, #FAF3E8 70%);
+      position: relative;
+      overflow: hidden;
+    }
+    .preview-cinematic::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 90%, rgba(201,101,28,0.30), transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(229,181,35,0.22), transparent 40%);
+    }
+    .dot-grid {
+      background-image: radial-gradient(circle, #C9651C 1px, transparent 1px);
+      background-size: 24px 24px;
+      opacity: 0.06;
+    }
+  </style>
+</head>
+<body class="min-h-screen grain-bg antialiased">
+
+  <!-- Subtle dot grid background -->
+  <div class="fixed inset-0 dot-grid pointer-events-none"></div>
+
+  <!-- Top brand bar -->
+  <header class="relative z-10 max-w-6xl mx-auto px-6 lg:px-10 pt-6 sm:pt-8 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <img src="proto-1-warm/assets/logo.png" alt="SAYSER" class="h-9 sm:h-10 w-auto" />
+    </div>
+    <span class="text-[10px] sm:text-[11px] tracking-[0.18em] uppercase text-ink-600 font-medium">
+      Prototipos · 2026
+    </span>
+  </header>
+
+  <!-- Hero -->
+  <main class="relative z-10 max-w-6xl mx-auto px-6 lg:px-10 pt-12 sm:pt-20 pb-20 sm:pb-28">
+
+    <div class="max-w-3xl">
+      <div class="inline-flex items-center gap-2 text-[11px] tracking-[0.18em] uppercase text-sayser-orange font-semibold mb-5">
+        <span class="w-6 h-px bg-sayser-orange"></span>
+        Sitio web · Versión de evaluación
+      </div>
+      <h1 class="text-[36px] sm:text-[48px] lg:text-[64px] font-semibold leading-[1.05] tracking-tight mb-5 sm:mb-6">
+        Dos direcciones de diseño<br />
+        <span class="gradient-text">para tu sitio web.</span>
+      </h1>
+      <p class="text-ink-700 text-[15px] sm:text-[17px] leading-relaxed max-w-2xl">
+        Explora las dos versiones del nuevo sitio corporativo de <strong class="text-ink-900">SAYSER Facility Services</strong>.
+        Misma estructura, mismo contenido, dos personalidades. Recorre cada una en tu computadora o celular
+        y cuéntanos cuál se siente como tu marca.
+      </p>
+    </div>
+
+    <!-- Prototype cards -->
+    <div class="mt-12 sm:mt-16 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+
+      <!-- Card 1: Warm Corporate -->
+      <a href="proto-1-warm/index.html" class="proto-card group block bg-white/80 backdrop-blur-sm border border-sayser-orange/15 rounded-2xl overflow-hidden">
+        <div class="preview-warm aspect-[16/10] flex items-end p-6 sm:p-8">
+          <div class="relative z-10 max-w-[80%]">
+            <div class="text-[10px] sm:text-[11px] tracking-[0.18em] uppercase text-sayser-orange font-semibold mb-2">A · Corporativo cálido</div>
+            <div class="text-ink-900 text-[20px] sm:text-[26px] font-semibold leading-tight">
+              Servicios a la medida<br />de tu negocio.
+            </div>
+          </div>
+        </div>
+        <div class="p-6 sm:p-7">
+          <p class="text-ink-700 text-[14px] sm:text-[15px] leading-relaxed mb-5">
+            Banking-grade con calidez peruana. Tipografía sobria, base crema cálida, naranja y amarillo como acentos premium.
+            Ideal para mostrar a gerentes de bancos y corporativos tradicionales.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-sayser-orange text-[13px] font-semibold inline-flex items-center gap-2 group-hover:gap-3 transition-all">
+              Abrir prototipo
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </span>
+            <span class="text-[11px] tracking-[0.14em] uppercase text-ink-600">3 páginas</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 2: Cinematic Day -->
+      <a href="proto-3-light/index.html" class="proto-card group block bg-white/80 backdrop-blur-sm border border-sayser-orange/15 rounded-2xl overflow-hidden">
+        <div class="preview-cinematic aspect-[16/10] flex items-end p-6 sm:p-8">
+          <div class="relative z-10 max-w-[80%]">
+            <div class="text-[10px] sm:text-[11px] tracking-[0.18em] uppercase text-sayser-orange font-semibold mb-2">C · Cinematic de día</div>
+            <div class="text-ink-900 text-[20px] sm:text-[26px] font-semibold leading-tight">
+              Mantenimiento que <span class="gradient-text">nunca para.</span>
+            </div>
+          </div>
+        </div>
+        <div class="p-6 sm:p-7">
+          <p class="text-ink-700 text-[14px] sm:text-[15px] leading-relaxed mb-5">
+            Premium y dramático sobre base luminosa. Glows naranja-amarillo, glassmorphism, partículas y micro-animaciones.
+            Conserva 2 "momentos de teatro" oscuros (testimonios y CTA) para mantener el drama.
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-sayser-orange text-[13px] font-semibold inline-flex items-center gap-2 group-hover:gap-3 transition-all">
+              Abrir prototipo
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </span>
+            <span class="text-[11px] tracking-[0.14em] uppercase text-ink-600">3 páginas</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- Hint -->
+    <div class="mt-10 sm:mt-14 text-center">
+      <p class="text-ink-600 text-[13px] sm:text-[14px] max-w-2xl mx-auto leading-relaxed">
+        Cada prototipo incluye <strong class="text-ink-900">Inicio</strong>, <strong class="text-ink-900">Servicios</strong> y <strong class="text-ink-900">Contacto</strong>.
+        Pruébalos desde computadora y celular.
+      </p>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="relative z-10 border-t border-sayser-orange/10 mt-6">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10 py-6 sm:py-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="text-[11px] sm:text-[12px] text-ink-600 tracking-wide">
+        SAYSER Facility Services · Trujillo, Perú · Desde 2009
+      </div>
+      <div class="text-[10px] tracking-[0.18em] uppercase text-ink-600 font-medium">
+        Trabajo en progreso · Confidencial
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

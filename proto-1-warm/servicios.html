@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Servicios · SAYSER Facility Services Perú</title>
+  <meta name="description" content="Catálogo completo de servicios SAYSER: climatización, energía, electricidad, contra incendio, infraestructura y servicios especializados a la medida." />
+  <meta property="og:title" content="Servicios · SAYSER" />
+  <meta property="og:image" content="assets/logo.png" />
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            tight: ['"Inter Tight"', 'system-ui', 'sans-serif'],
+            body: ['Inter', 'system-ui', 'sans-serif']
+          },
+          colors: {
+            brand: {
+              orange: '#C9651C', orangeDark: '#A4501A', orangeSoft: '#FFEAD0', orangeWarm: '#FFF1DC',
+              yellow: '#E5B523', yellowSoft: '#FCEFB8',
+              gray: '#7A6A55', graySoft: '#9C8B72', ink: '#1A1410',
+              line: '#E8DAC2', lineWarm: '#EFE2C8',
+              paper: '#FDF8F0', soft: '#FAF3E8', softer: '#F4EBD9', cream: '#FFF1DC'
+            }
+          },
+          boxShadow: {
+            warm: '0 8px 24px -8px rgba(201,101,28,0.18)',
+            warmLg: '0 20px 50px -20px rgba(201,101,28,0.28)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; color: #1A1410; background: #FDF8F0; -webkit-font-smoothing: antialiased; font-size: 16px; line-height: 1.7; }
+    h1, h2, h3, h4 { font-family: 'Inter Tight', sans-serif; letter-spacing: -0.02em; line-height: 1.1; }
+    .eyebrow { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500; color: #C9651C; }
+    .accent-dot {
+      width: 7px; height: 7px; border-radius: 9999px; background: #C9651C; display: inline-block;
+      box-shadow: 0 0 0 2px rgba(229,181,35,0.15);
+    }
+    .reveal { opacity: 0; transform: translateY(30px); }
+
+    @keyframes pulseRing {
+      0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.45); }
+      70% { box-shadow: 0 0 0 18px rgba(37,211,102,0); }
+      100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+    }
+    .pulse-ring { animation: pulseRing 2.2s infinite; }
+
+    header.scrolled {
+      background: rgba(253,248,240,0.88); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 1px 0 rgba(201,101,28,0.10);
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, #C9651C 30%, #E5B523 70%, transparent 100%);
+      opacity: 0;
+      transition: opacity .4s ease;
+    }
+    header.scrolled::after { opacity: 1; }
+
+    .filter-btn[data-active="true"] { background: #1A1410; color: #FDF8F0; border-color: #1A1410; }
+    .filter-btn[data-active="true"] .accent-dot {
+      background: #E5B523;
+      box-shadow: 0 0 0 3px rgba(229,181,35,0.25);
+    }
+
+    .svc-block { transition: opacity .35s ease, transform .35s ease; }
+
+    .svc-cta:hover svg { transform: translate(4px, 0); }
+    .svc-cta svg { transition: transform .3s ease; }
+
+    .cookie-hidden { transform: translateY(140%); }
+
+    .parallax-img { will-change: transform; }
+
+    /* Underline animation for nav links (desktop) */
+    @media (min-width: 1024px) {
+      header nav a:not(.text-brand-orange) { position: relative; }
+      header nav a:not(.text-brand-orange)::after {
+        content: '';
+        position: absolute;
+        left: 0; right: 0; bottom: -6px;
+        height: 2px;
+        background: linear-gradient(90deg, #C9651C, #E5B523);
+        transform: scaleX(0);
+        transform-origin: left center;
+        transition: transform .35s ease;
+        border-radius: 2px;
+      }
+      header nav a:not(.text-brand-orange):hover::after { transform: scaleX(1); }
+    }
+
+    .cta-outline {
+      transition: background .3s ease, color .3s ease, border-color .3s ease, box-shadow .3s ease;
+    }
+    .cta-outline:hover {
+      background: linear-gradient(135deg, #C9651C 0%, #E5B523 100%);
+      color: #FDF8F0;
+      border-color: transparent;
+      box-shadow: 0 8px 24px -8px rgba(201,101,28,0.40);
+    }
+  </style>
+</head>
+
+<body class="bg-brand-paper text-brand-ink font-body">
+
+  <!-- HEADER -->
+  <header id="siteHeader" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="max-w-[1280px] mx-auto px-6 lg:px-10 h-[76px] flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="assets/logo.png" alt="SAYSER" class="h-9 w-auto" />
+        <span class="font-tight font-semibold text-[17px] tracking-tight text-brand-ink hidden sm:block">SAYSER</span>
+      </a>
+      <nav class="hidden lg:flex items-center gap-9 text-[14px] font-medium text-brand-ink">
+        <a href="index.html" class="hover:text-brand-orange transition">Inicio</a>
+        <a href="index.html#nosotros" class="hover:text-brand-orange transition">Nosotros</a>
+        <a href="servicios.html" class="text-brand-orange">Servicios</a>
+        <a href="index.html#sectores" class="hover:text-brand-orange transition">Sectores</a>
+        <a href="index.html#trayectoria" class="hover:text-brand-orange transition">Proyectos</a>
+        <a href="contacto.html" class="hover:text-brand-orange transition">Contacto</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-1 text-[12px] font-medium text-brand-gray border border-brand-line rounded-full px-3 py-1.5">
+          <span class="text-brand-ink">ES</span><span class="opacity-30">|</span><span>EN</span>
+        </div>
+        <a href="contacto.html" class="cta-outline hidden md:inline-flex items-center gap-2 border-2 border-brand-orange text-brand-orange px-4 py-2 rounded-full text-[13px] font-medium">
+          Cotizar
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+        </a>
+        <button id="mobileMenuBtn" class="lg:hidden p-2 rounded-lg border border-brand-line">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobileMenu" class="hidden lg:hidden bg-brand-paper border-t border-brand-line">
+      <div class="px-6 py-6 flex flex-col gap-4 text-[15px] font-medium">
+        <a href="index.html" class="py-1">Inicio</a>
+        <a href="index.html#nosotros" class="py-1">Nosotros</a>
+        <a href="servicios.html" class="py-1 text-brand-orange">Servicios</a>
+        <a href="index.html#sectores" class="py-1">Sectores</a>
+        <a href="index.html#trayectoria" class="py-1">Proyectos</a>
+        <a href="contacto.html" class="py-1">Contacto</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO CORTO -->
+  <section class="pt-[140px] pb-16 lg:pb-20">
+    <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+      <div class="reveal flex items-center gap-3 mb-6">
+        <span class="accent-dot"></span>
+        <span class="eyebrow">Catálogo SAYSER · 13 líneas de servicio</span>
+      </div>
+      <div class="grid lg:grid-cols-12 gap-10 items-end">
+        <div class="lg:col-span-7 reveal">
+          <h1 class="font-tight font-semibold text-[44px] sm:text-[60px] lg:text-[72px] leading-[1.04] tracking-tight">
+            Nuestros servicios.<br/>
+            <span class="text-brand-gray">Diseñados a la carta.</span>
+          </h1>
+        </div>
+        <div class="lg:col-span-5 reveal">
+          <p class="text-[17px] text-brand-gray leading-[1.7]">
+            Cada servicio puede contratarse de forma independiente o combinarse en un paquete a medida según el tipo de operación, locación y frecuencia que necesites. Cotizamos cada proyecto por separado, sin planes cerrados.
+          </p>
+          <a href="contacto.html" class="mt-6 inline-flex items-center gap-2 text-[14px] font-medium text-brand-orange hover:gap-3 transition-all">
+            Cotizar mi proyecto
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTROS -->
+  <section class="pb-12 border-b border-brand-line sticky top-[76px] bg-brand-paper/95 backdrop-blur z-30">
+    <div class="max-w-[1280px] mx-auto px-6 lg:px-10 py-5">
+      <div class="reveal flex flex-wrap gap-2 items-center">
+        <span class="text-[11px] uppercase tracking-widest text-brand-gray font-medium mr-2 hidden md:inline">Filtrar:</span>
+        <button class="filter-btn px-4 py-2 rounded-full border border-brand-line text-[13px] font-medium hover:border-brand-ink transition flex items-center gap-2" data-cat="all" data-active="true"><span class="accent-dot"></span> Todos</button>
+        <button class="filter-btn px-4 py-2 rounded-full border border-brand-line text-[13px] font-medium hover:border-brand-ink transition flex items-center gap-2" data-cat="climatizacion" data-active="false"><span class="accent-dot"></span> Climatización</button>
+        <button class="filter-btn px-4 py-2 rounded-full border border-brand-line text-[13px] font-medium hover:border-brand-ink transition flex items-center gap-2" data-cat="energia" data-active="false"><span class="accent-dot"></span> Energía</button>
+        <button class="filter-btn px-4 py-2 rounded-full border border-brand-line text-[13px] font-medium hover:border-brand-ink transition flex items-center gap-2" data-cat="seguridad" data-active="false"><span class="accent-dot"></span> Seguridad</button>
+        <button class="filter-btn px-4 py-2 rounded-full border border-brand-line text-[13px] font-medium hover:border-brand-ink transition flex items-center gap-2" data-cat="construccion" data-active="false"><span class="accent-dot"></span> Construcción</button>
+        <button class="filter-btn px-4 py-2 rounded-full border border-brand-line text-[13px] font-medium hover:border-brand-ink transition flex items-center gap-2" data-cat="especializados" data-active="false"><span class="accent-dot"></span> Especializados</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- LISTA DE SERVICIOS -->
+  <section class="py-24 lg:py-32">
+    <div class="max-w-[1280px] mx-auto px-6 lg:px-10 space-y-28 lg:space-y-36">
+
+      <!-- 01 Aire acondicionado -->
+      <article class="svc-block reveal grid lg:grid-cols-12 gap-10 lg:gap-14 items-center" data-cat="climatizacion">
+        <div class="lg:col-span-7 order-2 lg:order-1">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="text-[12px] tracking-widest font-medium text-brand-gray">01 / 13</span>
+            <span class="text-brand-graySoft">·</span>
+            <span class="eyebrow">Climatización</span>
+          </div>
+          <h2 class="font-tight font-semibold text-[36px] lg:text-[44px] leading-[1.05] mb-6">Aire acondicionado</h2>
+          <p class="text-[16px] text-brand-gray leading-[1.7] mb-6 max-w-xl">
+            Diseño, instalación, mantenimiento preventivo y correctivo de equipos de aire acondicionado tipo Split, VRF, multi-zona y de precisión. Atendemos desde una agencia bancaria hasta redes de tiendas a nivel nacional, con calendarios de mantenimiento auditables.
+          </p>
+          <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-[14px] mb-8">
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Equipos Split decorativo, piso techo, cassette</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Sistemas VRF y multi-zona</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Aire de precisión (data center)</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Preventivos mensuales/trimestrales</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Correctivos en 24-48h</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Cambio de filtros y refrigerante</li>
+          </ul>
+          <a href="contacto.html?servicio=aire-acondicionado" class="svc-cta inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orangeDark transition px-6 py-3 rounded-full text-white text-[14px] font-medium">
+            Cotizar este servicio
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+        <div class="lg:col-span-5 order-1 lg:order-2">
+          <div class="relative">
+            <div class="absolute -top-3 -left-3 w-20 h-20 border-l-2 border-t-2 border-brand-orange"></div>
+            <img src="https://images.unsplash.com/photo-1718203862467-c33159fdc504?w=1200&q=80&auto=format&fit=crop" alt="Mantenimiento aire acondicionado" class="parallax-img w-full h-[480px] object-cover rounded-xl"/>
+          </div>
+        </div>
+      </article>
+
+      <!-- 02 Fancoil -->
+      <article class="svc-block reveal grid lg:grid-cols-12 gap-10 lg:gap-14 items-center" data-cat="climatizacion">
+        <div class="lg:col-span-5">
+          <div class="relative">
+            <div class="absolute -top-3 -right-3 w-20 h-20 border-r-2 border-t-2 border-brand-orange"></div>
+            <img src="https://images.unsplash.com/photo-1642749776312-aa42ce20c9f5?w=1200&q=80&auto=format&fit=crop" alt="Fancoil" class="parallax-img w-full h-[480px] object-cover rounded-xl"/>
+          </div>
+        </div>
+        <div class="lg:col-span-7">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="text-[12px] tracking-widest font-medium text-brand-gray">02 / 13</span>
+            <span class="text-brand-graySoft">·</span>
+            <span class="eyebrow">Climatización</span>
+          </div>
+          <h2 class="font-tight font-semibold text-[36px] lg:text-[44px] leading-[1.05] mb-6">Fancoil</h2>
+          <p class="text-[16px] text-brand-gray leading-[1.7] mb-6 max-w-xl">
+            Servicio especializado para sistemas centralizados de agua helada en edificios corporativos, centros comerciales y hospitales. Mantenimiento preventivo y correctivo de unidades fancoil, válvulas, bombas y tuberías de distribución.
+          </p>
+          <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-[14px] mb-8">
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Unidades fancoil ducto/cassette</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Bombas y válvulas de control</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Limpieza química y tratamiento de agua</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Reparación de fugas</li>
+          </ul>
+          <a href="contacto.html?servicio=fancoil" class="svc-cta inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orangeDark transition px-6 py-3 rounded-full text-white text-[14px] font-medium">
+            Cotizar este servicio
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- 03 Electricidad -->
+      <article class="svc-block reveal grid lg:grid-cols-12 gap-10 lg:gap-14 items-center" data-cat="energia">
+        <div class="lg:col-span-7 order-2 lg:order-1">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="text-[12px] tracking-widest font-medium text-brand-gray">03 / 13</span>
+            <span class="text-brand-graySoft">·</span>
+            <span class="eyebrow">Energía</span>
+          </div>
+          <h2 class="font-tight font-semibold text-[36px] lg:text-[44px] leading-[1.05] mb-6">Electricidad y tableros eléctricos</h2>
+          <p class="text-[16px] text-brand-gray leading-[1.7] mb-6 max-w-xl">
+            Diseño, fabricación e instalación de tableros eléctricos de baja tensión. Mantenimiento de instalaciones existentes: cableado, llaves termomagnéticas, diferenciales, transformadores y subestaciones. Cumplimos con el Código Nacional de Electricidad.
+          </p>
+          <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-[14px] mb-8">
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Tableros de fuerza y alumbrado</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Cableado estructurado eléctrico</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Termografía y diagnóstico</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Subestaciones de baja tensión</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Adecuaciones para certificación</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Mediciones de calidad de energía</li>
+          </ul>
+          <a href="contacto.html?servicio=electricidad" class="svc-cta inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orangeDark transition px-6 py-3 rounded-full text-white text-[14px] font-medium">
+            Cotizar este servicio
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+        <div class="lg:col-span-5 order-1 lg:order-2">
+          <div class="relative">
+            <div class="absolute -top-3 -left-3 w-20 h-20 border-l-2 border-t-2 border-brand-orange"></div>
+            <img src="https://images.unsplash.com/photo-1635335874521-7987db781153?w=1200&q=80&auto=format&fit=crop" alt="Tableros eléctricos" class="parallax-img w-full h-[480px] object-cover rounded-xl"/>
+          </div>
+        </div>
+      </article>
+
+      <!-- 04 Grupos electrógenos -->
+      <article class="svc-block reveal grid lg:grid-cols-12 gap-10 lg:gap-14 items-center" data-cat="energia">
+        <div class="lg:col-span-5">
+          <div class="relative">
+            <div class="absolute -top-3 -right-3 w-20 h-20 border-r-2 border-t-2 border-brand-orange"></div>
+            <img src="https://images.unsplash.com/photo-1523559094051-53bac879eb80?w=1200&q=80&auto=format&fit=crop" alt="Grupo electrógeno industrial" class="parallax-img w-full h-[480px] object-cover rounded-xl"/>
+          </div>
+        </div>
+        <div class="lg:col-span-7">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="text-[12px] tracking-widest font-medium text-brand-gray">04 / 13</span>
+            <span class="text-brand-graySoft">·</span>
+            <span class="eyebrow">Energía</span>
+          </div>
+          <h2 class="font-tight font-semibold text-[36px] lg:text-[44px] leading-[1.05] mb-6">Grupos electrógenos</h2>
+          <p class="text-[16px] text-brand-gray leading-[1.7] mb-6 max-w-xl">
+            Instalación, mantenimiento preventivo y correctivo de grupos electrógenos industriales y comerciales. Operamos marcas Cummins, Caterpillar, Perkins, John Deere. Garantizamos continuidad energética crítica para tu operación.
+          </p>
+          <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-[14px] mb-8">
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Marcas Cummins, CAT, Perkins, John Deere</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Instalación de tablero ATS</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Pruebas de carga y arranque</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Insonorización y cabinas</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Suministro de combustible (opcional)</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Reportes técnicos por intervención</li>
+          </ul>
+          <a href="contacto.html?servicio=grupos-electrogenos" class="svc-cta inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orangeDark transition px-6 py-3 rounded-full text-white text-[14px] font-medium">
+            Cotizar este servicio
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- 05 UPS -->
+      <article class="svc-block reveal grid lg:grid-cols-12 gap-10 lg:gap-14 items-center" data-cat="energia">
+        <div class="lg:col-span-7 order-2 lg:order-1">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="text-[12px] tracking-widest font-medium text-brand-gray">05 / 13</span>
+            <span class="text-brand-graySoft">·</span>
+            <span class="eyebrow">Energía</span>
+          </div>
+          <h2 class="font-tight font-semibold text-[36px] lg:text-[44px] leading-[1.05] mb-6">UPS — Sistemas ininterrumpidos</h2>
+          <p class="text-[16px] text-brand-gray leading-[1.7] mb-6 max-w-xl">
+            Instalación y mantenimiento de UPS monofásicos y trifásicos para protección de equipos críticos: servidores, agencias bancarias, sistemas de control. Diagnóstico de banco de baterías y reemplazo programado.
+          </p>
+          <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-[14px] mb-8">
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> UPS de 1 a 200 KVA</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Reemplazo banco de baterías</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Pruebas de autonomía</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Monitoreo remoto (con licencia)</li>
+          </ul>
+          <a href="contacto.html?servicio=ups" class="svc-cta inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orangeDark transition px-6 py-3 rounded-full text-white text-[14px] font-medium">
+            Cotizar este servicio
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+        <div class="lg:col-span-5 order-1 lg:order-2">
+          <div class="relative">
+            <div class="absolute -top-3 -left-3 w-20 h-20 border-l-2 border-t-2 border-brand-orange"></div>
+            <img src="https://images.unsplash.com/photo-1695668548342-c0c1ad479aee?w=1200&q=80&auto=format&fit=crop" alt="Sala de servidores con UPS" class="parallax-img w-full h-[480px] object-cover rounded-xl"/>
+          </div>
+        </div>
+      </article>
+
+      <!-- 06 Pozo a tierra -->
+      <article class="svc-block reveal grid lg:grid-cols-12 gap-10 lg:gap-14 items-center" data-cat="energia">
+        <div class="lg:col-span-5">
+          <div class="relative">
+            <div class="absolute -top-3 -right-3 w-20 h-20 border-r-2 border-t-2 border-brand-orange"></div>
+            <img src="https://images.unsplash.com/photo-1758101755915-462eddc23f57?w=1200&q=80&auto=format&fit=crop" alt="Sistemas de pozo a tierra" class="parallax-img w-full h-[480px] object-cover rounded-xl"/>
+          </div>
+        </div>
+        <div class="lg:col-span-7">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="text-[12px] tracking-widest font-medium text-brand-gray">06 / 13</span>
+            <span class="text-brand-graySoft">·</span>
+            <span class="eyebrow">Energía</span>
+          </div>
+          <h2 class="font-tight font-semibold text-[36px] lg:text-[44px] leading-[1.05] mb-6">Sistemas de pozo a tierra</h2>
+          <p class="text-[16px] text-brand-gray leading-[1.7] mb-6 max-w-xl">
+            Diseño, instalación y mantenimiento de sistemas de puesta a tierra para protección de personas y equipos. Mediciones de resistividad con telurómetro y emisión de protocolo técnico certificable.
+          </p>
+          <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-[14px] mb-8">
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Excavación, electrodo y dosis química</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Medición con telurómetro</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Mantenimiento anual</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Protocolo y certificado</li>
+          </ul>
+          <a href="contacto.html?servicio=pozo-tierra" class="svc-cta inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orangeDark transition px-6 py-3 rounded-full text-white text-[14px] font-medium">
+            Cotizar este servicio
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- 07 Luces emergencia -->
+      <article class="svc-block reveal grid lg:grid-cols-12 gap-10 lg:gap-14 items-center" data-cat="seguridad">
+        <div class="lg:col-span-7 order-2 lg:order-1">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="text-[12px] tracking-widest font-medium text-brand-gray">07 / 13</span>
+            <span class="text-brand-graySoft">·</span>
+            <span class="eyebrow">Seguridad</span>
+          </div>
+          <h2 class="font-tight font-semibold text-[36px] lg:text-[44px] leading-[1.05] mb-6">Luces de emergencia</h2>
+          <p class="text-[16px] text-brand-gray leading-[1.7] mb-6 max-w-xl">
+            Instalación y mantenimiento de sistemas de iluminación de emergencia bajo norma. Verificación de autonomía, reemplazo de baterías y reposicionamiento según planos de evacuación.
+          </p>
+          <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-[14px] mb-8">
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Verificación autonomía 90 min</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Reemplazo de baterías Ni-MH</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Señalización fotoluminiscente</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Documentación para Defensa Civil</li>
+          </ul>
+          <a href="contacto.html?servicio=luces-emergencia" class="svc-cta inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orangeDark transition px-6 py-3 rounded-full text-white text-[14px] font-medium">
+            Cotizar este servicio
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+        <div class="lg:col-span-5 order-1 lg:order-2">
+          <div class="relative">
+            <div class="absolute -top-3 -left-3 w-20 h-20 border-l-2 border-t-2 border-brand-orange"></div>
+            <img src="https://images.unsplash.com/photo-1520033906782-1684d0e7498e?w=1200&q=80&auto=format&fit=crop" alt="Luces de emergencia y señalización" class="parallax-img w-full h-[480px] object-cover rounded-xl"/>
+          </div>
+        </div>
+      </article>
+
+      <!-- 08 Contra incendio -->
+      <article class="svc-block reveal grid lg:grid-cols-12 gap-10 lg:gap-14 items-center" data-cat="seguridad">
+        <div class="lg:col-span-5">
+          <div class="relative">
+            <div class="absolute -top-3 -right-3 w-20 h-20 border-r-2 border-t-2 border-brand-orange"></div>
+            <img src="https://images.unsplash.com/photo-1585367437379-e0b71bb18156?w=1200&q=80&auto=format&fit=crop" alt="Pruebas sistema contra incendio" class="parallax-img w-full h-[480px] object-cover rounded-xl"/>
+          </div>
+        </div>
+        <div class="lg:col-span-7">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="text-[12px] tracking-widest font-medium text-brand-gray">08 / 13</span>
+            <span class="text-brand-graySoft">·</span>
+            <span class="eyebrow">Seguridad</span>
+          </div>
+          <h2 class="font-tight font-semibold text-[36px] lg:text-[44px] leading-[1.05] mb-6">Pruebas de sistemas contra incendio</h2>
+          <p class="text-[16px] text-brand-gray leading-[1.7] mb-6 max-w-xl">
+            Inspección, pruebas hidrostáticas y mantenimiento de sistemas contra incendio: rociadores automáticos (sprinklers), gabinetes contra incendio, bombas Jockey, válvulas, hidrantes y red de tuberías.
+          </p>
+          <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-[14px] mb-8">
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Pruebas hidrostáticas NFPA</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Mantenimiento de bombas centrífugas</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Recarga de extintores</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Inspección de detectores de humo</li>
+          </ul>
+          <a href="contacto.html?servicio=contra-incendio" class="svc-cta inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orangeDark transition px-6 py-3 rounded-full text-white text-[14px] font-medium">
+            Cotizar este servicio
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- 09 Servicios generales -->
+      <article class="svc-block reveal grid lg:grid-cols-12 gap-10 lg:gap-14 items-center" data-cat="construccion">
+        <div class="lg:col-span-7 order-2 lg:order-1">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="text-[12px] tracking-widest font-medium text-brand-gray">09 / 13</span>
+            <span class="text-brand-graySoft">·</span>
+            <span class="eyebrow">Construcción</span>
+          </div>
+          <h2 class="font-tight font-semibold text-[36px] lg:text-[44px] leading-[1.05] mb-6">Servicios generales de infraestructura</h2>
+          <p class="text-[16px] text-brand-gray leading-[1.7] mb-6 max-w-xl">
+            Servicios de obra civil menor y mantenimiento general que requieren equipos multi-oficio. Ideal para mantenimiento integral de locales comerciales, agencias y oficinas con un solo punto de contacto.
+          </p>
+          <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-[14px] mb-8">
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Pintado interior y exterior</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Cerámica y porcelanato</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Filtraciones de agua y desagüe</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Limpieza de frisos luminosos</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Gasfitería general</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Frenos hidráulicos</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Mantenimiento de estructuras metálicas</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Instalación de vidrios</li>
+          </ul>
+          <a href="contacto.html?servicio=servicios-generales" class="svc-cta inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orangeDark transition px-6 py-3 rounded-full text-white text-[14px] font-medium">
+            Cotizar este servicio
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+        <div class="lg:col-span-5 order-1 lg:order-2">
+          <div class="relative">
+            <div class="absolute -top-3 -left-3 w-20 h-20 border-l-2 border-t-2 border-brand-orange"></div>
+            <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200&q=80&auto=format&fit=crop" alt="Obra civil y servicios generales" class="parallax-img w-full h-[480px] object-cover rounded-xl"/>
+          </div>
+        </div>
+      </article>
+
+      <!-- 10 Carpintería -->
+      <article class="svc-block reveal grid lg:grid-cols-12 gap-10 lg:gap-14 items-center" data-cat="construccion">
+        <div class="lg:col-span-5">
+          <div class="relative">
+            <div class="absolute -top-3 -right-3 w-20 h-20 border-r-2 border-t-2 border-brand-orange"></div>
+            <img src="https://images.unsplash.com/photo-1547609434-b732edfee020?w=1200&q=80&auto=format&fit=crop" alt="Carpintería en melamine" class="parallax-img w-full h-[480px] object-cover rounded-xl"/>
+          </div>
+        </div>
+        <div class="lg:col-span-7">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="text-[12px] tracking-widest font-medium text-brand-gray">10 / 13</span>
+            <span class="text-brand-graySoft">·</span>
+            <span class="eyebrow">Construcción</span>
+          </div>
+          <h2 class="font-tight font-semibold text-[36px] lg:text-[44px] leading-[1.05] mb-6">Carpintería en melamine</h2>
+          <p class="text-[16px] text-brand-gray leading-[1.7] mb-6 max-w-xl">
+            Fabricación de muebles de melamine a medida e instalación de puertas para oficinas, agencias y comercios. Diseño 3D previo, materiales con certificación E1 y acabados industriales.
+          </p>
+          <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-[14px] mb-8">
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Mobiliario de oficina a medida</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Counters y módulos de atención</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Puertas contraplacadas y madera</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Renders y diseño 3D previo</li>
+          </ul>
+          <a href="contacto.html?servicio=carpinteria" class="svc-cta inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orangeDark transition px-6 py-3 rounded-full text-white text-[14px] font-medium">
+            Cotizar este servicio
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- 11 Cerrajería y soldadura -->
+      <article class="svc-block reveal grid lg:grid-cols-12 gap-10 lg:gap-14 items-center" data-cat="construccion">
+        <div class="lg:col-span-7 order-2 lg:order-1">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="text-[12px] tracking-widest font-medium text-brand-gray">11 / 13</span>
+            <span class="text-brand-graySoft">·</span>
+            <span class="eyebrow">Construcción</span>
+          </div>
+          <h2 class="font-tight font-semibold text-[36px] lg:text-[44px] leading-[1.05] mb-6">Cerrajería y soldadura</h2>
+          <p class="text-[16px] text-brand-gray leading-[1.7] mb-6 max-w-xl">
+            Trabajos en metal: rejas, puertas metálicas, escaleras, estructuras de soporte y reparaciones por soldadura. Soldadura MIG, TIG y por electrodo según material y especificación.
+          </p>
+          <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-[14px] mb-8">
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Rejas y puertas metálicas</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Soldadura MIG / TIG / electrodo</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Reparación de cerraduras y herrajes</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Estructuras de soporte</li>
+          </ul>
+          <a href="contacto.html?servicio=cerrajeria" class="svc-cta inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orangeDark transition px-6 py-3 rounded-full text-white text-[14px] font-medium">
+            Cotizar este servicio
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+        <div class="lg:col-span-5 order-1 lg:order-2">
+          <div class="relative">
+            <div class="absolute -top-3 -left-3 w-20 h-20 border-l-2 border-t-2 border-brand-orange"></div>
+            <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=1200&q=80&auto=format&fit=crop" alt="Soldadura industrial" class="parallax-img w-full h-[480px] object-cover rounded-xl"/>
+          </div>
+        </div>
+      </article>
+
+      <!-- 12 DRYWALL -->
+      <article class="svc-block reveal grid lg:grid-cols-12 gap-10 lg:gap-14 items-center" data-cat="construccion">
+        <div class="lg:col-span-5">
+          <div class="relative">
+            <div class="absolute -top-3 -right-3 w-20 h-20 border-r-2 border-t-2 border-brand-orange"></div>
+            <img src="https://images.unsplash.com/photo-1733431772808-82d878e59000?w=1200&q=80&auto=format&fit=crop" alt="Estructura drywall en obra" class="parallax-img w-full h-[480px] object-cover rounded-xl"/>
+          </div>
+        </div>
+        <div class="lg:col-span-7">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="text-[12px] tracking-widest font-medium text-brand-gray">12 / 13</span>
+            <span class="text-brand-graySoft">·</span>
+            <span class="eyebrow">Construcción</span>
+          </div>
+          <h2 class="font-tight font-semibold text-[36px] lg:text-[44px] leading-[1.05] mb-6">Estructuras DRYWALL</h2>
+          <p class="text-[16px] text-brand-gray leading-[1.7] mb-6 max-w-xl">
+            Construcción en seco con sistema drywall: tabiques, cielos rasos, divisiones acústicas y RF (resistente al fuego). Ideal para remodelaciones rápidas sin desalojar la operación.
+          </p>
+          <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-[14px] mb-8">
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Tabiques modulares</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Cielos rasos acústicos</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Placas RF resistencia al fuego</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Acabado pintura y empapelado</li>
+          </ul>
+          <a href="contacto.html?servicio=drywall" class="svc-cta inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orangeDark transition px-6 py-3 rounded-full text-white text-[14px] font-medium">
+            Cotizar este servicio
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- 13 Defensa civil + ITSE -->
+      <article class="svc-block reveal grid lg:grid-cols-12 gap-10 lg:gap-14 items-center" data-cat="especializados">
+        <div class="lg:col-span-7 order-2 lg:order-1">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="text-[12px] tracking-widest font-medium text-brand-gray">13 / 13</span>
+            <span class="text-brand-graySoft">·</span>
+            <span class="eyebrow">Especializados</span>
+          </div>
+          <h2 class="font-tight font-semibold text-[36px] lg:text-[44px] leading-[1.05] mb-6">Defensa Civil + tramitación ITSE</h2>
+          <p class="text-[16px] text-brand-gray leading-[1.7] mb-6 max-w-xl">
+            Asesoría integral para Inspección Técnica de Seguridad en Edificaciones (ITSE) ante la municipalidad correspondiente. Cubrimos desde el levantamiento de observaciones físicas hasta la presentación del expediente.
+          </p>
+          <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-[14px] mb-8">
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Diagnóstico de cumplimiento</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Levantamiento de observaciones</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Planos de evacuación y señalización</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Presentación de expediente</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> Acompañamiento de inspección</li>
+            <li class="flex gap-2 items-center"><span class="accent-dot"></span> ITSE básico, ex-post y ex-ante</li>
+          </ul>
+          <a href="contacto.html?servicio=defensa-civil-itse" class="svc-cta inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orangeDark transition px-6 py-3 rounded-full text-white text-[14px] font-medium">
+            Cotizar este servicio
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+        <div class="lg:col-span-5 order-1 lg:order-2">
+          <div class="relative">
+            <div class="absolute -top-3 -left-3 w-20 h-20 border-l-2 border-t-2 border-brand-orange"></div>
+            <img src="https://images.unsplash.com/photo-1622612023350-b15f063eabe6?w=1200&q=80&auto=format&fit=crop" alt="Tramitación documental y planos" class="parallax-img w-full h-[480px] object-cover rounded-xl"/>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="py-24 lg:py-32">
+    <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+      <div class="reveal border-2 border-brand-orange/40 rounded-2xl p-10 lg:p-16 bg-brand-cream relative overflow-hidden shadow-warmLg">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-brand-orange opacity-15 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4"></div>
+        <div class="absolute bottom-0 left-0 w-72 h-72 bg-brand-yellow opacity-10 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4"></div>
+        <div class="relative grid lg:grid-cols-12 gap-8 items-end">
+          <div class="lg:col-span-7">
+            <div class="flex items-center gap-3 mb-5">
+              <span class="accent-dot"></span>
+              <span class="eyebrow">Cotización a medida</span>
+            </div>
+            <h2 class="font-tight text-[36px] lg:text-[52px] font-semibold leading-[1.05] tracking-tight">
+              ¿Tu servicio no está en la lista?
+            </h2>
+            <p class="mt-6 text-[17px] text-brand-ink/70 max-w-xl">
+              Trabajamos como un menú a la carta: si no existe, lo armamos. Cuéntanos qué necesitas y diseñamos una propuesta específica para tu operación.
+            </p>
+          </div>
+          <div class="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col gap-3 lg:items-end">
+            <a href="contacto.html" class="inline-flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orangeDark transition px-7 py-4 rounded-full text-white text-[15px] font-medium">
+              Solicitar cotización
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <span class="text-[13px] text-brand-gray lg:text-right">Te respondemos en menos de 24 horas</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-brand-ink text-white pt-20 pb-10">
+    <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-10 mb-16">
+        <div>
+          <div class="flex items-center gap-3 mb-6">
+            <img src="assets/logo.png" alt="SAYSER" class="h-9 w-auto"/>
+            <span class="font-tight font-semibold text-[18px]">SAYSER</span>
+          </div>
+          <p class="text-[13px] text-white/60 leading-relaxed max-w-xs">
+            Servicios a la medida de tu negocio. Operamos facility services en 11 regiones del Perú desde 2009.
+          </p>
+        </div>
+        <div>
+          <div class="text-[11px] uppercase tracking-widest text-brand-yellow font-medium mb-5">Servicios</div>
+          <ul class="space-y-3 text-[14px] text-white/75">
+            <li><a href="servicios.html" class="hover:text-white transition">Climatización</a></li>
+            <li><a href="servicios.html" class="hover:text-white transition">Energía y respaldo</a></li>
+            <li><a href="servicios.html" class="hover:text-white transition">Electricidad</a></li>
+            <li><a href="servicios.html" class="hover:text-white transition">Contra incendio</a></li>
+            <li><a href="servicios.html" class="hover:text-white transition">Infraestructura</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="text-[11px] uppercase tracking-widest text-brand-yellow font-medium mb-5">Empresa</div>
+          <ul class="space-y-3 text-[14px] text-white/75">
+            <li><a href="index.html#nosotros" class="hover:text-white transition">Nosotros</a></li>
+            <li><a href="index.html#sectores" class="hover:text-white transition">Sectores</a></li>
+            <li><a href="index.html#trayectoria" class="hover:text-white transition">Trayectoria</a></li>
+            <li><a href="contacto.html" class="hover:text-white transition">Contacto</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="text-[11px] uppercase tracking-widest text-brand-yellow font-medium mb-5">Contacto</div>
+          <ul class="space-y-3 text-[14px] text-white/75">
+            <li>Panamericana Norte KM 557<br/>Moche, Trujillo · La Libertad</li>
+            <li><a href="https://wa.me/51935986543" class="hover:text-white transition">+51 935 986 543</a></li>
+            <li><a href="mailto:comercial@sayser.com" class="hover:text-white transition">comercial@sayser.com</a></li>
+            <li>Lun-Vie · 9:00 a 18:00</li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="text-[12px] text-white/50">
+          SAYSER S.A.C. · RUC 20482196595 · Inscrita en el Registro Nacional de Proveedores del Estado peruano.
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="https://facebook.com/corporacion.sayser" target="_blank" rel="noopener" class="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center hover:border-brand-orange hover:text-brand-orange transition">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88V14.9H8v-2.9h2.44V9.84c0-2.41 1.43-3.75 3.63-3.75 1.06 0 2.16.19 2.16.19v2.38H15c-1.2 0-1.57.75-1.57 1.51V12h2.68l-.43 2.9h-2.25v6.98A10 10 0 0 0 22 12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/company/sayser-s-a-c" target="_blank" rel="noopener" class="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center hover:border-brand-orange hover:text-brand-orange transition">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43A2.06 2.06 0 1 1 5.34 3.3a2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Float -->
+  <a href="https://wa.me/51935986543?text=Hola%20SAYSER%2C%20quisiera%20una%20cotizaci%C3%B3n." target="_blank" rel="noopener" class="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#1eb858] transition flex items-center justify-center pulse-ring shadow-lg" aria-label="Contactar por WhatsApp">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 0 1 8.413 3.488 11.82 11.82 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.149-.173.198-.297.297-.495.099-.198.05-.372-.025-.521-.074-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+  </a>
+
+  <!-- Cookie -->
+  <div id="cookieBanner" class="fixed bottom-0 left-0 right-0 z-40 transition-transform duration-500">
+    <div class="max-w-[1280px] mx-auto m-4 lg:m-6 bg-brand-paper border border-brand-line rounded-xl p-5 lg:p-6 shadow-warmLg">
+      <div class="flex flex-col md:flex-row md:items-center gap-5 md:gap-8">
+        <div class="flex-1">
+          <div class="font-tight font-semibold text-[15px] mb-1">Usamos cookies</div>
+          <p class="text-[13px] text-brand-gray leading-relaxed">Utilizamos cookies para mejorar tu experiencia y analizar el tráfico del sitio.</p>
+        </div>
+        <div class="flex gap-2">
+          <button id="cookieConfig" class="px-5 py-2.5 rounded-full border border-brand-line text-[13px] font-medium hover:border-brand-ink transition">Configurar</button>
+          <button id="cookieAccept" class="px-5 py-2.5 rounded-full bg-brand-ink text-white text-[13px] font-medium hover:bg-brand-orange transition">Aceptar todas</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Header scroll
+    const header = document.getElementById('siteHeader');
+    const onScroll = () => { if (window.scrollY > 40) header.classList.add('scrolled'); else header.classList.remove('scrolled'); };
+    window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+    // Mobile menu
+    const mb = document.getElementById('mobileMenuBtn');
+    const mm = document.getElementById('mobileMenu');
+    if (mb && mm) mb.addEventListener('click', () => mm.classList.toggle('hidden'));
+
+    // GSAP
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray('.reveal').forEach((el) => {
+      gsap.to(el, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
+    });
+    gsap.utils.toArray('.parallax-img').forEach((el) => {
+      gsap.to(el, { y: -40, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true } });
+    });
+
+    // Filtros
+    document.querySelectorAll('.filter-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.dataset.active = 'false');
+        btn.dataset.active = 'true';
+        const cat = btn.dataset.cat;
+        document.querySelectorAll('.svc-block').forEach(block => {
+          const blockCat = block.dataset.cat;
+          if (cat === 'all' || blockCat === cat) {
+            block.style.display = '';
+            gsap.fromTo(block, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' });
+          } else {
+            gsap.to(block, { opacity: 0, y: 16, duration: 0.2, onComplete: () => block.style.display = 'none' });
+          }
+        });
+      });
+    });
+
+    // Cookie
+    const banner = document.getElementById('cookieBanner');
+    if (localStorage.getItem('sayser_cookie_v1')) banner.classList.add('cookie-hidden');
+    document.getElementById('cookieAccept').addEventListener('click', () => { localStorage.setItem('sayser_cookie_v1', '1'); banner.classList.add('cookie-hidden'); });
+    document.getElementById('cookieConfig').addEventListener('click', () => alert('Configuración de cookies (prototipo).'));
+  </script>
+</body>
+</html>

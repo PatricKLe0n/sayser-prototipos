@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contacto · SAYSER · Cotización Facility Services Perú</title>
+  <meta name="description" content="Contáctanos por WhatsApp, email o formulario. Cotizamos tu proyecto de facility services en menos de 24 horas. Trujillo y 11 regiones del Perú." />
+  <meta property="og:title" content="Contacto · SAYSER" />
+  <meta property="og:image" content="assets/logo.png" />
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            tight: ['"Inter Tight"', 'system-ui', 'sans-serif'],
+            body: ['Inter', 'system-ui', 'sans-serif']
+          },
+          colors: {
+            brand: {
+              orange: '#C9651C', orangeDark: '#A4501A', orangeSoft: '#FFEAD0', orangeWarm: '#FFF1DC',
+              yellow: '#E5B523', yellowSoft: '#FCEFB8',
+              gray: '#7A6A55', graySoft: '#9C8B72', ink: '#1A1410',
+              line: '#E8DAC2', lineWarm: '#EFE2C8',
+              paper: '#FDF8F0', soft: '#FAF3E8', softer: '#F4EBD9', cream: '#FFF1DC'
+            }
+          },
+          boxShadow: {
+            warm: '0 8px 24px -8px rgba(201,101,28,0.18)',
+            warmLg: '0 20px 50px -20px rgba(201,101,28,0.28)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; color: #1A1410; background: #FDF8F0; -webkit-font-smoothing: antialiased; font-size: 16px; line-height: 1.7; }
+    h1, h2, h3, h4 { font-family: 'Inter Tight', sans-serif; letter-spacing: -0.02em; line-height: 1.1; }
+    .eyebrow { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500; color: #C9651C; }
+    .accent-dot {
+      width: 7px; height: 7px; border-radius: 9999px; background: #C9651C; display: inline-block;
+      box-shadow: 0 0 0 2px rgba(229,181,35,0.15);
+    }
+    .reveal { opacity: 0; transform: translateY(30px); }
+
+    @keyframes pulseRing {
+      0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.45); }
+      70% { box-shadow: 0 0 0 18px rgba(37,211,102,0); }
+      100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+    }
+    .pulse-ring { animation: pulseRing 2.2s infinite; }
+
+    header.scrolled {
+      background: rgba(253,248,240,0.88); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 1px 0 rgba(201,101,28,0.10);
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, #C9651C 30%, #E5B523 70%, transparent 100%);
+      opacity: 0;
+      transition: opacity .4s ease;
+    }
+    header.scrolled::after { opacity: 1; }
+
+    /* Underline animation for nav links (desktop) */
+    @media (min-width: 1024px) {
+      header nav a:not(.text-brand-orange) { position: relative; }
+      header nav a:not(.text-brand-orange)::after {
+        content: '';
+        position: absolute;
+        left: 0; right: 0; bottom: -6px;
+        height: 2px;
+        background: linear-gradient(90deg, #C9651C, #E5B523);
+        transform: scaleX(0);
+        transform-origin: left center;
+        transition: transform .35s ease;
+        border-radius: 2px;
+      }
+      header nav a:not(.text-brand-orange):hover::after { transform: scaleX(1); }
+    }
+
+    .cta-outline {
+      transition: background .3s ease, color .3s ease, border-color .3s ease, box-shadow .3s ease;
+    }
+    .cta-outline:hover {
+      background: linear-gradient(135deg, #C9651C 0%, #E5B523 100%);
+      color: #FDF8F0;
+      border-color: transparent;
+      box-shadow: 0 8px 24px -8px rgba(201,101,28,0.40);
+    }
+
+    .field-input, .field-textarea, .field-select {
+      width: 100%;
+      border: 1px solid #E8DAC2;
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      background: #FFFCF5;
+      color: #1A1410;
+      transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+      appearance: none;
+    }
+    .field-input::placeholder, .field-textarea::placeholder { color: #9C8B72; }
+    .field-input:focus, .field-textarea:focus, .field-select:focus {
+      outline: none;
+      border-color: #C9651C;
+      background: #FFFFFF;
+      box-shadow: 0 0 0 4px rgba(201,101,28,0.12);
+    }
+    .field-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: #1A1410;
+    }
+    .field-label .req { color: #C9651C; }
+
+    .field-select {
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%237A6A55' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'/%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 44px;
+    }
+
+    .channel-card { transition: border-color .3s ease, transform .3s ease, box-shadow .3s ease; }
+    .channel-card:hover { transform: translateY(-2px); box-shadow: 0 20px 50px -20px rgba(201,101,28,0.28); border-color: #C9651C; }
+
+    /* Custom checkbox */
+    .check-wrap {
+      display: flex; align-items: flex-start; gap: 12px; cursor: pointer;
+    }
+    .check-wrap input[type="checkbox"] { display: none; }
+    .check-box {
+      flex-shrink: 0;
+      width: 20px; height: 20px;
+      border: 1px solid #E8DAC2;
+      border-radius: 5px;
+      background: #FFFCF5;
+      display: flex; align-items: center; justify-content: center;
+      transition: all .2s ease;
+      margin-top: 2px;
+    }
+    .check-wrap input:checked + .check-box {
+      background: #C9651C; border-color: #C9651C;
+      box-shadow: 0 0 0 3px rgba(229,181,35,0.25);
+    }
+    .check-wrap input:checked + .check-box::after {
+      content: '';
+      width: 12px; height: 12px;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='20 6 9 17 4 12'/%3e%3c/svg%3e");
+      background-size: contain; background-repeat: no-repeat;
+    }
+
+    .cookie-hidden { transform: translateY(140%); }
+
+    /* Success modal */
+    .modal-hidden { opacity: 0; pointer-events: none; }
+    .modal-shown { opacity: 1; pointer-events: auto; }
+  </style>
+</head>
+
+<body class="bg-brand-paper text-brand-ink font-body">
+
+  <!-- HEADER -->
+  <header id="siteHeader" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="max-w-[1280px] mx-auto px-6 lg:px-10 h-[76px] flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="assets/logo.png" alt="SAYSER" class="h-9 w-auto" />
+        <span class="font-tight font-semibold text-[17px] tracking-tight text-brand-ink hidden sm:block">SAYSER</span>
+      </a>
+      <nav class="hidden lg:flex items-center gap-9 text-[14px] font-medium text-brand-ink">
+        <a href="index.html" class="hover:text-brand-orange transition">Inicio</a>
+        <a href="index.html#nosotros" class="hover:text-brand-orange transition">Nosotros</a>
+        <a href="servicios.html" class="hover:text-brand-orange transition">Servicios</a>
+        <a href="index.html#sectores" class="hover:text-brand-orange transition">Sectores</a>
+        <a href="index.html#trayectoria" class="hover:text-brand-orange transition">Proyectos</a>
+        <a href="contacto.html" class="text-brand-orange">Contacto</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-1 text-[12px] font-medium text-brand-gray border border-brand-line rounded-full px-3 py-1.5">
+          <span class="text-brand-ink">ES</span><span class="opacity-30">|</span><span>EN</span>
+        </div>
+        <a href="#formulario" class="cta-outline hidden md:inline-flex items-center gap-2 border-2 border-brand-orange text-brand-orange px-4 py-2 rounded-full text-[13px] font-medium">
+          Cotizar
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+        </a>
+        <button id="mobileMenuBtn" class="lg:hidden p-2 rounded-lg border border-brand-line">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobileMenu" class="hidden lg:hidden bg-brand-paper border-t border-brand-line">
+      <div class="px-6 py-6 flex flex-col gap-4 text-[15px] font-medium">
+        <a href="index.html" class="py-1">Inicio</a>
+        <a href="index.html#nosotros" class="py-1">Nosotros</a>
+        <a href="servicios.html" class="py-1">Servicios</a>
+        <a href="index.html#sectores" class="py-1">Sectores</a>
+        <a href="index.html#trayectoria" class="py-1">Proyectos</a>
+        <a href="contacto.html" class="py-1 text-brand-orange">Contacto</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO CORTO -->
+  <section class="pt-[140px] pb-16">
+    <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+      <div class="reveal flex items-center gap-3 mb-6">
+        <span class="accent-dot"></span>
+        <span class="eyebrow">Contacto · cotización personalizada</span>
+      </div>
+      <div class="grid lg:grid-cols-12 gap-10 items-end">
+        <div class="lg:col-span-8 reveal">
+          <h1 class="font-tight font-semibold text-[44px] sm:text-[60px] lg:text-[78px] leading-[1.04] tracking-tight">
+            Hablemos de<br/>
+            tu <span class="text-brand-orange">proyecto.</span>
+          </h1>
+        </div>
+        <div class="lg:col-span-4 reveal">
+          <p class="text-[17px] text-brand-gray">
+            Cuéntanos qué necesitas y diseñamos una propuesta a tu medida. Nuestro equipo comercial responde en menos de 24 horas hábiles.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMULARIO + CANALES -->
+  <section id="formulario" class="pb-24 lg:pb-32">
+    <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-16">
+
+        <!-- FORM -->
+        <div class="lg:col-span-7 reveal">
+          <div class="border border-brand-line rounded-2xl p-8 lg:p-12 bg-brand-paper shadow-warm">
+            <div class="flex items-center gap-3 mb-3">
+              <span class="accent-dot"></span>
+              <span class="eyebrow">Formulario</span>
+            </div>
+            <h2 class="font-tight font-semibold text-[28px] lg:text-[34px] leading-tight mb-3">Solicita tu cotización</h2>
+            <p class="text-[14px] text-brand-gray mb-8">Todos los campos con <span class="text-brand-orange">*</span> son obligatorios.</p>
+
+            <form id="contactForm" class="space-y-5" novalidate>
+              <div class="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="field-label" for="f-nombre">Nombre completo <span class="req">*</span></label>
+                  <input id="f-nombre" name="nombre" type="text" required class="field-input" placeholder="Ej. Ana Vargas" />
+                </div>
+                <div>
+                  <label class="field-label" for="f-empresa">Empresa <span class="req">*</span></label>
+                  <input id="f-empresa" name="empresa" type="text" required class="field-input" placeholder="Razón social o nombre comercial" />
+                </div>
+              </div>
+
+              <div class="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="field-label" for="f-ruc">RUC (opcional)</label>
+                  <input id="f-ruc" name="ruc" type="text" maxlength="11" class="field-input" placeholder="11 dígitos" />
+                </div>
+                <div>
+                  <label class="field-label" for="f-cargo">Cargo</label>
+                  <input id="f-cargo" name="cargo" type="text" class="field-input" placeholder="Ej. Jefe de Operaciones" />
+                </div>
+              </div>
+
+              <div class="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="field-label" for="f-email">Correo corporativo <span class="req">*</span></label>
+                  <input id="f-email" name="email" type="email" required class="field-input" placeholder="tu@empresa.com" />
+                </div>
+                <div>
+                  <label class="field-label" for="f-tel">Teléfono <span class="req">*</span></label>
+                  <input id="f-tel" name="telefono" type="tel" required class="field-input" placeholder="+51 9XX XXX XXX" />
+                </div>
+              </div>
+
+              <div>
+                <label class="field-label" for="f-servicio">Servicio de interés <span class="req">*</span></label>
+                <select id="f-servicio" name="servicio" required class="field-select">
+                  <option value="" disabled selected>Selecciona un servicio</option>
+                  <option value="aire-acondicionado">Aire acondicionado</option>
+                  <option value="fancoil">Fancoil</option>
+                  <option value="electricidad">Electricidad y tableros</option>
+                  <option value="grupos-electrogenos">Grupos electrógenos</option>
+                  <option value="ups">UPS — sistemas ininterrumpidos</option>
+                  <option value="pozo-tierra">Sistemas de pozo a tierra</option>
+                  <option value="luces-emergencia">Luces de emergencia</option>
+                  <option value="contra-incendio">Pruebas contra incendio</option>
+                  <option value="servicios-generales">Servicios generales infraestructura</option>
+                  <option value="carpinteria">Carpintería en melamine</option>
+                  <option value="cerrajeria">Cerrajería y soldadura</option>
+                  <option value="drywall">Estructuras DRYWALL</option>
+                  <option value="defensa-civil">Defensa Civil + ITSE</option>
+                  <option value="paquete-integral">Paquete integral / a medida</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="field-label" for="f-region">Región donde necesitas el servicio</label>
+                <select id="f-region" name="region" class="field-select">
+                  <option value="" disabled selected>Selecciona región</option>
+                  <option>La Libertad</option>
+                  <option>Lambayeque</option>
+                  <option>Piura</option>
+                  <option>Tumbes</option>
+                  <option>Áncash</option>
+                  <option>Cajamarca</option>
+                  <option>Lima</option>
+                  <option>Junín</option>
+                  <option>Loreto</option>
+                  <option>Ucayali</option>
+                  <option>San Martín</option>
+                  <option>Multi-región</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="field-label" for="f-mensaje">Cuéntanos sobre tu proyecto <span class="req">*</span></label>
+                <textarea id="f-mensaje" name="mensaje" required rows="5" class="field-textarea" placeholder="Tipo de operación, cantidad de locales, frecuencia esperada, normativa, plazos..."></textarea>
+              </div>
+
+              <label class="check-wrap pt-2">
+                <input type="checkbox" required id="f-politica" />
+                <span class="check-box"></span>
+                <span class="text-[13px] text-brand-gray leading-relaxed">
+                  Acepto la <a href="#" class="text-brand-orange underline">política de privacidad</a> y el tratamiento de mis datos para responder esta solicitud. <span class="text-brand-orange">*</span>
+                </span>
+              </label>
+
+              <div class="pt-4 flex flex-col sm:flex-row sm:items-center gap-4">
+                <button type="submit" class="inline-flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orangeDark transition px-7 py-4 rounded-full text-white text-[15px] font-medium w-full sm:w-auto">
+                  Enviar solicitud
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+                <span class="text-[13px] text-brand-gray flex items-center gap-2">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  Te respondemos en menos de 24 horas
+                </span>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- CANALES -->
+        <div class="lg:col-span-5 space-y-5">
+
+          <!-- WhatsApp card -->
+          <div class="reveal channel-card border border-brand-line rounded-2xl p-7 lg:p-8 bg-brand-paper">
+            <div class="flex items-start gap-5">
+              <div class="w-14 h-14 rounded-full bg-[#25D366] flex items-center justify-center flex-shrink-0">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 0 1 8.413 3.488 11.82 11.82 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.149-.173.198-.297.297-.495.099-.198.05-.372-.025-.521-.074-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+              </div>
+              <div class="min-w-0">
+                <div class="text-[11px] uppercase tracking-widest text-brand-gray font-medium mb-1">WhatsApp comercial</div>
+                <a href="https://wa.me/51935986543?text=Hola%20SAYSER%2C%20quisiera%20una%20cotizaci%C3%B3n." class="block font-tight font-semibold text-[24px] text-brand-ink hover:text-[#25D366] transition">+51 935 986 543</a>
+                <p class="text-[13px] text-brand-gray mt-2">Débora Tatiana Monteza Montero · Jefa comercial</p>
+                <a href="https://wa.me/51935986543?text=Hola%20SAYSER%2C%20quisiera%20una%20cotizaci%C3%B3n." target="_blank" rel="noopener" class="mt-4 inline-flex items-center gap-2 text-[13px] font-medium text-[#25D366]">
+                  Abrir chat
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Email card -->
+          <div class="reveal channel-card border border-brand-line rounded-2xl p-7 lg:p-8 bg-brand-paper">
+            <div class="flex items-start gap-5">
+              <div class="w-14 h-14 rounded-full bg-brand-orangeSoft ring-2 ring-brand-yellow/25 flex items-center justify-center flex-shrink-0">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div class="min-w-0">
+                <div class="text-[11px] uppercase tracking-widest text-brand-gray font-medium mb-1">Email comercial</div>
+                <a href="mailto:comercial@sayser.com" class="block font-tight font-semibold text-[20px] text-brand-ink hover:text-brand-orange transition break-all">comercial@sayser.com</a>
+                <p class="text-[13px] text-brand-gray mt-2">Respondemos en menos de 24h hábiles.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dirección + horario -->
+          <div class="reveal channel-card border border-brand-line rounded-2xl overflow-hidden bg-brand-paper">
+            <div class="aspect-[16/9] bg-brand-softer overflow-hidden">
+              <iframe
+                src="https://www.google.com/maps?q=Panamericana+Norte+Km+557+Moche+Trujillo+La+Libertad+Peru&output=embed"
+                class="w-full h-full border-0"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Mapa SAYSER Moche, Trujillo">
+              </iframe>
+            </div>
+            <div class="p-7 lg:p-8">
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-full bg-brand-orangeSoft ring-1 ring-brand-yellow/30 flex items-center justify-center flex-shrink-0">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <div>
+                  <div class="text-[11px] uppercase tracking-widest text-brand-gray font-medium mb-1">Sede principal</div>
+                  <div class="font-tight font-semibold text-[16px] leading-tight">Panamericana Norte KM 557, Moche</div>
+                  <p class="text-[13px] text-brand-gray mt-1">Trujillo · La Libertad · Perú</p>
+                </div>
+              </div>
+
+              <div class="mt-6 pt-6 border-t border-brand-line flex items-start gap-4">
+                <div class="w-10 h-10 rounded-full bg-brand-orangeSoft ring-1 ring-brand-yellow/30 flex items-center justify-center flex-shrink-0">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <div>
+                  <div class="text-[11px] uppercase tracking-widest text-brand-gray font-medium mb-1">Horario de atención</div>
+                  <div class="font-tight font-semibold text-[16px] leading-tight">Lunes a Viernes · 9:00 – 18:00</div>
+                  <p class="text-[13px] text-brand-gray mt-1">Soporte de emergencia 24/7 para clientes con contrato vigente.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- REDES SOCIALES -->
+  <section class="py-20 border-t border-brand-line bg-brand-soft">
+    <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+      <div class="reveal flex flex-col md:flex-row md:items-center justify-between gap-8">
+        <div class="max-w-xl">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="accent-dot"></span>
+            <span class="eyebrow">Síguenos</span>
+          </div>
+          <h2 class="font-tight font-semibold text-[28px] lg:text-[36px] leading-tight">Estamos también en redes sociales.</h2>
+        </div>
+        <div class="flex flex-wrap items-center gap-3">
+          <a href="https://facebook.com/corporacion.sayser" target="_blank" rel="noopener" class="inline-flex items-center gap-3 px-5 py-3 border border-brand-line rounded-full hover:border-brand-orange hover:text-brand-orange transition text-[14px] font-medium">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88V14.9H8v-2.9h2.44V9.84c0-2.41 1.43-3.75 3.63-3.75 1.06 0 2.16.19 2.16.19v2.38H15c-1.2 0-1.57.75-1.57 1.51V12h2.68l-.43 2.9h-2.25v6.98A10 10 0 0 0 22 12z"/></svg>
+            facebook.com/corporacion.sayser
+          </a>
+          <a href="https://linkedin.com/company/sayser-s-a-c" target="_blank" rel="noopener" class="inline-flex items-center gap-3 px-5 py-3 border border-brand-line rounded-full hover:border-brand-orange hover:text-brand-orange transition text-[14px] font-medium">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43A2.06 2.06 0 1 1 5.34 3.3a2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+            linkedin.com/company/sayser-s-a-c
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-brand-ink text-white pt-20 pb-10">
+    <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-10 mb-16">
+        <div>
+          <div class="flex items-center gap-3 mb-6">
+            <img src="assets/logo.png" alt="SAYSER" class="h-9 w-auto"/>
+            <span class="font-tight font-semibold text-[18px]">SAYSER</span>
+          </div>
+          <p class="text-[13px] text-white/60 leading-relaxed max-w-xs">
+            Servicios a la medida de tu negocio. Operamos facility services en 11 regiones del Perú desde 2009.
+          </p>
+        </div>
+        <div>
+          <div class="text-[11px] uppercase tracking-widest text-brand-yellow font-medium mb-5">Servicios</div>
+          <ul class="space-y-3 text-[14px] text-white/75">
+            <li><a href="servicios.html" class="hover:text-white transition">Climatización</a></li>
+            <li><a href="servicios.html" class="hover:text-white transition">Energía y respaldo</a></li>
+            <li><a href="servicios.html" class="hover:text-white transition">Electricidad</a></li>
+            <li><a href="servicios.html" class="hover:text-white transition">Contra incendio</a></li>
+            <li><a href="servicios.html" class="hover:text-white transition">Infraestructura</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="text-[11px] uppercase tracking-widest text-brand-yellow font-medium mb-5">Empresa</div>
+          <ul class="space-y-3 text-[14px] text-white/75">
+            <li><a href="index.html#nosotros" class="hover:text-white transition">Nosotros</a></li>
+            <li><a href="index.html#sectores" class="hover:text-white transition">Sectores</a></li>
+            <li><a href="index.html#trayectoria" class="hover:text-white transition">Trayectoria</a></li>
+            <li><a href="contacto.html" class="hover:text-white transition">Contacto</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="text-[11px] uppercase tracking-widest text-brand-yellow font-medium mb-5">Contacto</div>
+          <ul class="space-y-3 text-[14px] text-white/75">
+            <li>Panamericana Norte KM 557<br/>Moche, Trujillo · La Libertad</li>
+            <li><a href="https://wa.me/51935986543" class="hover:text-white transition">+51 935 986 543</a></li>
+            <li><a href="mailto:comercial@sayser.com" class="hover:text-white transition">comercial@sayser.com</a></li>
+            <li>Lun-Vie · 9:00 a 18:00</li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="text-[12px] text-white/50">
+          SAYSER S.A.C. · RUC 20482196595 · Inscrita en el Registro Nacional de Proveedores del Estado peruano.
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="https://facebook.com/corporacion.sayser" target="_blank" rel="noopener" class="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center hover:border-brand-orange hover:text-brand-orange transition">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88V14.9H8v-2.9h2.44V9.84c0-2.41 1.43-3.75 3.63-3.75 1.06 0 2.16.19 2.16.19v2.38H15c-1.2 0-1.57.75-1.57 1.51V12h2.68l-.43 2.9h-2.25v6.98A10 10 0 0 0 22 12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/company/sayser-s-a-c" target="_blank" rel="noopener" class="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center hover:border-brand-orange hover:text-brand-orange transition">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43A2.06 2.06 0 1 1 5.34 3.3a2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Float -->
+  <a href="https://wa.me/51935986543?text=Hola%20SAYSER%2C%20quisiera%20una%20cotizaci%C3%B3n." target="_blank" rel="noopener" class="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#1eb858] transition flex items-center justify-center pulse-ring shadow-lg" aria-label="Contactar por WhatsApp">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 0 1 8.413 3.488 11.82 11.82 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.149-.173.198-.297.297-.495.099-.198.05-.372-.025-.521-.074-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+  </a>
+
+  <!-- Cookie -->
+  <div id="cookieBanner" class="fixed bottom-0 left-0 right-0 z-40 transition-transform duration-500">
+    <div class="max-w-[1280px] mx-auto m-4 lg:m-6 bg-brand-paper border border-brand-line rounded-xl p-5 lg:p-6 shadow-warmLg">
+      <div class="flex flex-col md:flex-row md:items-center gap-5 md:gap-8">
+        <div class="flex-1">
+          <div class="font-tight font-semibold text-[15px] mb-1">Usamos cookies</div>
+          <p class="text-[13px] text-brand-gray leading-relaxed">Utilizamos cookies para mejorar tu experiencia y analizar el tráfico del sitio.</p>
+        </div>
+        <div class="flex gap-2">
+          <button id="cookieConfig" class="px-5 py-2.5 rounded-full border border-brand-line text-[13px] font-medium hover:border-brand-ink transition">Configurar</button>
+          <button id="cookieAccept" class="px-5 py-2.5 rounded-full bg-brand-ink text-white text-[13px] font-medium hover:bg-brand-orange transition">Aceptar todas</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS MODAL -->
+  <div id="successModal" class="modal-hidden fixed inset-0 z-[60] flex items-center justify-center transition-opacity duration-300 bg-black/40 backdrop-blur-sm">
+    <div class="bg-brand-paper rounded-2xl max-w-md w-[92%] p-8 lg:p-10 text-center border border-brand-line shadow-warmLg">
+      <div class="w-16 h-16 rounded-full bg-brand-orangeSoft ring-4 ring-brand-yellow/20 mx-auto flex items-center justify-center mb-6">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h3 class="font-tight font-semibold text-[24px] mb-3">Solicitud enviada</h3>
+      <p class="text-[14px] text-brand-gray mb-7">Gracias por contactarnos. Nuestro equipo comercial te responderá en menos de 24 horas hábiles.</p>
+      <button id="closeModal" class="inline-flex items-center justify-center gap-2 bg-brand-ink hover:bg-brand-orange transition px-6 py-3 rounded-full text-white text-[14px] font-medium">
+        Cerrar
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Header scroll
+    const header = document.getElementById('siteHeader');
+    const onScroll = () => { if (window.scrollY > 40) header.classList.add('scrolled'); else header.classList.remove('scrolled'); };
+    window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+    // Mobile menu
+    const mb = document.getElementById('mobileMenuBtn');
+    const mm = document.getElementById('mobileMenu');
+    if (mb && mm) mb.addEventListener('click', () => mm.classList.toggle('hidden'));
+
+    // GSAP
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray('.reveal').forEach((el) => {
+      gsap.to(el, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 90%', once: true } });
+    });
+
+    // Prefill servicio from query string
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('servicio')) {
+      const sel = document.getElementById('f-servicio');
+      const val = params.get('servicio');
+      const opt = Array.from(sel.options).find(o => o.value === val);
+      if (opt) sel.value = val;
+    }
+
+    // Form submit (prototype)
+    const form = document.getElementById('contactForm');
+    const modal = document.getElementById('successModal');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      modal.classList.remove('modal-hidden');
+      modal.classList.add('modal-shown');
+      form.reset();
+    });
+    document.getElementById('closeModal').addEventListener('click', () => {
+      modal.classList.remove('modal-shown');
+      modal.classList.add('modal-hidden');
+    });
+
+    // Cookie
+    const banner = document.getElementById('cookieBanner');
+    if (localStorage.getItem('sayser_cookie_v1')) banner.classList.add('cookie-hidden');
+    document.getElementById('cookieAccept').addEventListener('click', () => { localStorage.setItem('sayser_cookie_v1', '1'); banner.classList.add('cookie-hidden'); });
+    document.getElementById('cookieConfig').addEventListener('click', () => alert('Configuración de cookies (prototipo).'));
+  </script>
+</body>
+</html>

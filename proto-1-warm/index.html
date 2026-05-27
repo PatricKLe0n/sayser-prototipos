@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SAYSER · Servicios a la medida de tu negocio</title>
+  <meta name="description" content="SAYSER S.A.C. — Facility Services en Perú desde 2009. Mantenimiento HVAC, energía, electricidad e infraestructura para banca, retail y corporativo. Cobertura en 11 regiones." />
+  <meta property="og:title" content="SAYSER · Facility Services Perú" />
+  <meta property="og:description" content="Servicios técnicos a la medida para banca, retail y corporativo. ISO 9001. 16 años de trayectoria." />
+  <meta property="og:image" content="assets/logo.png" />
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            tight: ['"Inter Tight"', 'system-ui', 'sans-serif'],
+            body: ['Inter', 'system-ui', 'sans-serif']
+          },
+          colors: {
+            brand: {
+              orange: '#C9651C',
+              orangeDark: '#A4501A',
+              orangeSoft: '#FFEAD0',
+              orangeWarm: '#FFF1DC',
+              yellow: '#E5B523',
+              yellowSoft: '#FCEFB8',
+              gray: '#7A6A55',
+              graySoft: '#9C8B72',
+              ink: '#1A1410',
+              line: '#E8DAC2',
+              lineWarm: '#EFE2C8',
+              paper: '#FDF8F0',
+              soft: '#FAF3E8',
+              softer: '#F4EBD9',
+              cream: '#FFF1DC'
+            }
+          },
+          boxShadow: {
+            card: '0 1px 2px rgba(201,101,28,0.06)',
+            cardHover: '0 18px 40px -20px rgba(201,101,28,0.22)',
+            warm: '0 8px 24px -8px rgba(201,101,28,0.18)',
+            warmLg: '0 20px 50px -20px rgba(201,101,28,0.28)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      color: #1A1410;
+      background: #FDF8F0;
+      -webkit-font-smoothing: antialiased;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    h1, h2, h3, h4, h5 {
+      font-family: 'Inter Tight', system-ui, sans-serif;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: #C9651C;
+    }
+    .accent-dot {
+      width: 7px; height: 7px; border-radius: 9999px; background: #C9651C; display: inline-block;
+      box-shadow: 0 0 0 2px rgba(229,181,35,0.15);
+    }
+    .hero-grad {
+      background: linear-gradient(180deg, rgba(253,248,240,0) 0%, rgba(253,248,240,0.95) 100%);
+    }
+    /* WhatsApp pulse */
+    @keyframes pulseRing {
+      0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.45); }
+      70% { box-shadow: 0 0 0 18px rgba(37,211,102,0); }
+      100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+    }
+    .pulse-ring { animation: pulseRing 2.2s infinite; }
+
+    /* Reveal initial */
+    .reveal { opacity: 0; transform: translateY(30px); }
+
+    /* Tab buttons */
+    .tab-btn[data-active="true"] {
+      background: #1A1410;
+      color: #FDF8F0;
+      border-color: #1A1410;
+    }
+    .tab-btn[data-active="true"] .accent-dot {
+      background: #E5B523;
+      box-shadow: 0 0 0 3px rgba(229,181,35,0.25);
+    }
+
+    /* Region chip */
+    .chip {
+      border: 1px solid #E8DAC2;
+      background: #FDF8F0;
+      transition: all .25s ease;
+    }
+    .chip:hover {
+      border-color: #C9651C;
+      color: #C9651C;
+      background: #FFF1DC;
+      transform: translateY(-2px);
+    }
+
+    /* Service card hover */
+    .svc-card {
+      transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+    }
+    .svc-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 50px -20px rgba(201,101,28,0.28);
+      border-color: #C9651C !important;
+    }
+    .svc-card:hover .svc-arrow {
+      transform: translate(4px, -4px);
+      color: #C9651C;
+    }
+    .svc-arrow { transition: transform .35s ease, color .35s ease; }
+
+    /* Logo wordmark style */
+    .wordmark {
+      font-family: 'Inter Tight', sans-serif;
+      letter-spacing: -0.02em;
+      color: #9C8B72;
+      transition: color .3s ease, opacity .3s ease;
+      opacity: 0.7;
+    }
+    .wordmark:hover { color: #1A1410; opacity: 1; }
+
+    /* Parallax wrapper */
+    .parallax-img { will-change: transform; }
+
+    /* Cookie banner */
+    .cookie-hidden { transform: translateY(140%); }
+
+    /* Nav scrolled */
+    header.scrolled {
+      background: rgba(253,248,240,0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 1px 0 rgba(201,101,28,0.10);
+    }
+    /* Header bottom accent strip */
+    header::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, #C9651C 30%, #E5B523 70%, transparent 100%);
+      opacity: 0;
+      transition: opacity .4s ease;
+    }
+    header.scrolled::after { opacity: 1; }
+
+    /* Section divider */
+    .hairline { height: 1px; background: linear-gradient(90deg, transparent, #E8DAC2 20%, #E8DAC2 80%, transparent); }
+    .hairline-orange { height: 1px; background: linear-gradient(90deg, transparent, rgba(201,101,28,0.35) 30%, rgba(229,181,35,0.35) 70%, transparent); }
+
+    /* Custom select arrow */
+    select { appearance: none; }
+
+    /* Underline animation for nav links (desktop) */
+    @media (min-width: 1024px) {
+      header nav a:not(.text-brand-orange) { position: relative; }
+      header nav a:not(.text-brand-orange)::after {
+        content: '';
+        position: absolute;
+        left: 0; right: 0; bottom: -6px;
+        height: 2px;
+        background: linear-gradient(90deg, #C9651C, #E5B523);
+        transform: scaleX(0);
+        transform-origin: left center;
+        transition: transform .35s ease;
+        border-radius: 2px;
+      }
+      header nav a:not(.text-brand-orange):hover::after { transform: scaleX(1); }
+    }
+
+    /* Yellow highlight on counter finish */
+    @keyframes counterGlow {
+      0%   { text-shadow: 0 0 0 rgba(229,181,35,0); }
+      30%  { text-shadow: 0 0 22px rgba(229,181,35,0.45); }
+      100% { text-shadow: 0 0 0 rgba(229,181,35,0); }
+    }
+    .counter-glow { animation: counterGlow 1.2s ease-out; }
+
+    /* Hero warm overlay */
+    .hero-warm-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(201,101,28,0.05);
+      mix-blend-mode: multiply;
+      border-radius: 0.75rem;
+      pointer-events: none;
+    }
+
+    /* Cotizar CTA hover -> yellow fill */
+    .cta-outline {
+      transition: background .3s ease, color .3s ease, border-color .3s ease, box-shadow .3s ease;
+    }
+    .cta-outline:hover {
+      background: linear-gradient(135deg, #C9651C 0%, #E5B523 100%);
+      color: #FDF8F0;
+      border-color: transparent;
+      box-shadow: 0 8px 24px -8px rgba(201,101,28,0.40);
+    }
+  </style>
+</head>
+
+<body class="bg-brand-paper text-brand-ink font-body">
+
+  <!-- ============== HEADER ============== -->
+  <header id="siteHeader" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="max-w-[1280px] mx-auto px-6 lg:px-10 h-[76px] flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="assets/logo.png" alt="SAYSER" class="h-9 w-auto" />
+        <span class="font-tight font-semibold text-[17px] tracking-tight text-brand-ink hidden sm:block">SAYSER</span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-9 text-[14px] font-medium text-brand-ink">
+        <a href="index.html" class="hover:text-brand-orange transition">Inicio</a>
+        <a href="#nosotros" class="hover:text-brand-orange transition">Nosotros</a>
+        <a href="servicios.html" class="hover:text-brand-orange transition">Servicios</a>
+        <a href="#sectores" class="hover:text-brand-orange transition">Sectores</a>
+        <a href="#trayectoria" class="hover:text-brand-orange transition">Proyectos</a>
+        <a href="contacto.html" class="hover:text-brand-orange transition">Contacto</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-1 text-[12px] font-medium text-brand-gray border border-brand-line rounded-full px-3 py-1.5">
+          <span class="text-brand-ink">ES</span>
+          <span class="opacity-30">|</span>
+          <span>EN</span>
+        </div>
+        <a href="contacto.html" class="cta-outline hidden md:inline-flex items-center gap-2 border-2 border-brand-orange text-brand-orange px-4 py-2 rounded-full text-[13px] font-medium">
+          Cotizar
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+        </a>
+        <button id="mobileMenuBtn" class="lg:hidden p-2 rounded-lg border border-brand-line">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- mobile menu -->
+    <div id="mobileMenu" class="hidden lg:hidden bg-brand-paper border-t border-brand-line">
+      <div class="px-6 py-6 flex flex-col gap-4 text-[15px] font-medium">
+        <a href="index.html" class="py-1">Inicio</a>
+        <a href="#nosotros" class="py-1">Nosotros</a>
+        <a href="servicios.html" class="py-1">Servicios</a>
+        <a href="#sectores" class="py-1">Sectores</a>
+        <a href="#trayectoria" class="py-1">Proyectos</a>
+        <a href="contacto.html" class="py-1">Contacto</a>
+        <a href="contacto.html" class="mt-2 inline-flex items-center justify-center gap-2 border border-brand-orange text-brand-orange px-4 py-2 rounded-full text-[14px]">Cotizar</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============== HERO ============== -->
+  <section class="pt-[120px] pb-20 lg:pb-28">
+    <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+      <!-- Eyebrow row -->
+      <div class="reveal flex items-center gap-3 mb-6">
+        <span class="accent-dot"></span>
+        <span class="eyebrow">Facility Services · Desde 2009</span>
+        <span class="hidden md:inline-flex items-center gap-2 ml-4 text-[12px] text-brand-gray">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-12V5l-8-3-8 3v5c0 8 8 12 8 12z"/><path d="m9 12 2 2 4-4"/></svg>
+          ISO 9001 certificado
+        </span>
+      </div>
+
+      <div class="grid lg:grid-cols-12 gap-10 items-end">
+        <div class="lg:col-span-7 reveal">
+          <h1 class="font-tight font-semibold text-[44px] sm:text-[60px] lg:text-[78px] leading-[1.02] tracking-tight text-brand-ink">
+            Servicios a la medida<br/>
+            de tu <span class="relative inline-block">
+              negocio.
+              <svg class="absolute -bottom-2 left-0 w-full" height="10" viewBox="0 0 300 10" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="heroUnderline" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="#C9651C"/>
+                    <stop offset="100%" stop-color="#E5B523"/>
+                  </linearGradient>
+                </defs>
+                <path d="M2 7 Q 75 0, 150 6 T 298 4" stroke="url(#heroUnderline)" stroke-width="4" fill="none" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </h1>
+          <p class="mt-8 max-w-[560px] text-[17px] text-brand-gray leading-[1.7]">
+            Somos SAYSER. Operamos servicios técnicos integrales para banca, retail y corporativos en 11 regiones del Perú: climatización, energía, electricidad, infraestructura y mantenimiento especializado — diseñados a la carta para cada cliente.
+          </p>
+
+          <div class="mt-10 flex flex-wrap items-center gap-3">
+            <a href="contacto.html" class="inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orangeDark transition px-6 py-3.5 rounded-full text-white text-[14px] font-medium">
+              Solicitar cotización
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <a href="servicios.html" class="inline-flex items-center gap-2 border border-brand-line hover:border-brand-ink transition px-6 py-3.5 rounded-full text-brand-ink text-[14px] font-medium">
+              Ver servicios
+            </a>
+          </div>
+
+          <!-- mini stats inline -->
+          <div class="mt-12 flex flex-wrap items-center gap-x-10 gap-y-4">
+            <div>
+              <div class="font-tight text-[28px] font-semibold leading-none text-brand-ink"><span class="counter" data-target="16">0</span></div>
+              <div class="text-[12px] text-brand-gray mt-1 uppercase tracking-wider">Años operando</div>
+            </div>
+            <div class="w-px h-8 bg-brand-line hidden sm:block"></div>
+            <div>
+              <div class="font-tight text-[28px] font-semibold leading-none text-brand-ink"><span class="counter" data-target="11">0</span></div>
+              <div class="text-[12px] text-brand-gray mt-1 uppercase tracking-wider">Regiones</div>
+            </div>
+            <div class="w-px h-8 bg-brand-line hidden sm:block"></div>
+            <div>
+              <div class="font-tight text-[28px] font-semibold leading-none text-brand-ink"><span class="counter" data-target="200">0</span>+</div>
+              <div class="text-[12px] text-brand-gray mt-1 uppercase tracking-wider">Colaboradores</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero side card -->
+        <div class="lg:col-span-5 reveal">
+          <div class="relative">
+            <div class="absolute -top-4 -left-4 w-24 h-24 border-l-2 border-t-2 border-brand-orange"></div>
+            <div class="relative overflow-hidden rounded-xl">
+              <img src="https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=1400&q=80&auto=format&fit=crop" alt="Ingeniero supervisando instalación técnica" class="parallax-img w-full h-[520px] object-cover" />
+              <div class="hero-warm-overlay"></div>
+            </div>
+            <!-- Floating quote card -->
+            <div class="absolute -bottom-8 -left-6 sm:-left-10 bg-brand-paper border border-brand-line rounded-xl p-5 max-w-[300px] shadow-warm">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="accent-dot"></span>
+                <span class="text-[11px] tracking-[0.18em] uppercase text-brand-gray font-medium">Caso real</span>
+              </div>
+              <p class="text-[13px] text-brand-ink leading-relaxed">Operamos mantenimiento HVAC y energía en <strong>120+ agencias bancarias</strong> a nivel nacional.</p>
+              <div class="mt-3 pt-3 border-t border-brand-lineWarm flex items-center gap-2">
+                <div class="w-6 h-6 rounded-full bg-brand-orangeSoft flex items-center justify-center ring-2 ring-brand-yellowSoft/60">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <span class="text-[12px] text-brand-gray">Sector banca · operación activa</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== CLIENT LOGOS ============== -->
+  <section class="py-16 border-y border-brand-line bg-brand-soft">
+    <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+      <p class="reveal text-center text-[12px] tracking-[0.22em] uppercase text-brand-gray font-medium">
+        Operadores de confianza de líderes como
+      </p>
+      <div class="reveal mt-10 grid grid-cols-2 md:grid-cols-5 gap-x-8 gap-y-8 items-center">
+        <!-- Mibanco -->
+        <div class="flex items-center justify-center">
+          <span class="wordmark text-[26px] font-bold">mi<span style="color:#C9651C">banco</span></span>
+        </div>
+        <!-- Compartamos -->
+        <div class="flex items-center justify-center">
+          <span class="wordmark text-[22px] font-semibold tracking-tight">Compartamos<span class="text-brand-orange">.</span></span>
+        </div>
+        <!-- Sodexo -->
+        <div class="flex items-center justify-center">
+          <span class="wordmark text-[26px] font-bold italic">Sodexo</span>
+        </div>
+        <!-- Kamill -->
+        <div class="flex items-center justify-center">
+          <span class="wordmark text-[24px] font-semibold tracking-widest">KAMILL</span>
+        </div>
+        <!-- Pulso -->
+        <div class="flex items-center justify-center">
+          <span class="wordmark text-[24px] font-bold tracking-tight">Pulso<sup class="text-brand-orange text-sm">®</sup></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== DIFERENCIADORES ============== -->
+  <section id="nosotros" class="py-24 lg:py-32 bg-brand-cream relative">
+    <div class="absolute top-12 left-12 w-72 h-72 bg-brand-orange opacity-[0.04] rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+      <div class="grid lg:grid-cols-12 gap-10 mb-16">
+        <div class="lg:col-span-5 reveal">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="accent-dot"></span>
+            <span class="eyebrow">Por qué SAYSER</span>
+          </div>
+          <h2 class="font-tight text-[40px] lg:text-[52px] font-semibold leading-[1.05] tracking-tight">
+            La operación detrás de las marcas que ya confías.
+          </h2>
+        </div>
+        <div class="lg:col-span-6 lg:col-start-7 reveal">
+          <p class="text-[17px] text-brand-gray">
+            Desde 2009 mantenemos en operación los edificios, agencias y centros de cinco sectores estratégicos del Perú. Lo que nos diferencia no es solo el alcance técnico — es la cercanía con la que entendemos cada negocio. Nos ponemos la camiseta.
+          </p>
+          <div class="mt-6 hairline"></div>
+          <div class="mt-6 flex items-center gap-6 text-[12px] text-brand-gray">
+            <span class="flex items-center gap-2"><span class="accent-dot"></span> RNP del Estado peruano</span>
+            <span class="flex items-center gap-2"><span class="accent-dot"></span> Una de las mejores empresas 2017</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-brand-line border border-brand-line rounded-xl overflow-hidden">
+        <!-- Card 1 -->
+        <div class="reveal bg-brand-paper p-8 lg:p-10 hover:bg-brand-softer transition group">
+          <div class="w-12 h-12 rounded-lg bg-brand-orangeSoft ring-1 ring-brand-yellow/30 flex items-center justify-center mb-6 group-hover:bg-brand-orange group-hover:ring-brand-orange transition">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-white transition">
+              <path d="M12 22s8-4 8-12V5l-8-3-8 3v5c0 8 8 12 8 12z"/>
+              <path d="m9 12 2 2 4-4"/>
+            </svg>
+          </div>
+          <h3 class="font-tight font-semibold text-[20px] mb-3 leading-tight">Calidad ISO 9001</h3>
+          <p class="text-[14px] text-brand-gray leading-relaxed">Procesos certificados, auditorías regulares y trazabilidad documental de cada intervención.</p>
+        </div>
+        <!-- Card 2 -->
+        <div class="reveal bg-brand-paper p-8 lg:p-10 hover:bg-brand-softer transition group">
+          <div class="w-12 h-12 rounded-lg bg-brand-orangeSoft ring-1 ring-brand-yellow/30 flex items-center justify-center mb-6 group-hover:bg-brand-orange group-hover:ring-brand-orange transition">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-white transition">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M2 12h20"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <h3 class="font-tight font-semibold text-[20px] mb-3 leading-tight">Cobertura nacional</h3>
+          <p class="text-[14px] text-brand-gray leading-relaxed">11 regiones operativas en el norte, centro y selva del Perú. Llegamos donde otros no.</p>
+        </div>
+        <!-- Card 3 -->
+        <div class="reveal bg-brand-paper p-8 lg:p-10 hover:bg-brand-softer transition group">
+          <div class="w-12 h-12 rounded-lg bg-brand-orangeSoft ring-1 ring-brand-yellow/30 flex items-center justify-center mb-6 group-hover:bg-brand-orange group-hover:ring-brand-orange transition">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-white transition">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <h3 class="font-tight font-semibold text-[20px] mb-3 leading-tight">Equipo propio</h3>
+          <p class="text-[14px] text-brand-gray leading-relaxed">200+ colaboradores en planilla. Sin intermediarios. Trazabilidad real de quién entra a tu local.</p>
+        </div>
+        <!-- Card 4 -->
+        <div class="reveal bg-brand-paper p-8 lg:p-10 hover:bg-brand-softer transition group">
+          <div class="w-12 h-12 rounded-lg bg-brand-orangeSoft ring-1 ring-brand-yellow/30 flex items-center justify-center mb-6 group-hover:bg-brand-orange group-hover:ring-brand-orange transition">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-white transition">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="9" y1="13" x2="15" y2="13"/>
+              <line x1="9" y1="17" x2="13" y2="17"/>
+            </svg>
+          </div>
+          <h3 class="font-tight font-semibold text-[20px] mb-3 leading-tight">A la medida</h3>
+          <p class="text-[14px] text-brand-gray leading-relaxed">Sin paquetes cerrados. Diseñamos cada propuesta como un menú a la carta. Si no existe, lo inventamos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== SERVICIOS ============== -->
+  <section class="py-24 lg:py-32 bg-brand-soft">
+    <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+      <div class="flex flex-wrap items-end justify-between gap-8 mb-14">
+        <div class="reveal max-w-[640px]">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="accent-dot"></span>
+            <span class="eyebrow">Servicios principales</span>
+          </div>
+          <h2 class="font-tight text-[40px] lg:text-[52px] font-semibold leading-[1.05] tracking-tight">
+            Operamos lo que sostiene tu negocio.
+          </h2>
+        </div>
+        <a href="servicios.html" class="reveal inline-flex items-center gap-2 text-[14px] font-medium border border-brand-ink text-brand-ink hover:bg-brand-ink hover:text-white transition px-5 py-3 rounded-full">
+          Ver los 13 servicios
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- service 1 -->
+        <a href="servicios.html" class="svc-card group bg-brand-paper border border-brand-line rounded-xl overflow-hidden reveal">
+          <div class="overflow-hidden h-56">
+            <img src="https://images.unsplash.com/photo-1718203862467-c33159fdc504?w=1200&q=80&auto=format&fit=crop" alt="Mantenimiento HVAC" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" />
+          </div>
+          <div class="p-7">
+            <div class="flex items-start justify-between gap-4">
+              <h3 class="font-tight font-semibold text-[22px] leading-tight">Aire acondicionado</h3>
+              <span class="svc-arrow text-brand-gray">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+              </span>
+            </div>
+            <p class="text-[14px] text-brand-gray mt-3 leading-relaxed">Mantenimiento preventivo, correctivo e instalación de equipos comerciales e industriales.</p>
+            <div class="mt-5 pt-5 border-t border-brand-line text-[11px] tracking-widest uppercase text-brand-gray flex items-center gap-2">
+              <span class="accent-dot"></span> Climatización
+            </div>
+          </div>
+        </a>
+
+        <!-- service 2 -->
+        <a href="servicios.html" class="svc-card group bg-brand-paper border border-brand-line rounded-xl overflow-hidden reveal">
+          <div class="overflow-hidden h-56">
+            <img src="https://images.unsplash.com/photo-1635335874521-7987db781153?w=1200&q=80&auto=format&fit=crop" alt="Tableros eléctricos" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" />
+          </div>
+          <div class="p-7">
+            <div class="flex items-start justify-between gap-4">
+              <h3 class="font-tight font-semibold text-[22px] leading-tight">Electricidad y tableros</h3>
+              <span class="svc-arrow text-brand-gray">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+              </span>
+            </div>
+            <p class="text-[14px] text-brand-gray mt-3 leading-relaxed">Diseño, instalación y mantenimiento de tableros eléctricos baja tensión y sistemas asociados.</p>
+            <div class="mt-5 pt-5 border-t border-brand-line text-[11px] tracking-widest uppercase text-brand-gray flex items-center gap-2">
+              <span class="accent-dot"></span> Energía
+            </div>
+          </div>
+        </a>
+
+        <!-- service 3 -->
+        <a href="servicios.html" class="svc-card group bg-brand-paper border border-brand-line rounded-xl overflow-hidden reveal">
+          <div class="overflow-hidden h-56">
+            <img src="https://images.unsplash.com/photo-1523559094051-53bac879eb80?w=1200&q=80&auto=format&fit=crop" alt="Grupo electrógeno" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" />
+          </div>
+          <div class="p-7">
+            <div class="flex items-start justify-between gap-4">
+              <h3 class="font-tight font-semibold text-[22px] leading-tight">Grupos electrógenos</h3>
+              <span class="svc-arrow text-brand-gray">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+              </span>
+            </div>
+            <p class="text-[14px] text-brand-gray mt-3 leading-relaxed">Instalación, preventivo y correctivo de grupos electrógenos industriales — energía ininterrumpida.</p>
+            <div class="mt-5 pt-5 border-t border-brand-line text-[11px] tracking-widest uppercase text-brand-gray flex items-center gap-2">
+              <span class="accent-dot"></span> Energía
+            </div>
+          </div>
+        </a>
+
+        <!-- service 4 -->
+        <a href="servicios.html" class="svc-card group bg-brand-paper border border-brand-line rounded-xl overflow-hidden reveal">
+          <div class="overflow-hidden h-56">
+            <img src="https://images.unsplash.com/photo-1695668548342-c0c1ad479aee?w=1200&q=80&auto=format&fit=crop" alt="UPS sala de servidores" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" />
+          </div>
+          <div class="p-7">
+            <div class="flex items-start justify-between gap-4">
+              <h3 class="font-tight font-semibold text-[22px] leading-tight">UPS y pozo a tierra</h3>
+              <span class="svc-arrow text-brand-gray">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+              </span>
+            </div>
+            <p class="text-[14px] text-brand-gray mt-3 leading-relaxed">Sistemas de respaldo eléctrico y protección a tierra: mantenimiento e instalación.</p>
+            <div class="mt-5 pt-5 border-t border-brand-line text-[11px] tracking-widest uppercase text-brand-gray flex items-center gap-2">
+              <span class="accent-dot"></span> Energía
+            </div>
+          </div>
+        </a>
+
+        <!-- service 5 -->
+        <a href="servicios.html" class="svc-card group bg-brand-paper border border-brand-line rounded-xl overflow-hidden reveal">
+          <div class="overflow-hidden h-56">
+            <img src="https://images.unsplash.com/photo-1585367437379-e0b71bb18156?w=1200&q=80&auto=format&fit=crop" alt="Sistemas contra incendio" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" />
+          </div>
+          <div class="p-7">
+            <div class="flex items-start justify-between gap-4">
+              <h3 class="font-tight font-semibold text-[22px] leading-tight">Contra incendio y emergencia</h3>
+              <span class="svc-arrow text-brand-gray">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+              </span>
+            </div>
+            <p class="text-[14px] text-brand-gray mt-3 leading-relaxed">Pruebas de sistemas contra incendio, luces de emergencia y trámite ITSE de Defensa Civil.</p>
+            <div class="mt-5 pt-5 border-t border-brand-line text-[11px] tracking-widest uppercase text-brand-gray flex items-center gap-2">
+              <span class="accent-dot"></span> Seguridad
+            </div>
+          </div>
+        </a>
+
+        <!-- service 6 -->
+        <a href="servicios.html" class="svc-card group bg-brand-paper border border-brand-line rounded-xl overflow-hidden reveal">
+          <div class="overflow-hidden h-56">
+            <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200&q=80&auto=format&fit=crop" alt="Servicios generales infraestructura" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" />
+          </div>
+          <div class="p-7">
+            <div class="flex items-start justify-between gap-4">
+              <h3 class="font-tight font-semibold text-[22px] leading-tight">Infraestructura y obra civil</h3>
+              <span class="svc-arrow text-brand-gray">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+              </span>
+            </div>
+            <p class="text-[14px] text-brand-gray mt-3 leading-relaxed">Pintado, drywall, melamine, vidriería, cerrajería, gasfitería y mantenimiento estructural.</p>
+            <div class="mt-5 pt-5 border-t border-brand-line text-[11px] tracking-widest uppercase text-brand-gray flex items-center gap-2">
+              <span class="accent-dot"></span> Construcción
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== SECTORES (TABS) ============== -->
+  <section id="sectores" class="py-24 lg:py-32">
+    <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+      <div class="grid lg:grid-cols-12 gap-8 mb-14">
+        <div class="lg:col-span-6 reveal">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="accent-dot"></span>
+            <span class="eyebrow">Sectores</span>
+          </div>
+          <h2 class="font-tight text-[40px] lg:text-[52px] font-semibold leading-[1.05] tracking-tight">
+            Conocemos tu industria<br/>por dentro.
+          </h2>
+        </div>
+        <div class="lg:col-span-5 lg:col-start-8 reveal">
+          <p class="text-[17px] text-brand-gray">
+            Cada sector tiene reglas, turnos, urgencias y normativas distintas. Especializamos equipos por industria, no improvisamos. Selecciona uno para conocer cómo trabajamos.
+          </p>
+        </div>
+      </div>
+
+      <!-- tabs -->
+      <div class="flex flex-wrap gap-2 mb-10 reveal">
+        <button class="tab-btn px-5 py-2.5 rounded-full border border-brand-line text-[13px] font-medium hover:border-brand-ink transition flex items-center gap-2" data-tab="banca" data-active="true">
+          <span class="accent-dot"></span> Banca
+        </button>
+        <button class="tab-btn px-5 py-2.5 rounded-full border border-brand-line text-[13px] font-medium hover:border-brand-ink transition flex items-center gap-2" data-tab="retail" data-active="false">
+          <span class="accent-dot"></span> Retail
+        </button>
+        <button class="tab-btn px-5 py-2.5 rounded-full border border-brand-line text-[13px] font-medium hover:border-brand-ink transition flex items-center gap-2" data-tab="corporativo" data-active="false">
+          <span class="accent-dot"></span> Corporativo
+        </button>
+        <button class="tab-btn px-5 py-2.5 rounded-full border border-brand-line text-[13px] font-medium hover:border-brand-ink transition flex items-center gap-2" data-tab="pymes" data-active="false">
+          <span class="accent-dot"></span> Pymes
+        </button>
+        <button class="tab-btn px-5 py-2.5 rounded-full border border-brand-line text-[13px] font-medium hover:border-brand-ink transition flex items-center gap-2" data-tab="industria" data-active="false">
+          <span class="accent-dot"></span> Industria
+        </button>
+      </div>
+
+      <!-- tab panels -->
+      <div class="border border-brand-line rounded-xl overflow-hidden reveal">
+        <div class="grid lg:grid-cols-2">
+          <div id="tabImage" class="h-[400px] lg:h-auto bg-brand-softer overflow-hidden">
+            <img id="tabImg" src="https://images.unsplash.com/photo-1601597111158-2fceff292cdc?w=1400&q=80&auto=format&fit=crop" alt="Banca" class="w-full h-full object-cover transition-opacity duration-500" />
+          </div>
+          <div class="p-10 lg:p-14 flex flex-col justify-center">
+            <div class="text-[12px] uppercase tracking-widest text-brand-gray mb-3" id="tabKicker">Sector banca</div>
+            <h3 class="font-tight font-semibold text-[30px] lg:text-[36px] leading-tight mb-5" id="tabTitle">
+              Operación silenciosa para agencias en horario crítico.
+            </h3>
+            <p class="text-[15px] text-brand-gray mb-7" id="tabDesc">
+              Mantenemos HVAC, energía respaldada, sistemas contra incendio y emergencias en redes de agencias bancarias a nivel nacional, con cuadrillas que trabajan en horarios fuera de atención al público.
+            </p>
+            <ul id="tabList" class="space-y-3 text-[14px] text-brand-ink">
+              <li class="flex gap-3"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg> Rutas de mantenimiento por agencia y ciudad</li>
+              <li class="flex gap-3"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg> Respuesta de emergencia 24/7</li>
+              <li class="flex gap-3"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg> Cumplimiento de protocolos de seguridad bancaria</li>
+              <li class="flex gap-3"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg> Reportes técnicos auditables por agencia</li>
+            </ul>
+            <a href="contacto.html" class="mt-9 inline-flex items-center gap-2 text-[14px] font-medium text-brand-orange hover:gap-3 transition-all">
+              Hablar con un especialista de sector
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== TRAYECTORIA / STATS ============== -->
+  <section id="trayectoria" class="py-24 lg:py-32 bg-brand-ink text-white relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-brand-orange opacity-[0.12] blur-[120px]"></div>
+    <div class="absolute bottom-0 left-0 w-[420px] h-[420px] rounded-full bg-brand-yellow opacity-[0.06] blur-[140px]"></div>
+    <div class="max-w-[1280px] mx-auto px-6 lg:px-10 relative">
+      <div class="reveal max-w-2xl mb-16">
+        <div class="flex items-center gap-3 mb-5">
+          <span class="accent-dot"></span>
+          <span class="eyebrow text-brand-yellow">Trayectoria</span>
+        </div>
+        <h2 class="font-tight text-[40px] lg:text-[56px] font-semibold leading-[1.05] tracking-tight">
+          16 años manteniendo en operación lo que el país no puede detener.
+        </h2>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 border border-white/10 rounded-xl overflow-hidden">
+        <div class="bg-brand-ink p-10 reveal">
+          <div class="font-tight text-[68px] lg:text-[88px] font-semibold leading-none tracking-tight"><span class="counter" data-target="16">0</span></div>
+          <div class="mt-3 text-[13px] text-white/65 uppercase tracking-widest">Años en operación</div>
+          <div class="mt-2 h-px w-10 bg-gradient-to-r from-brand-orange to-brand-yellow"></div>
+          <p class="mt-4 text-[14px] text-white/60 leading-relaxed">Fundada en 2009 en Trujillo. Operación ininterrumpida desde entonces.</p>
+        </div>
+        <div class="bg-brand-ink p-10 reveal">
+          <div class="font-tight text-[68px] lg:text-[88px] font-semibold leading-none tracking-tight"><span class="counter" data-target="11">0</span></div>
+          <div class="mt-3 text-[13px] text-white/65 uppercase tracking-widest">Regiones cubiertas</div>
+          <div class="mt-2 h-px w-10 bg-gradient-to-r from-brand-orange to-brand-yellow"></div>
+          <p class="mt-4 text-[14px] text-white/60 leading-relaxed">Norte, centro y selva del Perú. Llegamos a donde están tus locales.</p>
+        </div>
+        <div class="bg-brand-ink p-10 reveal">
+          <div class="font-tight text-[68px] lg:text-[88px] font-semibold leading-none tracking-tight"><span class="counter" data-target="200">0</span>+</div>
+          <div class="mt-3 text-[13px] text-white/65 uppercase tracking-widest">Colaboradores propios</div>
+          <div class="mt-2 h-px w-10 bg-gradient-to-r from-brand-orange to-brand-yellow"></div>
+          <p class="mt-4 text-[14px] text-white/60 leading-relaxed">Equipo en planilla, sin tercerización oculta. Trazabilidad total.</p>
+        </div>
+        <div class="bg-brand-ink p-10 reveal">
+          <div class="font-tight text-[68px] lg:text-[88px] font-semibold leading-none tracking-tight">ISO</div>
+          <div class="mt-3 text-[13px] text-white/65 uppercase tracking-widest">9001 certificado</div>
+          <div class="mt-2 h-px w-10 bg-gradient-to-r from-brand-orange to-brand-yellow"></div>
+          <p class="mt-4 text-[14px] text-white/60 leading-relaxed">Procesos de gestión de calidad auditados anualmente.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== COBERTURA ============== -->
+  <section class="py-24 lg:py-32">
+    <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+      <div class="grid lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-5 reveal">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="accent-dot"></span>
+            <span class="eyebrow">Cobertura geográfica</span>
+          </div>
+          <h2 class="font-tight text-[40px] lg:text-[52px] font-semibold leading-[1.05] tracking-tight mb-6">
+            Norte, centro y selva del Perú.
+          </h2>
+          <p class="text-[17px] text-brand-gray mb-8">
+            11 regiones operativas con cuadrillas residentes o desplazables. Coordinamos rutas multiciudad para cadenas con presencia distribuida — sin terciarizar la calidad.
+          </p>
+          <div class="hairline mb-6"></div>
+          <div class="flex items-center gap-6 text-[13px] text-brand-gray">
+            <span class="flex items-center gap-2"><span class="accent-dot"></span> Base operativa Trujillo</span>
+            <span class="flex items-center gap-2"><span class="accent-dot"></span> Oficina Lima</span>
+          </div>
+        </div>
+        <div class="lg:col-span-6 lg:col-start-7 reveal">
+          <div class="flex flex-wrap gap-2.5">
+            <span class="chip px-4 py-2.5 rounded-full text-[13px] font-medium">La Libertad</span>
+            <span class="chip px-4 py-2.5 rounded-full text-[13px] font-medium">Lambayeque</span>
+            <span class="chip px-4 py-2.5 rounded-full text-[13px] font-medium">Piura</span>
+            <span class="chip px-4 py-2.5 rounded-full text-[13px] font-medium">Tumbes</span>
+            <span class="chip px-4 py-2.5 rounded-full text-[13px] font-medium">Áncash</span>
+            <span class="chip px-4 py-2.5 rounded-full text-[13px] font-medium">Cajamarca</span>
+            <span class="chip px-4 py-2.5 rounded-full text-[13px] font-medium">Lima</span>
+            <span class="chip px-4 py-2.5 rounded-full text-[13px] font-medium">Junín</span>
+            <span class="chip px-4 py-2.5 rounded-full text-[13px] font-medium">Loreto</span>
+            <span class="chip px-4 py-2.5 rounded-full text-[13px] font-medium">Ucayali</span>
+            <span class="chip px-4 py-2.5 rounded-full text-[13px] font-medium">San Martín</span>
+          </div>
+
+          <div class="mt-10 border border-brand-line rounded-xl p-6 bg-brand-soft flex items-center gap-5">
+            <div class="w-12 h-12 rounded-full bg-brand-paper flex items-center justify-center border border-brand-line shadow-warm">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <div class="text-[13px] text-brand-gray uppercase tracking-widest mb-1">Sede principal</div>
+              <div class="font-tight font-semibold text-[16px]">Panamericana Norte KM 557, Moche · Trujillo</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== TESTIMONIOS ============== -->
+  <section class="py-24 lg:py-32 bg-brand-soft">
+    <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+      <div class="reveal max-w-2xl mb-14">
+        <div class="flex items-center gap-3 mb-5">
+          <span class="accent-dot"></span>
+          <span class="eyebrow">Testimonios</span>
+        </div>
+        <h2 class="font-tight text-[40px] lg:text-[52px] font-semibold leading-[1.05] tracking-tight">
+          Lo que dicen quienes operan con nosotros.
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="reveal bg-brand-paper border border-brand-line rounded-xl p-8 lg:p-10 shadow-warm">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.4"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2H4c-1.25 0-2 .75-2 2v4c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2h-4c-1.25 0-2 .75-2 2v4c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/></svg>
+          <p class="mt-6 text-[16px] leading-relaxed text-brand-ink">
+            "Lo que valoramos de SAYSER es que entienden el negocio. No mandan a un técnico — mandan a alguien que sabe que una agencia no puede cerrar."
+          </p>
+          <div class="mt-8 pt-6 border-t border-brand-line">
+            <div class="font-tight font-semibold text-[14px]">Gerente de Operaciones</div>
+            <div class="text-[12px] text-brand-gray uppercase tracking-wider mt-1">Banca · sector microfinanzas</div>
+          </div>
+        </div>
+
+        <div class="reveal bg-brand-paper border border-brand-line rounded-xl p-8 lg:p-10 shadow-warm">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.4"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2H4c-1.25 0-2 .75-2 2v4c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2h-4c-1.25 0-2 .75-2 2v4c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/></svg>
+          <p class="mt-6 text-[16px] leading-relaxed text-brand-ink">
+            "Tienen cuadrillas que llegan a regiones donde otros proveedores ni siquiera responden la propuesta. Esa cobertura nos cambió la operación."
+          </p>
+          <div class="mt-8 pt-6 border-t border-brand-line">
+            <div class="font-tight font-semibold text-[14px]">Jefe de Facilities</div>
+            <div class="text-[12px] text-brand-gray uppercase tracking-wider mt-1">Retail · cadena nacional</div>
+          </div>
+        </div>
+
+        <div class="reveal bg-brand-paper border border-brand-line rounded-xl p-8 lg:p-10 shadow-warm">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.4"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2H4c-1.25 0-2 .75-2 2v4c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2h-4c-1.25 0-2 .75-2 2v4c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/></svg>
+          <p class="mt-6 text-[16px] leading-relaxed text-brand-ink">
+            "Pedimos algo que no estaba en su carta de servicios. En vez de decir 'no hacemos eso', nos armaron una propuesta a medida en 48 horas."
+          </p>
+          <div class="mt-8 pt-6 border-t border-brand-line">
+            <div class="font-tight font-semibold text-[14px]">Dir. Administración</div>
+            <div class="text-[12px] text-brand-gray uppercase tracking-wider mt-1">Corporativo · servicios</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== CTA FINAL ============== -->
+  <section class="py-24 lg:py-32">
+    <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+      <div class="reveal border-2 border-brand-orange/40 rounded-2xl p-10 lg:p-16 bg-brand-cream relative overflow-hidden shadow-warmLg">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-brand-orange opacity-15 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4"></div>
+        <div class="absolute bottom-0 left-0 w-72 h-72 bg-brand-yellow opacity-10 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4"></div>
+        <div class="relative grid lg:grid-cols-12 gap-8 items-end">
+          <div class="lg:col-span-7">
+            <div class="flex items-center gap-3 mb-5">
+              <span class="accent-dot"></span>
+              <span class="eyebrow">Cotización gratuita</span>
+            </div>
+            <h2 class="font-tight text-[36px] lg:text-[52px] font-semibold leading-[1.05] tracking-tight">
+              ¿Listo para tercerizar<br/>tus servicios técnicos?
+            </h2>
+            <p class="mt-6 text-[17px] text-brand-ink/75 max-w-xl">
+              Cuéntanos qué necesitas y diseñamos una propuesta a tu medida. Sin paquetes cerrados, sin compromiso inicial.
+            </p>
+          </div>
+          <div class="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col gap-3 lg:items-end">
+            <a href="contacto.html" class="inline-flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orangeDark transition px-7 py-4 rounded-full text-white text-[15px] font-medium shadow-warm">
+              Solicitar cotización
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <span class="text-[13px] text-brand-gray lg:text-right">Te respondemos en menos de 24 horas</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== FOOTER ============== -->
+  <footer class="bg-brand-ink text-white pt-20 pb-10">
+    <div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-10 mb-16">
+        <div>
+          <div class="flex items-center gap-3 mb-6">
+            <img src="assets/logo.png" alt="SAYSER" class="h-9 w-auto" />
+            <span class="font-tight font-semibold text-[18px]">SAYSER</span>
+          </div>
+          <p class="text-[13px] text-white/60 leading-relaxed max-w-xs">
+            Servicios a la medida de tu negocio. Operamos facility services en 11 regiones del Perú desde 2009.
+          </p>
+        </div>
+
+        <div>
+          <div class="text-[11px] uppercase tracking-widest text-brand-yellow font-medium mb-5">Servicios</div>
+          <ul class="space-y-3 text-[14px] text-white/75">
+            <li><a href="servicios.html" class="hover:text-white transition">Climatización</a></li>
+            <li><a href="servicios.html" class="hover:text-white transition">Energía y respaldo</a></li>
+            <li><a href="servicios.html" class="hover:text-white transition">Electricidad</a></li>
+            <li><a href="servicios.html" class="hover:text-white transition">Contra incendio</a></li>
+            <li><a href="servicios.html" class="hover:text-white transition">Infraestructura</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="text-[11px] uppercase tracking-widest text-brand-yellow font-medium mb-5">Empresa</div>
+          <ul class="space-y-3 text-[14px] text-white/75">
+            <li><a href="#nosotros" class="hover:text-white transition">Nosotros</a></li>
+            <li><a href="#sectores" class="hover:text-white transition">Sectores</a></li>
+            <li><a href="#trayectoria" class="hover:text-white transition">Trayectoria</a></li>
+            <li><a href="#" class="hover:text-white transition">Certificaciones</a></li>
+            <li><a href="contacto.html" class="hover:text-white transition">Contacto</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="text-[11px] uppercase tracking-widest text-brand-yellow font-medium mb-5">Contacto</div>
+          <ul class="space-y-3 text-[14px] text-white/75">
+            <li>Panamericana Norte KM 557<br/>Moche, Trujillo · La Libertad</li>
+            <li><a href="https://wa.me/51935986543" class="hover:text-white transition">+51 935 986 543</a></li>
+            <li><a href="mailto:comercial@sayser.com" class="hover:text-white transition">comercial@sayser.com</a></li>
+            <li>Lun-Vie · 9:00 a 18:00</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="text-[12px] text-white/50">
+          SAYSER S.A.C. · RUC 20482196595 · Inscrita en el Registro Nacional de Proveedores del Estado peruano.
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="https://facebook.com/corporacion.sayser" target="_blank" rel="noopener" class="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center hover:border-brand-orange hover:text-brand-orange transition">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88V14.9H8v-2.9h2.44V9.84c0-2.41 1.43-3.75 3.63-3.75 1.06 0 2.16.19 2.16.19v2.38H15c-1.2 0-1.57.75-1.57 1.51V12h2.68l-.43 2.9h-2.25v6.98A10 10 0 0 0 22 12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/company/sayser-s-a-c" target="_blank" rel="noopener" class="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center hover:border-brand-orange hover:text-brand-orange transition">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43A2.06 2.06 0 1 1 5.34 3.3a2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+          </a>
+          <a href="#" class="text-[12px] text-white/50 hover:text-white transition ml-2">Aviso legal</a>
+          <a href="#" class="text-[12px] text-white/50 hover:text-white transition">Privacidad</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============== WHATSAPP FLOAT ============== -->
+  <a href="https://wa.me/51935986543?text=Hola%20SAYSER%2C%20quisiera%20una%20cotizaci%C3%B3n." target="_blank" rel="noopener" class="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#1eb858] transition flex items-center justify-center pulse-ring shadow-lg" aria-label="Contactar por WhatsApp">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 0 1 8.413 3.488 11.82 11.82 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.149-.173.198-.297.297-.495.099-.198.05-.372-.025-.521-.074-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+  </a>
+
+  <!-- ============== COOKIE BANNER ============== -->
+  <div id="cookieBanner" class="fixed bottom-0 left-0 right-0 z-40 transition-transform duration-500">
+    <div class="max-w-[1280px] mx-auto m-4 lg:m-6 bg-brand-paper border border-brand-line rounded-xl p-5 lg:p-6 shadow-warmLg">
+      <div class="flex flex-col md:flex-row md:items-center gap-5 md:gap-8">
+        <div class="flex-1">
+          <div class="font-tight font-semibold text-[15px] mb-1">Usamos cookies</div>
+          <p class="text-[13px] text-brand-gray leading-relaxed">Utilizamos cookies para mejorar tu experiencia y analizar el tráfico del sitio. Puedes aceptar o configurar tus preferencias.</p>
+        </div>
+        <div class="flex gap-2">
+          <button id="cookieConfig" class="px-5 py-2.5 rounded-full border border-brand-line text-[13px] font-medium hover:border-brand-ink transition">Configurar</button>
+          <button id="cookieAccept" class="px-5 py-2.5 rounded-full bg-brand-ink text-white text-[13px] font-medium hover:bg-brand-orange transition">Aceptar todas</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============== SCRIPTS ============== -->
+  <script>
+    // ----- Header scroll state
+    const header = document.getElementById('siteHeader');
+    const onScroll = () => {
+      if (window.scrollY > 40) header.classList.add('scrolled');
+      else header.classList.remove('scrolled');
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // ----- Mobile menu
+    const mb = document.getElementById('mobileMenuBtn');
+    const mm = document.getElementById('mobileMenu');
+    if (mb && mm) mb.addEventListener('click', () => mm.classList.toggle('hidden'));
+
+    // ----- GSAP reveal
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.utils.toArray('.reveal').forEach((el) => {
+      gsap.to(el, {
+        opacity: 1, y: 0, duration: 0.7, ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+      });
+    });
+
+    // ----- Parallax on hero image
+    gsap.utils.toArray('.parallax-img').forEach((el) => {
+      gsap.to(el, {
+        y: -60,
+        ease: 'none',
+        scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true }
+      });
+    });
+
+    // ----- Counters
+    const counters = document.querySelectorAll('.counter');
+    counters.forEach((el) => {
+      const target = +el.dataset.target;
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 85%',
+        once: true,
+        onEnter: () => {
+          const obj = { val: 0 };
+          gsap.to(obj, {
+            val: target, duration: 1.6, ease: 'power2.out',
+            onUpdate: () => { el.textContent = Math.round(obj.val); },
+            onComplete: () => {
+              el.classList.add('counter-glow');
+              setTimeout(() => el.classList.remove('counter-glow'), 1200);
+            }
+          });
+        }
+      });
+    });
+
+    // ----- Sector tabs
+    const tabData = {
+      banca: {
+        kicker: 'Sector banca',
+        title: 'Operación silenciosa para agencias en horario crítico.',
+        desc: 'Mantenemos HVAC, energía respaldada, sistemas contra incendio y emergencias en redes de agencias bancarias a nivel nacional, con cuadrillas que trabajan en horarios fuera de atención al público.',
+        img: 'https://images.unsplash.com/photo-1601597111158-2fceff292cdc?w=1400&q=80&auto=format&fit=crop',
+        list: [
+          'Rutas de mantenimiento por agencia y ciudad',
+          'Respuesta de emergencia 24/7',
+          'Cumplimiento de protocolos de seguridad bancaria',
+          'Reportes técnicos auditables por agencia'
+        ]
+      },
+      retail: {
+        kicker: 'Sector retail',
+        title: 'Cadenas nacionales sin un solo local fuera de servicio.',
+        desc: 'Coordinamos mantenimiento multitienda para retailers, food service y franquicias. Cuadrillas regionales que conocen los protocolos visuales y operativos de cada marca.',
+        img: 'https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=1400&q=80&auto=format&fit=crop',
+        list: [
+          'Mantenimiento programado en horarios de baja afluencia',
+          'Coordinación multi-formato (tienda, kiosko, food court)',
+          'Reposición rápida de letreros, vidrios y mobiliario',
+          'Reportes consolidados por región'
+        ]
+      },
+      corporativo: {
+        kicker: 'Sector corporativo',
+        title: 'Edificios de oficinas operados como instalaciones críticas.',
+        desc: 'Para corporativos con sedes administrativas, salas de servidores y plantas piloto: mantenimiento integral, gestión de proveedores especialistas y obras menores bajo un solo punto de contacto.',
+        img: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1400&q=80&auto=format&fit=crop',
+        list: [
+          'Mantenimiento integral de edificio',
+          'Soporte a sala de servidores y centros de datos',
+          'Obras menores y remodelaciones internas',
+          'Tramitación ITSE de Defensa Civil'
+        ]
+      },
+      pymes: {
+        kicker: 'Pymes',
+        title: 'Capacidad de gran empresa, a escala de tu negocio.',
+        desc: 'Diseñamos paquetes flexibles para pymes que necesitan respaldo técnico sin contratar un equipo interno. Sin mínimos rígidos, sin sorpresas en la factura.',
+        img: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1400&q=80&auto=format&fit=crop',
+        list: [
+          'Visitas técnicas programadas mensuales',
+          'Respuesta correctiva en 24-48h',
+          'Asesoría para certificaciones y trámites',
+          'Tarifa transparente, sin paquetes obligatorios'
+        ]
+      },
+      industria: {
+        kicker: 'Industria',
+        title: 'Mantenimiento robusto para plantas y operaciones técnicas.',
+        desc: 'Trabajamos para plantas industriales con servicios de electricidad de fuerza, mantenimiento de estructuras metálicas, frenos hidráulicos y obras de infraestructura técnica.',
+        img: 'https://images.unsplash.com/photo-1733431772808-82d878e59000?w=1400&q=80&auto=format&fit=crop',
+        list: [
+          'Tableros eléctricos industriales',
+          'Estructuras metálicas y soldadura especializada',
+          'Frenos hidráulicos y mecánica industrial',
+          'Coordinación con paradas de planta'
+        ]
+      }
+    };
+
+    const tabImg = document.getElementById('tabImg');
+    const tabKicker = document.getElementById('tabKicker');
+    const tabTitle = document.getElementById('tabTitle');
+    const tabDesc = document.getElementById('tabDesc');
+    const tabList = document.getElementById('tabList');
+
+    document.querySelectorAll('.tab-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.dataset.active = 'false');
+        btn.dataset.active = 'true';
+        const key = btn.dataset.tab;
+        const d = tabData[key];
+        if (!d) return;
+        // fade animation
+        gsap.to([tabImg, tabKicker, tabTitle, tabDesc, tabList], {
+          opacity: 0, y: 8, duration: 0.2, ease: 'power2.in',
+          onComplete: () => {
+            tabImg.src = d.img;
+            tabKicker.textContent = d.kicker;
+            tabTitle.textContent = d.title;
+            tabDesc.textContent = d.desc;
+            tabList.innerHTML = d.list.map(item => `
+              <li class="flex gap-3">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                ${item}
+              </li>`).join('');
+            gsap.to([tabImg, tabKicker, tabTitle, tabDesc, tabList], { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out', stagger: 0.04 });
+          }
+        });
+      });
+    });
+
+    // ----- Cookie banner
+    const banner = document.getElementById('cookieBanner');
+    const hasAcc = localStorage.getItem('sayser_cookie_v1');
+    if (hasAcc) banner.classList.add('cookie-hidden');
+    document.getElementById('cookieAccept').addEventListener('click', () => {
+      localStorage.setItem('sayser_cookie_v1', '1');
+      banner.classList.add('cookie-hidden');
+    });
+    document.getElementById('cookieConfig').addEventListener('click', () => {
+      alert('Configuración de cookies (prototipo).');
+    });
+  </script>
+</body>
+</html>

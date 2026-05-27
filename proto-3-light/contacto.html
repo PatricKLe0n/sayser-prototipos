@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contacto — SAYSER Facility Services</title>
+<meta name="description" content="Hablemos. Cotización a medida en menos de 24 horas. WhatsApp +51 935 986 543 · Trujillo, La Libertad — Perú." />
+<link rel="icon" type="image/png" href="assets/logo.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          'sayser-orange': '#C9651C',
+          'sayser-yellow': '#E5B523',
+          'sayser-gray': '#8C8C8C',
+          'cream': { 50: '#FFFBF3', 100: '#FDF8F0', 200: '#FAF3E8', 300: '#F4ECDB' },
+          'ink': { 900: '#1A1410', 800: '#3A2E22', 700: '#5A4D3F', 600: '#9C8B72' }
+        },
+        fontFamily: {
+          sans: ['Geist', 'Inter Tight', 'system-ui', 'sans-serif'],
+          mono: ['Geist Mono', 'ui-monospace', 'monospace'],
+        },
+      }
+    }
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<style>
+  * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: #FDF8F0; color: #1A1410;
+    font-family: 'Geist', 'Inter Tight', system-ui, sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+  .cursor-dot {
+    position: fixed; top: 0; left: 0; width: 8px; height: 8px;
+    background: #1A1410; border-radius: 50%; pointer-events: none;
+    z-index: 9999;
+    transition: width .2s, height .2s, background .2s, border .2s;
+    transform: translate(-50%, -50%);
+  }
+  .cursor-dot.hover-link {
+    width: 44px; height: 44px; background: rgba(201,101,28,.25); border: 1px solid rgba(201,101,28,.5);
+  }
+  @media (max-width: 768px) { body { cursor: auto; } .cursor-dot { display: none; } }
+
+  .dot-grid {
+    background-image: radial-gradient(rgba(90,77,63,0.18) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .orb-glow {
+    position: absolute; border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,101,28,0.45) 0%, rgba(229,181,35,0.22) 30%, rgba(201,101,28,0) 70%);
+    filter: blur(70px); pointer-events: none;
+    animation: orbPulse 3.5s ease-in-out infinite alternate;
+    mix-blend-mode: multiply;
+  }
+  .orb-glow-yellow {
+    background: radial-gradient(circle, rgba(229,181,35,0.4) 0%, rgba(229,181,35,0.18) 35%, rgba(229,181,35,0) 70%);
+    filter: blur(90px);
+  }
+  @keyframes orbPulse {
+    0% { opacity: 0.55; }
+    100% { opacity: 0.9; }
+  }
+
+  .gradient-text {
+    background: linear-gradient(90deg, #E5B523 0%, #C9651C 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #E5B523 0%, #C9651C 100%);
+    color: #1A1410; font-weight: 600;
+    box-shadow: 0 0 0 1px rgba(201,101,28,0.35), 0 12px 30px -8px rgba(201,101,28,0.55), inset 0 1px 0 rgba(255,255,255,0.45);
+    transition: all .35s cubic-bezier(.2,.8,.2,1);
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 0 1px rgba(201,101,28,0.55), 0 18px 45px -8px rgba(201,101,28,0.7), inset 0 1px 0 rgba(255,255,255,0.55);
+  }
+
+  .btn-ghost {
+    background: rgba(255,255,255,0.55);
+    border: 1px solid rgba(26,20,16,0.18);
+    color: #1A1410;
+    backdrop-filter: blur(10px);
+    transition: all .35s cubic-bezier(.2,.8,.2,1);
+  }
+  .btn-ghost:hover {
+    background: rgba(255,255,255,0.85);
+    border-color: rgba(201,101,28,0.5);
+    box-shadow: 0 12px 32px -10px rgba(201,101,28,0.35);
+  }
+
+  .glass {
+    background: rgba(255,253,247,0.7);
+    border: 1px solid rgba(201,101,28,0.12);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 8px 32px -10px rgba(201,101,28,0.10), inset 0 1px 0 rgba(255,255,255,0.6);
+    transition: all .4s cubic-bezier(.2,.8,.2,1);
+  }
+  .glass:hover { border-color: rgba(201,101,28,0.32); }
+
+  .header-blur {
+    backdrop-filter: blur(20px) saturate(180%);
+    background: rgba(253,248,240,0.78);
+    border-bottom: 1px solid rgba(201,101,28,0.10);
+  }
+
+  .pulse-dot {
+    width: 8px; height: 8px; background: #C9651C; border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(201,101,28,0.7);
+    animation: pulseDot 2s infinite;
+  }
+  @keyframes pulseDot {
+    0% { box-shadow: 0 0 0 0 rgba(201,101,28,0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(201,101,28,0); }
+    100% { box-shadow: 0 0 0 0 rgba(201,101,28,0); }
+  }
+
+  /* Inputs — light warm */
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.7);
+    border: 1px solid rgba(201,101,28,0.18);
+    border-radius: 12px;
+    padding: 14px 16px;
+    color: #1A1410;
+    font-size: 14px;
+    font-family: inherit;
+    transition: all .3s ease;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    outline: none;
+    border-color: rgba(201,101,28,0.7);
+    box-shadow: 0 0 0 4px rgba(201,101,28,0.15), 0 0 30px -8px rgba(201,101,28,0.4);
+    background: rgba(255,255,255,0.92);
+  }
+  .form-input::placeholder, .form-textarea::placeholder { color: rgba(90,77,63,0.55); }
+  .form-select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235A4D3F' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px; }
+  .form-select option { background: #FDF8F0; color: #1A1410; }
+
+  .form-label {
+    font-family: 'Geist Mono', monospace;
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #9C8B72;
+    margin-bottom: 8px; display: block;
+  }
+
+  .checkbox-custom {
+    width: 18px; height: 18px;
+    background: rgba(255,255,255,0.7);
+    border: 1px solid rgba(201,101,28,0.35);
+    border-radius: 5px;
+    appearance: none;
+    cursor: pointer;
+    position: relative;
+    transition: all .2s ease;
+    flex-shrink: 0;
+  }
+  .checkbox-custom:checked {
+    background: linear-gradient(135deg, #E5B523, #C9651C);
+    border-color: transparent;
+  }
+  .checkbox-custom:checked::after {
+    content: '';
+    position: absolute;
+    top: 2px; left: 5px;
+    width: 5px; height: 9px;
+    border: solid #1A1410;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  /* Channel cards — light */
+  .channel-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.55);
+    border: 1px solid rgba(201,101,28,0.12);
+    transition: all .35s cubic-bezier(.2,.8,.2,1);
+  }
+  .channel-card:hover {
+    background: rgba(255,255,255,0.92);
+    border-color: rgba(201,101,28,0.45);
+    transform: translateX(4px);
+    box-shadow: 0 16px 36px -12px rgba(201,101,28,0.28);
+  }
+  .channel-icon {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .channel-icon.wa { background: rgba(37,211,102,0.14); border: 1px solid rgba(37,211,102,0.4); box-shadow: 0 0 20px -5px rgba(37,211,102,0.35); }
+  .channel-icon.email { background: rgba(229,181,35,0.18); border: 1px solid rgba(201,101,28,0.4); box-shadow: 0 0 20px -5px rgba(229,181,35,0.4); }
+  .channel-icon.phone { background: rgba(201,101,28,0.14); border: 1px solid rgba(201,101,28,0.4); box-shadow: 0 0 20px -5px rgba(201,101,28,0.4); }
+  .channel-icon.location { background: rgba(156,139,114,0.18); border: 1px solid rgba(156,139,114,0.4); }
+  .channel-icon.clock { background: rgba(229,181,35,0.18); border: 1px solid rgba(201,101,28,0.35); }
+  .channel-icon.social { background: rgba(255,255,255,0.7); border: 1px solid rgba(201,101,28,0.22); color: #1A1410; }
+  .channel-icon.social:hover { background: rgba(201,101,28,0.1); border-color: rgba(201,101,28,0.5); }
+
+  .wa-float {
+    position: fixed; bottom: 28px; right: 28px;
+    width: 60px; height: 60px; background: #25D366;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 0 0 rgba(37,211,102,0.7), 0 10px 30px -5px rgba(37,211,102,0.5);
+    animation: waPulse 2.5s infinite;
+    z-index: 100;
+    transition: transform .3s ease;
+  }
+  .wa-float:hover { transform: scale(1.08); }
+  @keyframes waPulse {
+    0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.7), 0 10px 30px -5px rgba(37,211,102,0.5); }
+    70% { box-shadow: 0 0 0 20px rgba(37,211,102,0), 0 10px 30px -5px rgba(37,211,102,0.5); }
+    100% { box-shadow: 0 0 0 0 rgba(37,211,102,0), 0 10px 30px -5px rgba(37,211,102,0.5); }
+  }
+
+  .cookie-banner {
+    position: fixed; bottom: 28px; left: 28px; max-width: 420px; z-index: 90;
+    transition: transform .5s, opacity .5s;
+  }
+  .cookie-banner.hidden-banner { transform: translateY(180%); opacity: 0; pointer-events: none; }
+
+  .display-text { font-family: 'Geist', sans-serif; font-weight: 600; letter-spacing: -0.03em; line-height: 0.98; color: #1A1410; }
+  .mono-tag { font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; }
+  ::selection { background: rgba(229,181,35,0.45); color: #1A1410; }
+  .logo-glow { filter: drop-shadow(0 0 14px rgba(201,101,28,0.55)); }
+
+  /* Map decoration — keep iframe natural over warm overlay */
+  .map-wrap {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #FAF3E8;
+    border: 1px solid rgba(201,101,28,0.18);
+  }
+  .map-wrap::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(201,101,28,0.18) 0%, transparent 50%, rgba(229,181,35,0.12) 100%);
+    pointer-events: none; z-index: 2;
+    mix-blend-mode: multiply;
+  }
+  .map-wrap iframe {
+    filter: saturate(0.85) contrast(0.95);
+  }
+
+  .reveal-section { will-change: transform, opacity; }
+</style>
+</head>
+
+<body class="bg-cream-100 text-ink-900 antialiased">
+
+<div class="cursor-dot" id="cursor"></div>
+
+<!-- HEADER -->
+<header class="header-blur fixed top-0 left-0 right-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-2.5">
+      <img src="assets/logo.png" alt="SAYSER" class="h-8 w-auto logo-glow" />
+      <span class="font-semibold tracking-tight text-[15px] text-ink-900">SAYSER</span>
+    </a>
+    <nav class="hidden md:flex items-center gap-7 text-[13px] text-ink-700">
+      <a href="index.html" class="hover:text-sayser-orange transition-colors">Inicio</a>
+      <a href="index.html#nosotros" class="hover:text-sayser-orange transition-colors">Nosotros</a>
+      <a href="servicios.html" class="hover:text-sayser-orange transition-colors">Servicios</a>
+      <a href="index.html#sectores" class="hover:text-sayser-orange transition-colors">Sectores</a>
+      <a href="contacto.html" class="text-sayser-orange">Contacto</a>
+    </nav>
+    <div class="flex items-center gap-3">
+      <button id="mobileMenuBtn" aria-label="Abrir menú" aria-expanded="false" class="md:hidden p-2.5 rounded-lg border border-sayser-orange/25 text-ink-900 hover:bg-sayser-orange/8 transition-colors">
+        <svg id="menuIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+        <svg id="closeIcon" class="hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      <div class="hidden sm:flex items-center gap-1 text-[11px] text-ink-600 mono-tag">
+        <span class="text-ink-900">ES</span><span>|</span>
+        <span class="hover:text-sayser-orange cursor-pointer transition-colors">EN</span>
+      </div>
+      <a href="#form" class="btn-primary px-4 py-2 rounded-full text-[13px] inline-flex items-center gap-1.5">
+        Cotizar
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile menu drawer -->
+<div id="mobileMenu" class="hidden md:hidden fixed top-16 left-0 right-0 z-40 bg-cream-50/95 backdrop-blur-md border-t border-sayser-orange/15 shadow-[0_12px_32px_-12px_rgba(201,101,28,0.18)]">
+  <nav class="max-w-7xl mx-auto px-6 py-5 flex flex-col gap-1 text-[15px] text-ink-700">
+    <a href="index.html" class="py-3 px-3 rounded-lg hover:bg-sayser-orange/8 hover:text-sayser-orange transition-colors">Inicio</a>
+    <a href="index.html#nosotros" class="py-3 px-3 rounded-lg hover:bg-sayser-orange/8 hover:text-sayser-orange transition-colors">Nosotros</a>
+    <a href="servicios.html" class="py-3 px-3 rounded-lg hover:bg-sayser-orange/8 hover:text-sayser-orange transition-colors">Servicios</a>
+    <a href="index.html#sectores" class="py-3 px-3 rounded-lg hover:bg-sayser-orange/8 hover:text-sayser-orange transition-colors">Sectores</a>
+    <a href="contacto.html" class="py-3 px-3 rounded-lg text-sayser-orange bg-sayser-orange/8 transition-colors">Contacto</a>
+    <div class="flex items-center gap-2 mt-3 pt-3 border-t border-sayser-orange/10 text-[12px] mono-tag text-ink-600 px-3">
+      <span class="text-ink-900">ES</span><span>|</span><span class="hover:text-sayser-orange cursor-pointer">EN</span>
+    </div>
+  </nav>
+</div>
+
+<!-- HERO -->
+<section class="relative pt-40 pb-16 overflow-hidden">
+  <div class="absolute inset-0 dot-grid opacity-60"></div>
+  <div class="orb-glow" style="top: -200px; left: 50%; transform: translateX(-50%); width: 900px; height: 900px;"></div>
+  <div class="orb-glow orb-glow-yellow" style="bottom: -100px; right: -200px; width: 600px; height: 600px;"></div>
+
+  <div class="relative max-w-5xl mx-auto px-6 lg:px-8 text-center">
+    <div class="inline-flex items-center gap-3 mono-tag text-sayser-orange mb-8">
+      <span class="pulse-dot"></span>
+      RESPUESTA EN MENOS DE 24 HORAS
+    </div>
+    <h1 class="display-text mb-8" style="font-size: clamp(2.5rem, 7vw, 5.5rem);">
+      <span class="gradient-text">Hablemos.</span>
+    </h1>
+    <p class="text-ink-700 text-[18px] max-w-2xl mx-auto leading-relaxed">
+      Cuéntanos qué necesita tu instalación. Cotización a medida sin paquetes cerrados —desde Tumbes hasta Junín.
+    </p>
+  </div>
+</section>
+
+<!-- FORM + CHANNELS -->
+<section id="form" class="relative py-20 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+    <!-- LEFT: Form -->
+    <div class="lg:col-span-7 reveal-section">
+      <div class="glass rounded-3xl p-8 md:p-12">
+        <div class="mono-tag text-sayser-orange mb-3">FORMULARIO · 01</div>
+        <h2 class="display-text text-[36px] md:text-[42px] mb-3">Solicita tu cotización.</h2>
+        <p class="text-ink-700 text-[15px] leading-relaxed mb-10 max-w-md">
+          Mientras más detalle nos des, más precisa será nuestra propuesta. Te respondemos en menos de 24 horas hábiles.
+        </p>
+
+        <form class="space-y-6" onsubmit="handleSubmit(event)">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+              <label class="form-label">Nombre completo *</label>
+              <input type="text" class="form-input" placeholder="Tu nombre" required />
+            </div>
+            <div>
+              <label class="form-label">Empresa</label>
+              <input type="text" class="form-input" placeholder="Razón social" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+              <label class="form-label">Email *</label>
+              <input type="email" class="form-input" placeholder="nombre@empresa.com" required />
+            </div>
+            <div>
+              <label class="form-label">Teléfono</label>
+              <input type="tel" class="form-input" placeholder="+51 9XX XXX XXX" />
+            </div>
+          </div>
+
+          <div>
+            <label class="form-label">Servicio de interés *</label>
+            <select class="form-select" required>
+              <option value="" disabled selected>Selecciona un servicio</option>
+              <option>Aire acondicionado</option>
+              <option>Fancoil</option>
+              <option>Tableros eléctricos</option>
+              <option>Grupos electrógenos</option>
+              <option>Sistemas UPS</option>
+              <option>Pozo a tierra</option>
+              <option>Luces de emergencia</option>
+              <option>Contra incendios</option>
+              <option>Servicios generales (pintura, gasfitería, etc.)</option>
+              <option>Carpintería</option>
+              <option>Cerrajería y soldadura</option>
+              <option>DRYWALL</option>
+              <option>Defensa civil + ITSE</option>
+              <option>Otro / a medida</option>
+            </select>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+              <label class="form-label">Región</label>
+              <select class="form-select">
+                <option value="" disabled selected>Selecciona</option>
+                <option>La Libertad</option>
+                <option>Lambayeque</option>
+                <option>Piura</option>
+                <option>Tumbes</option>
+                <option>Áncash</option>
+                <option>Cajamarca</option>
+                <option>Lima</option>
+                <option>Junín</option>
+                <option>Loreto</option>
+                <option>Ucayali</option>
+                <option>San Martín</option>
+                <option>Otra</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label">Urgencia</label>
+              <select class="form-select">
+                <option value="" disabled selected>¿Cuándo lo necesitas?</option>
+                <option>Inmediato (esta semana)</option>
+                <option>Próximas 2-4 semanas</option>
+                <option>Próximos meses</option>
+                <option>Solo cotizando</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="form-label">Cuéntanos sobre tu proyecto *</label>
+            <textarea class="form-textarea" rows="5" placeholder="Tipo de instalación, alcance, sedes, equipos involucrados, plazos..." required></textarea>
+          </div>
+
+          <div class="flex items-start gap-3 pt-2">
+            <input type="checkbox" class="checkbox-custom mt-0.5" id="terms" required />
+            <label for="terms" class="text-[13px] text-ink-700 leading-relaxed">
+              Acepto la <a href="#" class="text-sayser-orange hover:underline">política de privacidad</a> y autorizo el tratamiento de mis datos para responder a esta solicitud comercial.
+            </label>
+          </div>
+
+          <div class="pt-4">
+            <button type="submit" class="btn-primary w-full md:w-auto px-8 py-4 rounded-full text-[15px] inline-flex items-center justify-center gap-2">
+              Enviar solicitud
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+            <p class="mt-4 mono-tag text-ink-600">RESPUESTA EN MENOS DE 24H</p>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- RIGHT: Channels -->
+    <div class="lg:col-span-5 reveal-section">
+      <div class="glass rounded-3xl p-8 md:p-10 mb-6">
+        <div class="mono-tag text-sayser-orange mb-3">CANALES · 02</div>
+        <h3 class="display-text text-[28px] md:text-[32px] mb-2">Canales directos.</h3>
+        <p class="text-ink-700 text-[14px] mb-8">Atendidos por nuestra jefa comercial Débora Monteza.</p>
+
+        <div class="space-y-3">
+          <a href="https://wa.me/51935986543" target="_blank" class="channel-card block">
+            <div class="flex items-center gap-4">
+              <div class="channel-icon wa">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
+              </div>
+              <div class="flex-1">
+                <div class="mono-tag text-ink-600 mb-0.5">WHATSAPP</div>
+                <div class="text-[15px] font-medium text-ink-900">+51 935 986 543</div>
+              </div>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(90,77,63,0.45)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </a>
+
+          <a href="mailto:comercial@sayser.com" class="channel-card block">
+            <div class="flex items-center gap-4">
+              <div class="channel-icon email">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div class="flex-1">
+                <div class="mono-tag text-ink-600 mb-0.5">EMAIL COMERCIAL</div>
+                <div class="text-[15px] font-medium text-ink-900">comercial@sayser.com</div>
+              </div>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(90,77,63,0.45)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </a>
+
+          <a href="tel:+51935986543" class="channel-card block">
+            <div class="flex items-center gap-4">
+              <div class="channel-icon phone">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <div class="flex-1">
+                <div class="mono-tag text-ink-600 mb-0.5">CENTRAL TELEFÓNICA</div>
+                <div class="text-[15px] font-medium text-ink-900">+51 935 986 543</div>
+              </div>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(90,77,63,0.45)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </a>
+
+          <div class="channel-card">
+            <div class="channel-icon location">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5A4D3F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="flex-1">
+              <div class="mono-tag text-ink-600 mb-0.5">SEDE CENTRAL</div>
+              <div class="text-[14px] text-ink-900 leading-snug">Panamericana Norte KM 557<br/>Moche, Trujillo — La Libertad</div>
+            </div>
+          </div>
+
+          <div class="channel-card">
+            <div class="channel-icon clock">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="flex-1">
+              <div class="mono-tag text-ink-600 mb-0.5">HORARIO COMERCIAL</div>
+              <div class="text-[14px] text-ink-900 leading-snug">Lunes a Viernes · 9:00 — 18:00<br/><span class="text-ink-700">Emergencias 24/7 vía WhatsApp</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social -->
+      <div class="glass rounded-3xl p-8">
+        <div class="mono-tag text-ink-600 mb-5">SÍGUENOS</div>
+        <div class="flex items-center gap-3">
+          <a href="https://facebook.com/corporacion.sayser" target="_blank" class="channel-icon social" style="width:48px; height:48px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://linkedin.com/company/sayser-s-a-c" target="_blank" class="channel-icon social" style="width:48px; height:48px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"/></svg>
+          </a>
+          <a href="https://wa.me/51935986543" target="_blank" class="channel-icon social" style="width:48px; height:48px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606z"/></svg>
+          </a>
+        </div>
+        <div class="mt-6 pt-6 border-t border-sayser-orange/15 flex items-center gap-3">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span class="text-[12px] text-ink-700">Empresa ISO 9001 · Inscrita en RNP</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- UBICACIÓN -->
+<section class="relative py-32 overflow-hidden border-t border-sayser-orange/10 bg-cream-200/40">
+  <div class="absolute -right-40 top-1/4 w-[500px] h-[500px] rounded-full" style="background: radial-gradient(circle, rgba(201,101,28,0.14), transparent 70%); filter: blur(60px); mix-blend-mode: multiply;"></div>
+
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-16 reveal-section">
+      <div class="inline-flex items-center gap-3 mono-tag text-sayser-orange mb-5">
+        <div class="w-6 h-px bg-sayser-orange"></div>
+        UBICACIÓN · 03
+        <div class="w-6 h-px bg-sayser-orange"></div>
+      </div>
+      <h2 class="display-text" style="font-size: clamp(2rem, 5vw, 3.25rem);">
+        Vienes a visitarnos,<br/>
+        <span class="gradient-text">vamos a verte.</span>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 reveal-section">
+      <div class="lg:col-span-8 map-wrap aspect-[16/10]">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.789912!2d-78.99!3d-8.16!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOMKwMDknMzYuMCJTIDc4wrA1OScyNC4wIlc!5e0!3m2!1ses-419!2spe!4v1700000000000"
+          width="100%" height="100%"
+          style="border:0; position: relative; z-index: 1;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+
+      <div class="lg:col-span-4 glass rounded-3xl p-8 flex flex-col justify-between">
+        <div>
+          <div class="mono-tag text-sayser-orange mb-4">SEDE TRUJILLO</div>
+          <h3 class="display-text text-[28px] mb-4">Moche, La Libertad</h3>
+          <p class="text-ink-700 text-[14px] leading-relaxed mb-8">
+            Panamericana Norte KM 557, Moche, Trujillo. Desde aquí coordinamos operaciones en 11 regiones del Perú.
+          </p>
+
+          <div class="space-y-4 pt-6 border-t border-sayser-orange/15">
+            <div class="flex items-start gap-3">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.5" class="mt-0.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <div>
+                <div class="mono-tag text-ink-600 mb-0.5">COORDENADAS</div>
+                <div class="text-[13px] text-ink-900 font-mono">-8.1670, -78.9912</div>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.5" class="mt-0.5"><path d="M3 9h18M9 21V9"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+              <div>
+                <div class="mono-tag text-ink-600 mb-0.5">RUC</div>
+                <div class="text-[13px] text-ink-900 font-mono">20482196595</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a href="https://www.google.com/maps/search/?api=1&query=Panamericana+Norte+KM+557+Moche+Trujillo" target="_blank" class="btn-ghost mt-8 px-6 py-3 rounded-full text-[13px] inline-flex items-center justify-center gap-2">
+          Cómo llegar
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="relative py-24 overflow-hidden border-t border-sayser-orange/10">
+  <div class="max-w-4xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-16 reveal-section">
+      <div class="inline-flex items-center gap-3 mono-tag text-sayser-orange mb-5">
+        <div class="w-6 h-px bg-sayser-orange"></div>
+        FAQ · 04
+        <div class="w-6 h-px bg-sayser-orange"></div>
+      </div>
+      <h2 class="display-text" style="font-size: clamp(2rem, 4vw, 3rem);">
+        Preguntas frecuentes.
+      </h2>
+    </div>
+
+    <div class="space-y-3">
+      <details class="reveal-section glass rounded-2xl p-6 group cursor-pointer">
+        <summary class="flex items-center justify-between text-[16px] font-medium list-none text-ink-900">
+          <span>¿Cuánto tarda una cotización?</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.5" class="group-open:rotate-45 transition-transform"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </summary>
+        <p class="text-ink-700 text-[14px] mt-4 leading-relaxed">
+          Respondemos en menos de 24 horas hábiles. Para proyectos que requieren visita técnica previa, coordinamos cita en 48-72 horas.
+        </p>
+      </details>
+
+      <details class="reveal-section glass rounded-2xl p-6 group cursor-pointer">
+        <summary class="flex items-center justify-between text-[16px] font-medium list-none text-ink-900">
+          <span>¿Atienden emergencias fuera de horario?</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.5" class="group-open:rotate-45 transition-transform"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </summary>
+        <p class="text-ink-700 text-[14px] mt-4 leading-relaxed">
+          Sí. Clientes con contrato de mantenimiento tienen acceso a línea de emergencia 24/7. Para nuevos clientes, contáctanos por WhatsApp.
+        </p>
+      </details>
+
+      <details class="reveal-section glass rounded-2xl p-6 group cursor-pointer">
+        <summary class="flex items-center justify-between text-[16px] font-medium list-none text-ink-900">
+          <span>¿Trabajan fuera de Trujillo?</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.5" class="group-open:rotate-45 transition-transform"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </summary>
+        <p class="text-ink-700 text-[14px] mt-4 leading-relaxed">
+          Sí. Operamos en 11 regiones: La Libertad, Lambayeque, Piura, Tumbes, Áncash, Cajamarca, Lima, Junín, Loreto, Ucayali y San Martín.
+        </p>
+      </details>
+
+      <details class="reveal-section glass rounded-2xl p-6 group cursor-pointer">
+        <summary class="flex items-center justify-between text-[16px] font-medium list-none text-ink-900">
+          <span>¿Pueden facturar a empresas del Estado?</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.5" class="group-open:rotate-45 transition-transform"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </summary>
+        <p class="text-ink-700 text-[14px] mt-4 leading-relaxed">
+          Sí, estamos inscritos en el Registro Nacional de Proveedores (RNP) y cumplimos con todos los requisitos de contratación con entidades públicas.
+        </p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="relative border-t border-sayser-orange/15 pt-20 pb-10 bg-cream-200">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-10 mb-16">
+      <div class="col-span-2">
+        <div class="flex items-center gap-2.5 mb-6">
+          <img src="assets/logo.png" alt="SAYSER" class="h-10 w-auto logo-glow" />
+          <span class="font-semibold text-[18px] tracking-tight text-ink-900">SAYSER</span>
+        </div>
+        <p class="text-ink-700 text-[14px] max-w-xs leading-relaxed mb-6">
+          Facility Services con disciplina de banca. Operamos 13 líneas de servicio en 11 regiones desde 2009.
+        </p>
+        <div class="flex items-center gap-3">
+          <a href="https://facebook.com/corporacion.sayser" target="_blank" class="w-9 h-9 rounded-full bg-white/60 border border-sayser-orange/20 flex items-center justify-center text-ink-700 hover:border-sayser-orange/60 hover:bg-sayser-orange/10 hover:text-sayser-orange transition"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="https://linkedin.com/company/sayser-s-a-c" target="_blank" class="w-9 h-9 rounded-full bg-white/60 border border-sayser-orange/20 flex items-center justify-center text-ink-700 hover:border-sayser-orange/60 hover:bg-sayser-orange/10 hover:text-sayser-orange transition"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"/></svg></a>
+        </div>
+      </div>
+
+      <div>
+        <div class="mono-tag text-ink-600 mb-5">SERVICIOS</div>
+        <ul class="space-y-3 text-[13px] text-ink-700">
+          <li><a href="servicios.html" class="hover:text-sayser-orange transition">Climatización</a></li>
+          <li><a href="servicios.html" class="hover:text-sayser-orange transition">Energía</a></li>
+          <li><a href="servicios.html" class="hover:text-sayser-orange transition">Obra y acabados</a></li>
+          <li><a href="servicios.html" class="hover:text-sayser-orange transition">Especializados</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="mono-tag text-ink-600 mb-5">EMPRESA</div>
+        <ul class="space-y-3 text-[13px] text-ink-700">
+          <li><a href="index.html#nosotros" class="hover:text-sayser-orange transition">Nosotros</a></li>
+          <li><a href="index.html#sectores" class="hover:text-sayser-orange transition">Sectores</a></li>
+          <li><a href="contacto.html" class="hover:text-sayser-orange transition">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="mono-tag text-ink-600 mb-5">CONTACTO</div>
+        <ul class="space-y-3 text-[13px] text-ink-700">
+          <li>Panamericana Norte<br/>KM 557, Moche, Trujillo</li>
+          <li><a href="https://wa.me/51935986543" class="hover:text-sayser-orange transition">+51 935 986 543</a></li>
+          <li><a href="mailto:comercial@sayser.com" class="hover:text-sayser-orange transition">comercial@sayser.com</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pt-8 border-t border-sayser-orange/15 flex flex-col md:flex-row justify-between gap-4 text-[12px] text-ink-600">
+      <div>SAYSER S.A.C. · RUC 20482196595 · © 2009-2026</div>
+      <div class="flex flex-wrap gap-6">
+        <a href="#" class="hover:text-sayser-orange transition">Política de privacidad</a>
+        <a href="#" class="hover:text-sayser-orange transition">Libro de reclamaciones</a>
+        <a href="#" class="hover:text-sayser-orange transition">ISO 9001</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/51935986543" target="_blank" class="wa-float" aria-label="WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+</a>
+
+<div class="cookie-banner glass rounded-2xl p-5" id="cookieBanner">
+  <div class="flex items-start gap-4">
+    <div class="w-9 h-9 rounded-full bg-sayser-orange/15 border border-sayser-orange/35 flex items-center justify-center flex-shrink-0">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9651C" stroke-width="1.5"><circle cx="12" cy="12" r="10"/></svg>
+    </div>
+    <div class="flex-1">
+      <div class="text-[13px] text-ink-900 leading-relaxed mb-3">Usamos cookies para mejorar tu experiencia.</div>
+      <div class="flex gap-2">
+        <button onclick="document.getElementById('cookieBanner').classList.add('hidden-banner')" class="btn-primary px-4 py-1.5 rounded-full text-[12px]">Aceptar</button>
+        <button onclick="document.getElementById('cookieBanner').classList.add('hidden-banner')" class="btn-ghost px-4 py-1.5 rounded-full text-[12px]">Rechazar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SUCCESS Toast -->
+<div id="successToast" class="fixed top-24 right-8 glass rounded-2xl p-5 max-w-sm transform translate-x-[150%] transition-transform duration-500 z-[200]">
+  <div class="flex items-start gap-3">
+    <div class="w-9 h-9 rounded-full bg-green-500/15 border border-green-500/45 flex items-center justify-center flex-shrink-0">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <div class="flex-1">
+      <div class="text-[14px] font-medium text-ink-900 mb-1">Solicitud enviada</div>
+      <div class="text-[12px] text-ink-700">Te contactaremos en menos de 24 horas hábiles.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  if (cursor && window.innerWidth > 768) {
+    document.addEventListener('mousemove', (e) => {
+      gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.15, ease: 'power2.out' });
+    });
+    document.querySelectorAll('a, button, .glass, .channel-card, input, select, textarea').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hover-link'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hover-link'));
+    });
+  }
+
+  // Parallax orbs
+  document.addEventListener('mousemove', (e) => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 30;
+    const y = (e.clientY / window.innerHeight - 0.5) * 30;
+    document.querySelectorAll('.orb-glow').forEach((orb, i) => {
+      const factor = i === 0 ? 1 : -0.6;
+      orb.style.marginLeft = (x * factor) + 'px';
+      orb.style.marginTop = (y * factor) + 'px';
+    });
+  });
+
+  // Form submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    const toast = document.getElementById('successToast');
+    toast.style.transform = 'translateX(0)';
+    setTimeout(() => { toast.style.transform = 'translateX(150%)'; }, 4000);
+    e.target.reset();
+  }
+
+  // Reveals
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.utils.toArray('.reveal-section').forEach(el => {
+    gsap.from(el, {
+      y: 40, opacity: 0, scale: 0.98, duration: 0.9, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+    });
+  });
+</script>
+
+<script>
+  // Mobile menu toggle
+  (function() {
+    const btn = document.getElementById('mobileMenuBtn');
+    const menu = document.getElementById('mobileMenu');
+    const menuIcon = document.getElementById('menuIcon');
+    const closeIcon = document.getElementById('closeIcon');
+    if (!btn || !menu) return;
+    const setOpen = (open) => {
+      menu.classList.toggle('hidden', !open);
+      menuIcon.classList.toggle('hidden', open);
+      closeIcon.classList.toggle('hidden', !open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.style.overflow = open ? 'hidden' : '';
+    };
+    btn.addEventListener('click', () => setOpen(menu.classList.contains('hidden')));
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+    window.addEventListener('resize', () => { if (window.innerWidth >= 768) setOpen(false); });
+  })();
+</script>
+</body>
+</html>
